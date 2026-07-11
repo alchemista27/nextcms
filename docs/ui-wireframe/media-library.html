@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Media Library - NextCMS</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #00704A; --primary-dark: #1E3932; --bg: #F3F4F6;
+            --surface: #FFFFFF; --text-primary: #111827; --text-secondary: #6B7280;
+            --border: #E5E7EB; --danger: #DC2626; --sidebar-width: 260px; --header-height: 64px;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
+        body { background-color: var(--bg); color: var(--text-primary); display: flex; min-height: 100vh; overflow: hidden; }
+        
+        .sidebar { width: var(--sidebar-width); background-color: var(--primary-dark); color: white; position: fixed; top: 0; bottom: 0; left: 0; display: flex; flex-direction: column; z-index: 40; }
+        .sidebar-header { height: var(--header-height); display: flex; align-items: center; padding: 0 20px; border-bottom: 1px solid rgba(255,255,255,0.1); }
+        .sidebar-logo { display: flex; align-items: center; gap: 12px; color: white; text-decoration: none; font-size: 20px; font-weight: 700; }
+        .sidebar-logo .material-icons-outlined { color: var(--primary); }
+        .sidebar-nav { flex: 1; overflow-y: auto; padding: 20px 0; }
+        .nav-item { display: flex; align-items: center; padding: 12px 20px; color: rgba(255,255,255,0.7); text-decoration: none; gap: 12px; font-size: 15px; }
+        .nav-item.active { background-color: rgba(255,255,255,0.1); color: white; border-left: 3px solid var(--primary); }
+        
+        .main-wrapper { flex: 1; margin-left: var(--sidebar-width); display: flex; flex-direction: column; height: 100vh; }
+        .header { height: var(--header-height); background-color: var(--surface); border-bottom: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; padding: 0 24px; flex-shrink: 0; }
+        .breadcrumb { font-weight: 600; font-size: 18px; }
+        .header-actions { display: flex; gap: 12px; }
+        
+        .btn-primary { background-color: var(--primary); color: white; border: none; padding: 8px 16px; border-radius: 6px; font-size: 14px; font-weight: 500; cursor: pointer; display: inline-flex; align-items: center; gap: 6px;}
+        .btn-primary:hover { background-color: var(--primary-dark); }
+        
+        .view-toggles { display: flex; border: 1px solid var(--border); border-radius: 6px; overflow: hidden; }
+        .view-toggle { background: white; border: none; padding: 6px 12px; cursor: pointer; color: var(--text-secondary); display: flex; align-items: center; justify-content: center; }
+        .view-toggle.active { background: #E5E7EB; color: var(--text-primary); }
+
+        .content-area { flex: 1; display: flex; overflow: hidden; }
+        .media-main { flex: 1; padding: 24px; overflow-y: auto; display: flex; flex-direction: column; }
+        
+        /* Upload Area */
+        .upload-area { border: 2px dashed var(--border); border-radius: 8px; padding: 40px; text-align: center; background: var(--surface); margin-bottom: 24px; flex-shrink: 0; }
+        .upload-area .material-icons-outlined { font-size: 48px; color: var(--text-secondary); margin-bottom: 16px; }
+        .upload-area h3 { font-size: 18px; margin-bottom: 8px; }
+        .upload-area p { color: var(--text-secondary); font-size: 14px; margin-bottom: 16px; }
+
+        /* Media Grid */
+        .media-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 16px; }
+        .media-item { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; overflow: hidden; cursor: pointer; position: relative; }
+        .media-item:hover { border-color: #9CA3AF; }
+        .media-item.selected { border-color: var(--primary); box-shadow: 0 0 0 2px var(--primary); }
+        .media-item.selected::after { content: 'check_circle'; font-family: 'Material Icons Outlined'; position: absolute; top: 8px; right: 8px; color: var(--primary); background: white; border-radius: 50%; font-size: 20px; line-height: 20px;}
+        
+        .media-thumb { aspect-ratio: 1; background-color: #E5E7EB; display: flex; align-items: center; justify-content: center; font-size: 48px; color: #9CA3AF; }
+        /* Simulated images using gradients for wireframe */
+        .img-1 { background: linear-gradient(45deg, #f3ec78, #af4261); }
+        .img-2 { background: linear-gradient(45deg, #2193b0, #6dd5ed); }
+        .img-3 { background: linear-gradient(45deg, #cc2b5e, #753a88); }
+        .img-4 { background: linear-gradient(45deg, #ee9ca7, #ffdde1); }
+        .img-5 { background: linear-gradient(45deg, #42275a, #734b6d); }
+        .img-6 { background: linear-gradient(45deg, #bdc3c7, #2c3e50); }
+        .img-7 { background: linear-gradient(45deg, #de6262, #ffb88c); }
+        .img-8 { background: linear-gradient(45deg, #06beb6, #48b1bf); }
+        .img-9 { background: linear-gradient(45deg, #eb3349, #f45c43); }
+        .img-10 { background: linear-gradient(45deg, #56ab2f, #a8e063); }
+        .img-11 { background: linear-gradient(45deg, #614385, #516395); }
+        .img-12 { background: linear-gradient(45deg, #e65c00, #F9D423); }
+
+        .media-info { padding: 10px; border-top: 1px solid var(--border); }
+        .media-filename { font-size: 13px; font-weight: 500; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin-bottom: 2px; }
+        .media-meta { font-size: 11px; color: var(--text-secondary); }
+
+        /* Detail Sidebar */
+        .media-detail { width: 320px; background: var(--surface); border-left: 1px solid var(--border); padding: 20px; overflow-y: auto; flex-shrink: 0; }
+        .detail-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+        .detail-header h3 { font-size: 16px; font-weight: 600; }
+        .close-btn { background: none; border: none; cursor: pointer; color: var(--text-secondary); }
+        
+        .detail-preview { width: 100%; aspect-ratio: 1; background: linear-gradient(45deg, #f3ec78, #af4261); border-radius: 8px; margin-bottom: 20px; }
+        
+        .detail-meta { font-size: 13px; color: var(--text-secondary); margin-bottom: 20px; line-height: 1.5; }
+        .detail-meta b { color: var(--text-primary); }
+        
+        .form-group { margin-bottom: 16px; }
+        .form-label { display: block; font-weight: 500; margin-bottom: 6px; font-size: 13px; }
+        .form-input { width: 100%; padding: 8px; border: 1px solid var(--border); border-radius: 4px; font-size: 13px; }
+        .form-textarea { width: 100%; padding: 8px; border: 1px solid var(--border); border-radius: 4px; font-size: 13px; min-height: 60px; resize: vertical; }
+
+        .detail-actions { margin-top: 24px; padding-top: 16px; border-top: 1px solid var(--border); display: flex; flex-direction: column; gap: 10px; }
+        .btn-outline { border: 1px solid var(--border); background: white; padding: 8px; border-radius: 4px; font-size: 13px; font-weight: 500; cursor: pointer; text-align: center; }
+        .btn-danger-link { color: var(--danger); text-decoration: none; font-size: 13px; cursor: pointer; font-weight: 500; }
+        .btn-danger-link:hover { text-decoration: underline; }
+
+    </style>
+</head>
+<body>
+    <aside class="sidebar">
+        <div class="sidebar-header"><a href="#" class="sidebar-logo"><span class="material-icons-outlined">hub</span> NextCMS</a></div>
+        <nav class="sidebar-nav">
+            <a href="dashboard.html" class="nav-item"><span class="material-icons-outlined">dashboard</span> Dashboard</a>
+            <a href="post-list.html" class="nav-item"><span class="material-icons-outlined">article</span> Posts</a>
+            <a href="#" class="nav-item"><span class="material-icons-outlined">description</span> Pages</a>
+            <a href="media-library.html" class="nav-item active"><span class="material-icons-outlined">perm_media</span> Media</a>
+            <!-- other links -->
+        </nav>
+    </aside>
+
+    <div class="main-wrapper">
+        <header class="header">
+            <div class="breadcrumb">Media Library</div>
+            <div class="header-actions">
+                <button class="btn-primary"><span class="material-icons-outlined" style="font-size: 18px;">upload</span> Upload New</button>
+                <div class="view-toggles">
+                    <button class="view-toggle active"><span class="material-icons-outlined">grid_view</span></button>
+                    <button class="view-toggle"><span class="material-icons-outlined">view_list</span></button>
+                </div>
+            </div>
+        </header>
+
+        <div class="content-area">
+            
+            <main class="media-main">
+                <div class="upload-area">
+                    <span class="material-icons-outlined">cloud_upload</span>
+                    <h3>Drop files here or click to upload</h3>
+                    <p>Maximum upload file size: 10 MB.</p>
+                    <button class="btn-primary" style="margin:0 auto;">Select Files</button>
+                </div>
+
+                <div class="media-grid">
+                    <!-- Item 1 (Selected) -->
+                    <div class="media-item selected">
+                        <div class="media-thumb img-1"></div>
+                        <div class="media-info">
+                            <div class="media-filename">hero-banner.jpg</div>
+                            <div class="media-meta">245 KB</div>
+                        </div>
+                    </div>
+                    <!-- Item 2 -->
+                    <div class="media-item">
+                        <div class="media-thumb img-2"></div>
+                        <div class="media-info">
+                            <div class="media-filename">logo-transparent.png</div>
+                            <div class="media-meta">45 KB</div>
+                        </div>
+                    </div>
+                    <!-- Item 3 -->
+                    <div class="media-item">
+                        <div class="media-thumb img-3"></div>
+                        <div class="media-info">
+                            <div class="media-filename">team-photo-2026.jpg</div>
+                            <div class="media-meta">1.2 MB</div>
+                        </div>
+                    </div>
+                    <!-- Item 4 -->
+                    <div class="media-item">
+                        <div class="media-thumb img-4"></div>
+                        <div class="media-info">
+                            <div class="media-filename">product-showcase.webp</div>
+                            <div class="media-meta">120 KB</div>
+                        </div>
+                    </div>
+                    <!-- Item 5 -->
+                    <div class="media-item">
+                        <div class="media-thumb img-5"></div>
+                        <div class="media-info">
+                            <div class="media-filename">background-pattern.svg</div>
+                            <div class="media-meta">12 KB</div>
+                        </div>
+                    </div>
+                    <!-- Item 6 -->
+                    <div class="media-item">
+                        <div class="media-thumb img-6"></div>
+                        <div class="media-info">
+                            <div class="media-filename">office-interior.jpg</div>
+                            <div class="media-meta">850 KB</div>
+                        </div>
+                    </div>
+                    <!-- Additional Items -->
+                    <div class="media-item"><div class="media-thumb img-7"></div><div class="media-info"><div class="media-filename">chart-data.png</div><div class="media-meta">64 KB</div></div></div>
+                    <div class="media-item"><div class="media-thumb img-8"></div><div class="media-info"><div class="media-filename">avatar-jdoe.jpg</div><div class="media-meta">32 KB</div></div></div>
+                    <div class="media-item"><div class="media-thumb img-9"></div><div class="media-info"><div class="media-filename">blog-cover-1.jpg</div><div class="media-meta">310 KB</div></div></div>
+                    <div class="media-item"><div class="media-thumb img-10"></div><div class="media-info"><div class="media-filename">icon-set.svg</div><div class="media-meta">8 KB</div></div></div>
+                    <div class="media-item"><div class="media-thumb img-11"></div><div class="media-info"><div class="media-filename">presentation.pdf</div><div class="media-meta">2.4 MB</div></div></div>
+                    <div class="media-item"><div class="media-thumb img-12"></div><div class="media-info"><div class="media-filename">promo-banner.jpg</div><div class="media-meta">420 KB</div></div></div>
+                </div>
+            </main>
+
+            <!-- Detail Panel (Shows when an item is selected) -->
+            <aside class="media-detail">
+                <div class="detail-header">
+                    <h3>Attachment Details</h3>
+                    <button class="close-btn"><span class="material-icons-outlined">close</span></button>
+                </div>
+                
+                <div class="detail-preview img-1"></div>
+                
+                <div class="detail-meta">
+                    <b>hero-banner.jpg</b><br>
+                    Jul 11, 2026<br>
+                    245 KB<br>
+                    1920 by 1080 pixels<br>
+                    Uploaded by: Admin User
+                </div>
+
+                <form>
+                    <div class="form-group">
+                        <label class="form-label">Alt Text</label>
+                        <input type="text" class="form-input" value="Colorful abstract gradient background">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Title</label>
+                        <input type="text" class="form-input" value="Hero Banner">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Caption</label>
+                        <textarea class="form-textarea"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">File URL</label>
+                        <input type="text" class="form-input" value="http://localhost:3000/uploads/hero-banner.jpg" readonly style="background:#F9FAFB;">
+                    </div>
+                </form>
+
+                <div class="detail-actions">
+                    <button class="btn-outline">Copy URL to clipboard</button>
+                    <a class="btn-danger-link">Delete Permanently</a>
+                </div>
+            </aside>
+
+        </div>
+    </div>
+</body>
+</html>

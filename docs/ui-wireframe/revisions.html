@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Revisions - NextCMS</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #00704A; --primary-dark: #1E3932; --bg: #F3F4F6;
+            --surface: #FFFFFF; --text-primary: #111827; --text-secondary: #6B7280;
+            --border: #E5E7EB; --diff-add: #D1FAE5; --diff-add-text: #065F46;
+            --diff-rem: #FEE2E2; --diff-rem-text: #991B1B;
+            --sidebar-width: 260px; --header-height: 64px;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
+        body { background-color: var(--bg); color: var(--text-primary); display: flex; min-height: 100vh; }
+        
+        .sidebar { width: var(--sidebar-width); background-color: var(--primary-dark); color: white; position: fixed; top: 0; bottom: 0; left: 0; display: flex; flex-direction: column; z-index: 40; }
+        .sidebar-header { height: var(--header-height); display: flex; align-items: center; padding: 0 20px; border-bottom: 1px solid rgba(255,255,255,0.1); }
+        .sidebar-logo { display: flex; align-items: center; gap: 12px; color: white; text-decoration: none; font-size: 20px; font-weight: 700; }
+        .sidebar-logo .material-icons-outlined { color: var(--primary); }
+        .sidebar-nav { flex: 1; overflow-y: auto; padding: 20px 0; }
+        .nav-item { display: flex; align-items: center; padding: 12px 20px; color: rgba(255,255,255,0.7); text-decoration: none; gap: 12px; font-size: 15px; }
+        
+        .main-wrapper { flex: 1; margin-left: var(--sidebar-width); display: flex; flex-direction: column; }
+        .header { height: var(--header-height); background-color: var(--surface); border-bottom: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; padding: 0 24px; }
+        .breadcrumb { font-weight: 600; font-size: 18px; display: flex; align-items: center; gap: 8px;}
+        .breadcrumb span { color: var(--text-secondary); font-weight: 400; font-size: 14px;}
+        .back-link { color: var(--primary); text-decoration: none; font-size: 14px; font-weight: 500; display: flex; align-items: center; gap: 4px;}
+        
+        .main-content { padding: 24px; flex: 1; display: flex; gap: 24px; height: calc(100vh - var(--header-height)); }
+
+        .card { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; box-shadow: 0 1px 2px rgba(0,0,0,0.05); display: flex; flex-direction: column; }
+        
+        /* Left Panel (Timeline) */
+        .timeline-panel { width: 320px; flex-shrink: 0; overflow-y: auto; }
+        .timeline-header { padding: 16px; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; background: var(--surface); z-index: 10;}
+        .btn-restore { background-color: var(--primary); color: white; border: none; padding: 8px 12px; border-radius: 6px; font-size: 13px; font-weight: 500; cursor: pointer; width: 100%;}
+        
+        .rev-list { padding: 16px; }
+        .rev-item { padding: 12px; border: 1px solid var(--border); border-radius: 6px; margin-bottom: 12px; cursor: pointer; display: flex; gap: 12px; transition: border-color 0.2s;}
+        .rev-item:hover { border-color: #9CA3AF; }
+        .rev-item.active { border-color: var(--primary); background-color: #F0FDF4; box-shadow: inset 3px 0 0 var(--primary); }
+        
+        .rev-avatar { width: 32px; height: 32px; border-radius: 50%; background: #E5E7EB; display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 600;}
+        .rev-info { flex: 1; }
+        .rev-meta { font-size: 12px; color: var(--text-secondary); margin-bottom: 4px; display: flex; justify-content: space-between;}
+        .rev-author { font-weight: 600; color: var(--text-primary); font-size: 14px; }
+        .rev-badge { background: #E5E7EB; padding: 2px 6px; border-radius: 4px; font-size: 10px; font-weight: 600; }
+        .rev-item.active .rev-badge { background: var(--primary); color: white; }
+
+        /* Right Panel (Diff View) */
+        .diff-panel { flex: 1; overflow-y: auto; }
+        .diff-header { padding: 16px 24px; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; background: var(--surface); z-index: 10;}
+        .diff-title { font-weight: 600; font-size: 16px; display: flex; align-items: center; gap: 8px;}
+        
+        .diff-body { padding: 24px; }
+        
+        .diff-section { margin-bottom: 32px; }
+        .diff-label { font-size: 12px; font-weight: 600; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 8px; }
+        
+        .diff-content { font-family: monospace; font-size: 14px; line-height: 1.6; border: 1px solid var(--border); border-radius: 6px; padding: 16px; background: white; white-space: pre-wrap; }
+        
+        .diff-removed { background-color: var(--diff-rem); color: var(--diff-rem-text); text-decoration: line-through; padding: 0 4px; border-radius: 2px; }
+        .diff-added { background-color: var(--diff-add); color: var(--diff-add-text); padding: 0 4px; border-radius: 2px; }
+
+        .diff-line { display: flex; margin-bottom: 4px; }
+        .diff-line.removed { background-color: #FEF2F2; }
+        .diff-line.added { background-color: #F0FDF4; }
+        .diff-line-marker { width: 24px; text-align: center; font-weight: bold; color: var(--text-secondary); user-select: none; }
+        .diff-line.removed .diff-line-marker { color: var(--diff-rem-text); }
+        .diff-line.added .diff-line-marker { color: var(--diff-add-text); }
+
+    </style>
+</head>
+<body>
+    <aside class="sidebar">
+        <div class="sidebar-header"><a href="#" class="sidebar-logo"><span class="material-icons-outlined">hub</span> NextCMS</a></div>
+        <nav class="sidebar-nav">
+            <a href="dashboard.html" class="nav-item"><span class="material-icons-outlined">dashboard</span> Dashboard</a>
+            <a href="post-list.html" class="nav-item active"><span class="material-icons-outlined">article</span> Posts</a>
+            <!-- other links -->
+        </nav>
+    </aside>
+
+    <div class="main-wrapper">
+        <header class="header">
+            <div class="breadcrumb">
+                Revisions <span>/</span> Hello World
+            </div>
+            <a href="post-editor.html" class="back-link">
+                <span class="material-icons-outlined" style="font-size: 18px;">arrow_back</span>
+                Return to editor
+            </a>
+        </header>
+
+        <main class="main-content">
+            
+            <!-- Timeline Panel -->
+            <div class="card timeline-panel">
+                <div class="timeline-header">
+                    <button class="btn-restore">Restore This Revision</button>
+                </div>
+                <div class="rev-list">
+                    
+                    <div class="rev-item">
+                        <div class="rev-avatar" style="background:#3B82F6;color:white;">J</div>
+                        <div class="rev-info">
+                            <div class="rev-meta"><span>Jul 11, 2026 @ 14:30</span> <span class="rev-badge">Current</span></div>
+                            <div class="rev-author">Jane Doe</div>
+                        </div>
+                    </div>
+
+                    <div class="rev-item active">
+                        <div class="rev-avatar">A</div>
+                        <div class="rev-info">
+                            <div class="rev-meta"><span>Jul 10, 2026 @ 09:15</span> <span class="rev-badge">Rev 4</span></div>
+                            <div class="rev-author">Admin User</div>
+                        </div>
+                    </div>
+
+                    <div class="rev-item">
+                        <div class="rev-avatar">A</div>
+                        <div class="rev-info">
+                            <div class="rev-meta"><span>Jul 09, 2026 @ 16:45</span> <span class="rev-badge">Rev 3</span></div>
+                            <div class="rev-author">Admin User</div>
+                        </div>
+                    </div>
+
+                    <div class="rev-item">
+                        <div class="rev-avatar" style="background:#8B5CF6;color:white;">M</div>
+                        <div class="rev-info">
+                            <div class="rev-meta"><span>Jul 09, 2026 @ 10:20</span> <span class="rev-badge">Rev 2</span></div>
+                            <div class="rev-author">Mark Smith</div>
+                        </div>
+                    </div>
+
+                    <div class="rev-item">
+                        <div class="rev-avatar">A</div>
+                        <div class="rev-info">
+                            <div class="rev-meta"><span>Jul 08, 2026 @ 11:00</span> <span class="rev-badge">Original</span></div>
+                            <div class="rev-author">Admin User</div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- Diff Panel -->
+            <div class="card diff-panel">
+                <div class="diff-header">
+                    <div class="diff-title">
+                        Comparing Revision 4 (Admin) with Current (Jane)
+                    </div>
+                </div>
+                
+                <div class="diff-body">
+                    
+                    <div class="diff-section">
+                        <div class="diff-label">Title</div>
+                        <div class="diff-content" style="font-family: 'Inter', sans-serif; font-size: 24px; font-weight: 600;">
+                            <span class="diff-removed">Hello World</span>
+                            <span class="diff-added">Hello World: Welcome to NextCMS</span>
+                        </div>
+                    </div>
+
+                    <div class="diff-section">
+                        <div class="diff-label">Content</div>
+                        <div class="diff-content">
+<div class="diff-line"><div class="diff-line-marker"> </div><p>Welcome to NextCMS. This is your first post.</p></div>
+<div class="diff-line removed"><div class="diff-line-marker">-</div><p>Edit or delete it, then start writing!</p></div>
+<div class="diff-line added"><div class="diff-line-marker">+</div><p>Edit or delete it, then start creating amazing content with our rich text editor!</p></div>
+<div class="diff-line added"><div class="diff-line-marker">+</div></div>
+<div class="diff-line added"><div class="diff-line-marker">+</div><h2>Features included:</h2></div>
+<div class="diff-line added"><div class="diff-line-marker">+</div><ul></div>
+<div class="diff-line added"><div class="diff-line-marker">+</div>  <li>Fast performance</li></div>
+<div class="diff-line added"><div class="diff-line-marker">+</div>  <li>SEO optimized</li></div>
+<div class="diff-line added"><div class="diff-line-marker">+</div></ul></div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </main>
+    </div>
+</body>
+</html>

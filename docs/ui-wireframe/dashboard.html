@@ -1,0 +1,715 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - NextCMS</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #00704A;
+            --primary-dark: #1E3932;
+            --primary-light: #D4E9E2;
+            --accent: #CBA258;
+            --bg: #F3F4F6;
+            --surface: #FFFFFF;
+            --text-primary: #111827;
+            --text-secondary: #6B7280;
+            --border: #E5E7EB;
+            --danger: #DC2626;
+            --success: #10B981;
+            --info: #3B82F6;
+            
+            --sidebar-width: 260px;
+            --header-height: 64px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg);
+            color: var(--text-primary);
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* --- SIDEBAR --- */
+        .sidebar {
+            width: var(--sidebar-width);
+            background-color: var(--primary-dark);
+            color: white;
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            display: flex;
+            flex-direction: column;
+            z-index: 40;
+        }
+
+        .sidebar-header {
+            height: var(--header-height);
+            display: flex;
+            align-items: center;
+            padding: 0 20px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .sidebar-logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: white;
+            text-decoration: none;
+            font-size: 20px;
+            font-weight: 700;
+        }
+        
+        .sidebar-logo .material-icons-outlined {
+            color: var(--primary);
+        }
+
+        .sidebar-nav {
+            flex: 1;
+            overflow-y: auto;
+            padding: 20px 0;
+        }
+
+        .nav-item {
+            display: flex;
+            align-items: center;
+            padding: 12px 20px;
+            color: rgba(255,255,255,0.7);
+            text-decoration: none;
+            transition: all 0.2s;
+            gap: 12px;
+            border-left: 3px solid transparent;
+            font-size: 15px;
+        }
+
+        .nav-item:hover {
+            background-color: rgba(255,255,255,0.05);
+            color: white;
+        }
+
+        .nav-item.active {
+            background-color: rgba(255,255,255,0.1);
+            color: white;
+            border-left-color: var(--primary);
+        }
+
+        .nav-item .material-icons-outlined {
+            font-size: 20px;
+        }
+
+        .nav-item .expand-icon {
+            margin-left: auto;
+            font-size: 16px;
+        }
+
+        .sub-menu {
+            background-color: rgba(0,0,0,0.2);
+            padding: 4px 0;
+            display: none; /* Hidden by default in simple HTML */
+        }
+        .nav-item-parent.open + .sub-menu {
+            display: block;
+        }
+
+        .sub-item {
+            display: block;
+            padding: 10px 20px 10px 52px;
+            color: rgba(255,255,255,0.6);
+            text-decoration: none;
+            font-size: 14px;
+        }
+        .sub-item:hover, .sub-item.active {
+            color: white;
+        }
+
+        .sidebar-user {
+            padding: 20px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .avatar {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background-color: var(--primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            color: white;
+        }
+
+        .user-info {
+            flex: 1;
+        }
+        .user-name { font-size: 14px; font-weight: 600; }
+        .user-role { font-size: 12px; color: rgba(255,255,255,0.5); }
+
+        /* --- MAIN LAYOUT --- */
+        .main-wrapper {
+            flex: 1;
+            margin-left: var(--sidebar-width);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .header {
+            height: var(--header-height);
+            background-color: var(--surface);
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 24px;
+            position: sticky;
+            top: 0;
+            z-index: 30;
+        }
+
+        .breadcrumb {
+            font-weight: 600;
+            font-size: 18px;
+        }
+
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .search-box {
+            position: relative;
+        }
+        .search-box input {
+            padding: 8px 12px 8px 36px;
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            font-size: 14px;
+            width: 240px;
+            background-color: var(--bg);
+        }
+        .search-box .material-icons-outlined {
+            position: absolute;
+            left: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-secondary);
+            font-size: 18px;
+        }
+
+        .icon-btn {
+            background: none;
+            border: none;
+            color: var(--text-secondary);
+            cursor: pointer;
+            position: relative;
+            display: flex;
+        }
+        .icon-btn:hover { color: var(--primary); }
+        .badge {
+            position: absolute;
+            top: -4px;
+            right: -4px;
+            background-color: var(--danger);
+            color: white;
+            font-size: 10px;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+
+        .btn-outline {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding: 8px 16px;
+            border: 1px solid var(--border);
+            background: white;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--text-primary);
+            cursor: pointer;
+            text-decoration: none;
+        }
+        .btn-outline:hover { background-color: var(--bg); }
+        .btn-outline .material-icons-outlined { font-size: 16px; }
+
+        .btn-primary {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+        }
+        .btn-primary:hover { background-color: var(--primary-dark); }
+
+        .main-content {
+            padding: 24px;
+            flex: 1;
+        }
+
+        /* --- DASHBOARD COMPONENTS --- */
+        .welcome-banner {
+            margin-bottom: 24px;
+        }
+        .welcome-banner h1 {
+            font-size: 24px;
+            margin-bottom: 4px;
+        }
+        .welcome-banner p {
+            color: var(--text-secondary);
+            font-size: 14px;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            margin-bottom: 24px;
+        }
+
+        .stat-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+        }
+
+        .stat-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .stat-icon .material-icons-outlined { font-size: 24px; }
+        
+        .stat-info flex { flex: 1; }
+        .stat-label { color: var(--text-secondary); font-size: 13px; font-weight: 500; margin-bottom: 4px; }
+        .stat-value { font-size: 24px; font-weight: 700; color: var(--text-primary); }
+        .stat-trend { font-size: 12px; font-weight: 500; display: flex; align-items: center; gap: 4px; margin-top: 4px;}
+        .trend-up { color: var(--success); }
+
+        /* Icon Colors */
+        .icon-blue { background-color: #EFF6FF; color: #3B82F6; }
+        .icon-green { background-color: #F0FDF4; color: #10B981; }
+        .icon-purple { background-color: #FAF5FF; color: #A855F7; }
+        .icon-orange { background-color: #FFF7ED; color: #F97316; }
+
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: 3fr 2fr;
+            gap: 24px;
+        }
+
+        .card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+            overflow: hidden;
+            margin-bottom: 24px;
+        }
+
+        .card-header {
+            padding: 16px 20px;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .card-header h2 { font-size: 16px; font-weight: 600; }
+
+        .card-body {
+            padding: 20px;
+        }
+
+        /* Table */
+        .table { width: 100%; border-collapse: collapse; }
+        .table th, .table td {
+            padding: 12px 20px;
+            text-align: left;
+            border-bottom: 1px solid var(--border);
+            font-size: 14px;
+        }
+        .table th { color: var(--text-secondary); font-weight: 500; }
+        .table tr:last-child td { border-bottom: none; }
+        
+        .status-badge {
+            padding: 4px 8px;
+            border-radius: 999px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+        .status-published { background-color: #D1FAE5; color: #065F46; }
+        .status-draft { background-color: #F3F4F6; color: #374151; }
+
+        /* Chart mock */
+        .chart-mock {
+            height: 200px;
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-between;
+            gap: 10px;
+            padding-top: 20px;
+        }
+        .chart-bar-wrapper {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+        }
+        .chart-bar {
+            width: 100%;
+            background-color: var(--primary-light);
+            border-radius: 4px 4px 0 0;
+            transition: background-color 0.2s;
+        }
+        .chart-bar:hover { background-color: var(--primary); }
+        .chart-label { font-size: 12px; color: var(--text-secondary); }
+
+        /* Quick Draft */
+        .form-control {
+            width: 100%;
+            padding: 10px 12px;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            margin-bottom: 16px;
+            font-size: 14px;
+        }
+        .form-control:focus { outline: none; border-color: var(--primary); }
+        textarea.form-control { resize: vertical; min-height: 100px; }
+
+        /* Timeline */
+        .timeline { position: relative; padding-left: 20px; }
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 5px;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background-color: var(--border);
+        }
+        .timeline-item {
+            position: relative;
+            margin-bottom: 20px;
+            padding-left: 15px;
+        }
+        .timeline-item:last-child { margin-bottom: 0; }
+        .timeline-icon {
+            position: absolute;
+            left: -20px;
+            top: 2px;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background-color: var(--surface);
+            border: 2px solid var(--primary);
+        }
+        .timeline-content { font-size: 14px; }
+        .timeline-time { display: block; font-size: 12px; color: var(--text-secondary); margin-top: 4px; }
+
+    </style>
+</head>
+<body>
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <a href="#" class="sidebar-logo">
+                <span class="material-icons-outlined">hub</span>
+                NextCMS
+            </a>
+        </div>
+        <nav class="sidebar-nav">
+            <a href="dashboard.html" class="nav-item active">
+                <span class="material-icons-outlined">dashboard</span>
+                Dashboard
+            </a>
+            
+            <a href="#" class="nav-item nav-item-parent">
+                <span class="material-icons-outlined">article</span>
+                Posts
+                <span class="material-icons-outlined expand-icon">expand_more</span>
+            </a>
+            <!-- Submenu normally hidden, shown for wireframe context -->
+            
+            <a href="#" class="nav-item">
+                <span class="material-icons-outlined">description</span>
+                Pages
+                <span class="material-icons-outlined expand-icon">chevron_right</span>
+            </a>
+            
+            <a href="#" class="nav-item">
+                <span class="material-icons-outlined">folder</span>
+                Categories
+            </a>
+            
+            <a href="#" class="nav-item">
+                <span class="material-icons-outlined">local_offer</span>
+                Tags
+            </a>
+            
+            <a href="#" class="nav-item">
+                <span class="material-icons-outlined">perm_media</span>
+                Media
+            </a>
+            
+            <a href="#" class="nav-item">
+                <span class="material-icons-outlined">menu</span>
+                Menus
+            </a>
+            
+            <a href="#" class="nav-item">
+                <span class="material-icons-outlined">group</span>
+                Users
+            </a>
+            
+            <a href="#" class="nav-item">
+                <span class="material-icons-outlined">palette</span>
+                Appearance
+            </a>
+            
+            <a href="#" class="nav-item">
+                <span class="material-icons-outlined">settings</span>
+                Settings
+                <span class="material-icons-outlined expand-icon">chevron_right</span>
+            </a>
+        </nav>
+        
+        <div class="sidebar-user">
+            <div class="avatar">A</div>
+            <div class="user-info">
+                <div class="user-name">Admin User</div>
+                <div class="user-role">Administrator</div>
+            </div>
+        </div>
+    </aside>
+
+    <!-- MAIN CONTENT -->
+    <div class="main-wrapper">
+        <header class="header">
+            <div class="breadcrumb">Dashboard</div>
+            
+            <div class="header-actions">
+                <div class="search-box">
+                    <span class="material-icons-outlined">search</span>
+                    <input type="text" placeholder="Search anything...">
+                </div>
+                
+                <a href="#" class="btn-outline">
+                    <span class="material-icons-outlined">open_in_new</span>
+                    Visit Site
+                </a>
+                
+                <button class="icon-btn">
+                    <span class="material-icons-outlined">notifications</span>
+                    <span class="badge">3</span>
+                </button>
+            </div>
+        </header>
+
+        <main class="main-content">
+            <div class="welcome-banner">
+                <h1>Welcome back, Admin!</h1>
+                <p>Here's what's happening with your site today.</p>
+            </div>
+
+            <!-- STATS -->
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-icon icon-blue">
+                        <span class="material-icons-outlined">article</span>
+                    </div>
+                    <div class="stat-info">
+                        <div class="stat-label">Total Posts</div>
+                        <div class="stat-value">24</div>
+                        <div class="stat-trend trend-up">
+                            <span class="material-icons-outlined" style="font-size: 14px;">trending_up</span> +12%
+                        </div>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon icon-green">
+                        <span class="material-icons-outlined">description</span>
+                    </div>
+                    <div class="stat-info">
+                        <div class="stat-label">Total Pages</div>
+                        <div class="stat-value">8</div>
+                        <div class="stat-trend trend-up">
+                            <span class="material-icons-outlined" style="font-size: 14px;">trending_up</span> +2%
+                        </div>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon icon-purple">
+                        <span class="material-icons-outlined">perm_media</span>
+                    </div>
+                    <div class="stat-info">
+                        <div class="stat-label">Media Files</div>
+                        <div class="stat-value">156</div>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon icon-orange">
+                        <span class="material-icons-outlined">group</span>
+                    </div>
+                    <div class="stat-info">
+                        <div class="stat-label">Registered Users</div>
+                        <div class="stat-value">5</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 2-COL GRID -->
+            <div class="dashboard-grid">
+                <!-- LEFT COL -->
+                <div class="col-left">
+                    <div class="card">
+                        <div class="card-header">
+                            <h2>Recent Posts</h2>
+                        </div>
+                        <div class="card-body" style="padding: 0;">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>Title</th>
+                                        <th>Status</th>
+                                        <th>Author</th>
+                                        <th>Date</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td style="font-weight: 500;">Hello World</td>
+                                        <td><span class="status-badge status-published">Published</span></td>
+                                        <td>Admin User</td>
+                                        <td>Today</td>
+                                    </tr>
+                                    <tr>
+                                        <td style="font-weight: 500;">Getting Started with NextCMS</td>
+                                        <td><span class="status-badge status-published">Published</span></td>
+                                        <td>Admin User</td>
+                                        <td>Yesterday</td>
+                                    </tr>
+                                    <tr>
+                                        <td style="font-weight: 500;">Top 10 Web Design Trends 2026</td>
+                                        <td><span class="status-badge status-draft">Draft</span></td>
+                                        <td>Jane Doe</td>
+                                        <td>Jul 09</td>
+                                    </tr>
+                                    <tr>
+                                        <td style="font-weight: 500;">How to use Prisma ORM</td>
+                                        <td><span class="status-badge status-published">Published</span></td>
+                                        <td>Admin User</td>
+                                        <td>Jul 05</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-header">
+                            <h2>Content Overview (Posts per Month)</h2>
+                        </div>
+                        <div class="card-body">
+                            <div class="chart-mock">
+                                <div class="chart-bar-wrapper"><div class="chart-bar" style="height: 30%"></div><div class="chart-label">Feb</div></div>
+                                <div class="chart-bar-wrapper"><div class="chart-bar" style="height: 50%"></div><div class="chart-label">Mar</div></div>
+                                <div class="chart-bar-wrapper"><div class="chart-bar" style="height: 20%"></div><div class="chart-label">Apr</div></div>
+                                <div class="chart-bar-wrapper"><div class="chart-bar" style="height: 80%"></div><div class="chart-label">May</div></div>
+                                <div class="chart-bar-wrapper"><div class="chart-bar" style="height: 60%"></div><div class="chart-label">Jun</div></div>
+                                <div class="chart-bar-wrapper"><div class="chart-bar" style="height: 100%; background-color: var(--primary);"></div><div class="chart-label">Jul</div></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- RIGHT COL -->
+                <div class="col-right">
+                    <div class="card">
+                        <div class="card-header">
+                            <h2>Quick Draft</h2>
+                        </div>
+                        <div class="card-body">
+                            <input type="text" class="form-control" placeholder="Title">
+                            <textarea class="form-control" placeholder="What's on your mind?"></textarea>
+                            <button class="btn-primary">Save Draft</button>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-header">
+                            <h2>Recent Activity</h2>
+                        </div>
+                        <div class="card-body">
+                            <div class="timeline">
+                                <div class="timeline-item">
+                                    <div class="timeline-icon"></div>
+                                    <div class="timeline-content">
+                                        <strong>Admin User</strong> published <a href="#" style="color: var(--primary);">Hello World</a>
+                                        <span class="timeline-time">2 hours ago</span>
+                                    </div>
+                                </div>
+                                <div class="timeline-item">
+                                    <div class="timeline-icon" style="border-color: var(--info);"></div>
+                                    <div class="timeline-content">
+                                        <strong>Jane Doe</strong> updated <a href="#" style="color: var(--primary);">About Page</a>
+                                        <span class="timeline-time">5 hours ago</span>
+                                    </div>
+                                </div>
+                                <div class="timeline-item">
+                                    <div class="timeline-icon" style="border-color: var(--success);"></div>
+                                    <div class="timeline-content">
+                                        <strong>Admin User</strong> uploaded 3 new media files
+                                        <span class="timeline-time">Yesterday</span>
+                                    </div>
+                                </div>
+                                <div class="timeline-item">
+                                    <div class="timeline-icon" style="border-color: var(--warning);"></div>
+                                    <div class="timeline-content">
+                                        <strong>John Smith</strong> registered as Subscriber
+                                        <span class="timeline-time">Jul 08, 2026</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </main>
+    </div>
+
+</body>
+</html>

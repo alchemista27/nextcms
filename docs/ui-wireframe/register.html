@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register - NextCMS</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #00704A;
+            --primary-dark: #1E3932;
+            --primary-light: #D4E9E2;
+            --bg: #F7F7F7;
+            --surface: #FFFFFF;
+            --text-primary: #1E3932;
+            --text-secondary: #6B7280;
+            --border: #E5E7EB;
+            --danger: #DC2626;
+            --warning: #F59E0B;
+            --success: #10B981;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, var(--primary-dark), var(--primary));
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .login-card {
+            background: var(--surface);
+            width: 100%;
+            max-width: 440px;
+            border-radius: 12px;
+            padding: 40px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+        }
+
+        .logo-area {
+            text-align: center;
+            margin-bottom: 24px;
+        }
+
+        .logo-icon {
+            color: var(--primary);
+            font-size: 40px;
+            margin-bottom: 10px;
+        }
+
+        .logo-text {
+            color: var(--primary-dark);
+            font-size: 24px;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+        }
+
+        .logo-subtitle {
+            color: var(--text-secondary);
+            font-size: 14px;
+            margin-top: 5px;
+        }
+
+        .form-group {
+            margin-bottom: 16px;
+            position: relative;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 8px;
+            color: var(--text-primary);
+            font-weight: 500;
+            font-size: 14px;
+        }
+
+        .input-wrapper {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .input-icon {
+            position: absolute;
+            left: 12px;
+            color: var(--text-secondary);
+            font-size: 20px;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 12px 12px 12px 40px;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            font-size: 15px;
+            color: var(--text-primary);
+            transition: all 0.2s ease;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px var(--primary-light);
+        }
+
+        .toggle-password {
+            position: absolute;
+            right: 12px;
+            color: var(--text-secondary);
+            font-size: 20px;
+            cursor: pointer;
+        }
+
+        .toggle-password:hover {
+            color: var(--primary);
+        }
+
+        /* Password Strength */
+        .password-strength {
+            margin-top: 8px;
+        }
+
+        .strength-bar-container {
+            display: flex;
+            gap: 4px;
+            height: 4px;
+            margin-bottom: 4px;
+        }
+
+        .strength-bar {
+            flex: 1;
+            height: 100%;
+            background-color: var(--border);
+            border-radius: 2px;
+            transition: background-color 0.3s ease;
+        }
+
+        .strength-text {
+            font-size: 12px;
+            color: var(--text-secondary);
+            text-align: right;
+        }
+
+        /* Classes for strength levels added via JS potentially, hardcoded for wireframe */
+        .strength-medium .bar-1, .strength-medium .bar-2 { background-color: var(--warning); }
+        .strength-medium .strength-text { color: var(--warning); }
+
+
+        .checkbox-wrapper {
+            display: flex;
+            align-items: flex-start;
+            gap: 8px;
+            color: var(--text-secondary);
+            cursor: pointer;
+            font-size: 14px;
+            margin-bottom: 24px;
+            margin-top: 20px;
+        }
+
+        .checkbox-input {
+            accent-color: var(--primary);
+            width: 16px;
+            height: 16px;
+            cursor: pointer;
+            margin-top: 2px;
+        }
+
+        .text-link {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .text-link:hover {
+            text-decoration: underline;
+        }
+
+        .btn-primary {
+            width: 100%;
+            padding: 12px;
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+        }
+
+        .btn-primary:hover {
+            background-color: var(--primary-dark);
+        }
+
+        .divider {
+            display: flex;
+            align-items: center;
+            text-align: center;
+            margin: 24px 0;
+            color: var(--text-secondary);
+            font-size: 14px;
+        }
+
+        .divider::before,
+        .divider::after {
+            content: '';
+            flex: 1;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .divider:not(:empty)::before {
+            margin-right: .25em;
+        }
+
+        .divider:not(:empty)::after {
+            margin-left: .25em;
+        }
+
+        .register-link {
+            text-align: center;
+            font-size: 14px;
+            color: var(--text-secondary);
+        }
+    </style>
+</head>
+<body>
+    <div class="login-card">
+        <div class="logo-area">
+            <span class="material-icons-outlined logo-icon">hub</span>
+            <div class="logo-text">NextCMS</div>
+            <div class="logo-subtitle">Create a new account</div>
+        </div>
+
+        <form action="#" method="POST">
+            <div class="form-group">
+                <label class="form-label" for="name">Full Name</label>
+                <div class="input-wrapper">
+                    <span class="material-icons-outlined input-icon">person</span>
+                    <input type="text" id="name" class="form-input" placeholder="John Doe" required>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label" for="email">Email Address</label>
+                <div class="input-wrapper">
+                    <span class="material-icons-outlined input-icon">email</span>
+                    <input type="email" id="email" class="form-input" placeholder="john@example.com" required>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label" for="password">Password</label>
+                <div class="input-wrapper">
+                    <span class="material-icons-outlined input-icon">lock</span>
+                    <input type="password" id="password" class="form-input" placeholder="••••••••" required value="p@ssword">
+                    <span class="material-icons-outlined toggle-password">visibility</span>
+                </div>
+                <!-- Password Strength Indicator (Wireframe state: Medium) -->
+                <div class="password-strength strength-medium">
+                    <div class="strength-bar-container">
+                        <div class="strength-bar bar-1"></div>
+                        <div class="strength-bar bar-2"></div>
+                        <div class="strength-bar bar-3"></div>
+                        <div class="strength-bar bar-4"></div>
+                    </div>
+                    <div class="strength-text">Medium</div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label" for="confirm-password">Confirm Password</label>
+                <div class="input-wrapper">
+                    <span class="material-icons-outlined input-icon">lock</span>
+                    <input type="password" id="confirm-password" class="form-input" placeholder="••••••••" required>
+                </div>
+            </div>
+
+            <label class="checkbox-wrapper">
+                <input type="checkbox" class="checkbox-input" required>
+                <span>I agree to the <a href="#" class="text-link">Terms of Service</a> and <a href="#" class="text-link">Privacy Policy</a></span>
+            </label>
+
+            <button type="submit" class="btn-primary">Create Account</button>
+
+            <div class="divider">or</div>
+
+            <div class="register-link">
+                Already have an account? <a href="login.html" class="text-link">Sign In</a>
+            </div>
+        </form>
+    </div>
+</body>
+</html>

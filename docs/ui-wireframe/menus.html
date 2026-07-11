@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Menus - NextCMS</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #00704A; --primary-dark: #1E3932; --bg: #F3F4F6;
+            --surface: #FFFFFF; --text-primary: #111827; --text-secondary: #6B7280;
+            --border: #E5E7EB; --danger: #DC2626; --sidebar-width: 260px; --header-height: 64px;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
+        body { background-color: var(--bg); color: var(--text-primary); display: flex; min-height: 100vh; }
+        
+        .sidebar { width: var(--sidebar-width); background-color: var(--primary-dark); color: white; position: fixed; top: 0; bottom: 0; left: 0; display: flex; flex-direction: column; z-index: 40; }
+        .sidebar-header { height: var(--header-height); display: flex; align-items: center; padding: 0 20px; border-bottom: 1px solid rgba(255,255,255,0.1); }
+        .sidebar-logo { display: flex; align-items: center; gap: 12px; color: white; text-decoration: none; font-size: 20px; font-weight: 700; }
+        .sidebar-logo .material-icons-outlined { color: var(--primary); }
+        .sidebar-nav { flex: 1; overflow-y: auto; padding: 20px 0; }
+        .nav-item { display: flex; align-items: center; padding: 12px 20px; color: rgba(255,255,255,0.7); text-decoration: none; gap: 12px; font-size: 15px; }
+        .nav-item.active { background-color: rgba(255,255,255,0.1); color: white; border-left: 3px solid var(--primary); }
+        
+        .main-wrapper { flex: 1; margin-left: var(--sidebar-width); display: flex; flex-direction: column; }
+        .header { height: var(--header-height); background-color: var(--surface); border-bottom: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; padding: 0 24px; }
+        .breadcrumb { font-weight: 600; font-size: 18px; }
+        
+        .main-content { padding: 24px; flex: 1; }
+
+        /* Menu Selector Top */
+        .menu-selector { background: var(--surface); padding: 16px 24px; border: 1px solid var(--border); border-radius: 8px; margin-bottom: 24px; display: flex; align-items: center; gap: 16px; }
+        .form-select { padding: 8px 12px; border: 1px solid var(--border); border-radius: 6px; font-size: 14px; background: white; min-width: 200px; }
+        .btn-outline { border: 1px solid var(--border); background: white; padding: 8px 16px; border-radius: 6px; font-size: 14px; font-weight: 500; cursor: pointer; color: var(--text-primary); }
+        .text-link { color: var(--primary); font-size: 14px; text-decoration: underline; cursor: pointer; }
+
+        .layout-grid { display: grid; grid-template-columns: 320px 1fr; gap: 24px; }
+
+        .card { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; box-shadow: 0 1px 2px rgba(0,0,0,0.05); }
+        .card-header { padding: 16px 20px; border-bottom: 1px solid var(--border); font-weight: 600; }
+        .card-body { padding: 20px; }
+
+        /* Accordion (Left side) */
+        .accordion-item { border: 1px solid var(--border); border-radius: 6px; margin-bottom: 12px; overflow: hidden;}
+        .accordion-header { padding: 12px 16px; background: #F9FAFB; display: flex; justify-content: space-between; align-items: center; cursor: pointer; font-weight: 500; font-size: 14px; }
+        .accordion-body { padding: 16px; border-top: 1px solid var(--border); }
+        
+        .checkbox-list { max-height: 150px; overflow-y: auto; margin-bottom: 12px; border: 1px solid var(--border); padding: 8px; border-radius: 4px; }
+        .checkbox-item { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; font-size: 14px; }
+        
+        .form-group { margin-bottom: 12px; }
+        .form-label { display: block; font-size: 13px; color: var(--text-secondary); margin-bottom: 4px; }
+        .form-input { width: 100%; padding: 6px 10px; border: 1px solid var(--border); border-radius: 4px; font-size: 13px; }
+
+        .btn-add { border: 1px solid var(--border); background: #F9FAFB; padding: 6px 12px; border-radius: 4px; font-size: 13px; cursor: pointer; }
+
+        /* Draggable Menu Structure (Right side) */
+        .menu-name-row { display: flex; align-items: center; gap: 16px; margin-bottom: 24px; }
+        .menu-name-row input { font-size: 16px; font-weight: 500; width: 300px; padding: 8px 12px; }
+        
+        .menu-structure { background: #F9FAFB; padding: 20px; border: 1px solid var(--border); border-radius: 6px; min-height: 300px; }
+        .menu-structure-title { font-weight: 600; margin-bottom: 8px; }
+        .menu-structure-hint { font-size: 13px; color: var(--text-secondary); margin-bottom: 16px; }
+
+        .menu-item-box { background: white; border: 1px solid var(--border); border-radius: 4px; margin-bottom: 8px; box-shadow: 0 1px 2px rgba(0,0,0,0.05); }
+        .menu-item-box.indented { margin-left: 30px; }
+        
+        .menu-item-header { display: flex; align-items: center; padding: 10px 12px; cursor: move; }
+        .drag-handle { color: #9CA3AF; margin-right: 12px; cursor: grab; }
+        .menu-item-title { font-weight: 500; font-size: 14px; flex: 1; }
+        .menu-item-type { font-size: 12px; color: var(--text-secondary); margin-right: 12px; }
+        .expand-btn { color: var(--text-secondary); cursor: pointer; }
+
+        /* Expanded State Mock */
+        .menu-item-expanded .menu-item-body { display: block; }
+        .menu-item-body { display: none; padding: 16px; border-top: 1px solid var(--border); background: #FAFAFA; }
+        
+        .menu-item-box:first-of-type .menu-item-body { display: block; } /* Mock the first one open */
+
+        .btn-primary { background-color: var(--primary); color: white; border: none; padding: 10px 20px; border-radius: 6px; font-size: 14px; font-weight: 500; cursor: pointer; }
+        .footer-actions { display: flex; justify-content: space-between; align-items: center; margin-top: 24px; padding-top: 16px; border-top: 1px solid var(--border); }
+        .text-danger { color: var(--danger); font-size: 14px; text-decoration: none; cursor: pointer; }
+        .text-danger:hover { text-decoration: underline; }
+
+    </style>
+</head>
+<body>
+    <aside class="sidebar">
+        <div class="sidebar-header"><a href="#" class="sidebar-logo"><span class="material-icons-outlined">hub</span> NextCMS</a></div>
+        <nav class="sidebar-nav">
+            <a href="dashboard.html" class="nav-item"><span class="material-icons-outlined">dashboard</span> Dashboard</a>
+            <a href="#" class="nav-item"><span class="material-icons-outlined">article</span> Posts</a>
+            <a href="#" class="nav-item"><span class="material-icons-outlined">description</span> Pages</a>
+            <a href="media-library.html" class="nav-item"><span class="material-icons-outlined">perm_media</span> Media</a>
+            <a href="menus.html" class="nav-item active"><span class="material-icons-outlined">menu</span> Menus</a>
+        </nav>
+    </aside>
+
+    <div class="main-wrapper">
+        <header class="header">
+            <div class="breadcrumb">Menus</div>
+        </header>
+
+        <main class="main-content">
+            
+            <div class="menu-selector">
+                <span style="font-size: 14px; font-weight: 500;">Select a menu to edit:</span>
+                <select class="form-select">
+                    <option>Primary Menu (Header)</option>
+                    <option>Footer Links</option>
+                </select>
+                <button class="btn-outline">Select</button>
+                <span style="color:var(--border);">|</span>
+                <span style="font-size: 14px;">or <a class="text-link">create a new menu</a>.</span>
+            </div>
+
+            <div class="layout-grid">
+                
+                <!-- Add Menu Items -->
+                <div class="card" style="align-self: start;">
+                    <div class="card-header">Add Menu Items</div>
+                    <div class="card-body" style="padding: 12px;">
+                        
+                        <div class="accordion-item">
+                            <div class="accordion-header">
+                                Pages <span class="material-icons-outlined">expand_more</span>
+                            </div>
+                            <div class="accordion-body">
+                                <div class="checkbox-list">
+                                    <label class="checkbox-item"><input type="checkbox"> Home</label>
+                                    <label class="checkbox-item"><input type="checkbox"> About Us</label>
+                                    <label class="checkbox-item"><input type="checkbox"> Contact</label>
+                                    <label class="checkbox-item"><input type="checkbox"> Privacy Policy</label>
+                                </div>
+                                <div style="display:flex; justify-content:space-between; align-items:center;">
+                                    <a class="text-link" style="font-size:12px;">Select All</a>
+                                    <button class="btn-add">Add to Menu</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="accordion-item">
+                            <div class="accordion-header">
+                                Posts <span class="material-icons-outlined">chevron_right</span>
+                            </div>
+                        </div>
+
+                        <div class="accordion-item">
+                            <div class="accordion-header">
+                                Custom Links <span class="material-icons-outlined">expand_more</span>
+                            </div>
+                            <div class="accordion-body">
+                                <div class="form-group">
+                                    <label class="form-label">URL</label>
+                                    <input type="text" class="form-input" value="https://">
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">Link Text</label>
+                                    <input type="text" class="form-input" placeholder="Menu Item">
+                                </div>
+                                <div style="text-align:right;">
+                                    <button class="btn-add">Add to Menu</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="accordion-item">
+                            <div class="accordion-header">
+                                Categories <span class="material-icons-outlined">chevron_right</span>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <!-- Menu Structure -->
+                <div class="card">
+                    <div class="card-header">Menu Structure</div>
+                    <div class="card-body">
+                        
+                        <div class="menu-name-row">
+                            <label style="font-weight:500; font-size:14px;">Menu Name</label>
+                            <input type="text" class="form-input" value="Primary Menu" style="width: 300px; font-size: 15px;">
+                        </div>
+
+                        <div class="menu-structure">
+                            <div class="menu-structure-title">Menu Items</div>
+                            <div class="menu-structure-hint">Drag each item into the order you prefer. Click the arrow on the right of the item to reveal additional configuration options.</div>
+                            
+                            <!-- Item 1 (Expanded) -->
+                            <div class="menu-item-box">
+                                <div class="menu-item-header">
+                                    <span class="material-icons-outlined drag-handle">drag_indicator</span>
+                                    <span class="menu-item-title">Home</span>
+                                    <span class="menu-item-type">Custom Link</span>
+                                    <span class="material-icons-outlined expand-btn">expand_less</span>
+                                </div>
+                                <div class="menu-item-body">
+                                    <div class="form-group">
+                                        <label class="form-label">URL</label>
+                                        <input type="text" class="form-input" value="/">
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-label">Navigation Label</label>
+                                        <input type="text" class="form-input" value="Home">
+                                    </div>
+                                    <div style="margin-top:16px;">
+                                        <a class="text-danger">Remove</a> | <a class="text-link">Cancel</a>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Item 2 -->
+                            <div class="menu-item-box">
+                                <div class="menu-item-header">
+                                    <span class="material-icons-outlined drag-handle">drag_indicator</span>
+                                    <span class="menu-item-title">About Us</span>
+                                    <span class="menu-item-type">Page</span>
+                                    <span class="material-icons-outlined expand-btn">expand_more</span>
+                                </div>
+                            </div>
+
+                            <!-- Item 3 -->
+                            <div class="menu-item-box">
+                                <div class="menu-item-header">
+                                    <span class="material-icons-outlined drag-handle">drag_indicator</span>
+                                    <span class="menu-item-title">Blog</span>
+                                    <span class="menu-item-type">Page</span>
+                                    <span class="material-icons-outlined expand-btn">expand_more</span>
+                                </div>
+                            </div>
+
+                            <!-- Item 4 (Child) -->
+                            <div class="menu-item-box indented">
+                                <div class="menu-item-header">
+                                    <span class="material-icons-outlined drag-handle">drag_indicator</span>
+                                    <span class="menu-item-title">Technology</span>
+                                    <span class="menu-item-type">Category</span>
+                                    <span class="material-icons-outlined expand-btn">expand_more</span>
+                                </div>
+                            </div>
+
+                            <!-- Item 5 (Child) -->
+                            <div class="menu-item-box indented">
+                                <div class="menu-item-header">
+                                    <span class="material-icons-outlined drag-handle">drag_indicator</span>
+                                    <span class="menu-item-title">Design</span>
+                                    <span class="menu-item-type">Category</span>
+                                    <span class="material-icons-outlined expand-btn">expand_more</span>
+                                </div>
+                            </div>
+
+                            <!-- Item 6 -->
+                            <div class="menu-item-box">
+                                <div class="menu-item-header">
+                                    <span class="material-icons-outlined drag-handle">drag_indicator</span>
+                                    <span class="menu-item-title">Contact</span>
+                                    <span class="menu-item-type">Page</span>
+                                    <span class="material-icons-outlined expand-btn">expand_more</span>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div style="margin-top: 24px;">
+                            <div style="font-weight:600; font-size:14px; margin-bottom:12px;">Menu Settings</div>
+                            <div style="display:flex; align-items:flex-start; gap:16px;">
+                                <div style="font-size:14px; color:var(--text-secondary); width:150px;">Display location</div>
+                                <div>
+                                    <label style="display:flex; align-items:center; gap:8px; font-size:14px; margin-bottom:8px;"><input type="checkbox" checked> Header Navigation</label>
+                                    <label style="display:flex; align-items:center; gap:8px; font-size:14px; margin-bottom:8px;"><input type="checkbox"> Footer Links</label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="footer-actions">
+                            <a class="text-danger">Delete Menu</a>
+                            <button class="btn-primary">Save Menu</button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </main>
+    </div>
+</body>
+</html>

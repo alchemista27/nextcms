@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>General Settings - NextCMS</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #00704A; --primary-dark: #1E3932; --bg: #F3F4F6;
+            --surface: #FFFFFF; --text-primary: #111827; --text-secondary: #6B7280;
+            --border: #E5E7EB; --sidebar-width: 260px; --header-height: 64px;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
+        body { background-color: var(--bg); color: var(--text-primary); display: flex; min-height: 100vh; }
+        
+        .sidebar { width: var(--sidebar-width); background-color: var(--primary-dark); color: white; position: fixed; top: 0; bottom: 0; left: 0; display: flex; flex-direction: column; z-index: 40; }
+        .sidebar-header { height: var(--header-height); display: flex; align-items: center; padding: 0 20px; border-bottom: 1px solid rgba(255,255,255,0.1); }
+        .sidebar-logo { display: flex; align-items: center; gap: 12px; color: white; text-decoration: none; font-size: 20px; font-weight: 700; }
+        .sidebar-logo .material-icons-outlined { color: var(--primary); }
+        .sidebar-nav { flex: 1; overflow-y: auto; padding: 20px 0; }
+        .nav-item { display: flex; align-items: center; padding: 12px 20px; color: rgba(255,255,255,0.7); text-decoration: none; gap: 12px; font-size: 15px; }
+        .nav-item.active-parent { background-color: rgba(255,255,255,0.05); color: white; border-left: 3px solid var(--primary); }
+        .sub-menu { background-color: rgba(0,0,0,0.2); padding: 4px 0; }
+        .sub-item { display: block; padding: 10px 20px 10px 52px; color: rgba(255,255,255,0.6); text-decoration: none; font-size: 14px; }
+        .sub-item.active { color: white; }
+        
+        .main-wrapper { flex: 1; margin-left: var(--sidebar-width); display: flex; flex-direction: column; }
+        .header { height: var(--header-height); background-color: var(--surface); border-bottom: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; padding: 0 24px; }
+        .breadcrumb { font-weight: 600; font-size: 18px; display: flex; align-items: center; gap: 8px;}
+        .breadcrumb span { color: var(--text-secondary); font-weight: 400; font-size: 14px;}
+        
+        .main-content { padding: 24px; flex: 1; max-width: 1000px; }
+
+        .card { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; box-shadow: 0 1px 2px rgba(0,0,0,0.05); }
+        .card-body { padding: 32px; }
+
+        .form-row { display: grid; grid-template-columns: 200px 1fr; gap: 24px; margin-bottom: 24px; align-items: start; }
+        .form-label { font-weight: 500; font-size: 14px; color: var(--text-primary); padding-top: 8px; }
+        .form-input, .form-select { width: 100%; max-width: 400px; padding: 10px 12px; border: 1px solid var(--border); border-radius: 6px; font-size: 14px; background: white; }
+        .form-input:focus, .form-select:focus { outline: none; border-color: var(--primary); }
+        .form-hint { font-size: 13px; color: var(--text-secondary); margin-top: 6px; }
+
+        .radio-group { display: flex; flex-direction: column; gap: 12px; margin-top: 8px; }
+        .radio-item { display: flex; align-items: center; gap: 8px; font-size: 14px; }
+        
+        .toggle-switch { display: flex; align-items: center; gap: 12px; margin-top: 8px; }
+        .switch { position: relative; display: inline-block; width: 44px; height: 24px; }
+        .switch input { opacity: 0; width: 0; height: 0; }
+        .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #ccc; transition: .4s; border-radius: 24px; }
+        .slider:before { position: absolute; content: ""; height: 18px; width: 18px; left: 3px; bottom: 3px; background-color: white; transition: .4s; border-radius: 50%; }
+        input:checked + .slider { background-color: var(--primary); }
+        input:checked + .slider:before { transform: translateX(20px); }
+
+        .separator { height: 1px; background-color: var(--border); margin: 32px 0; }
+
+        .form-actions { margin-top: 40px; }
+        .btn-primary { background-color: var(--primary); color: white; border: none; padding: 10px 24px; border-radius: 6px; font-size: 14px; font-weight: 500; cursor: pointer; }
+        .btn-primary:hover { background-color: var(--primary-dark); }
+
+    </style>
+</head>
+<body>
+    <aside class="sidebar">
+        <div class="sidebar-header"><a href="#" class="sidebar-logo"><span class="material-icons-outlined">hub</span> NextCMS</a></div>
+        <nav class="sidebar-nav">
+            <a href="dashboard.html" class="nav-item"><span class="material-icons-outlined">dashboard</span> Dashboard</a>
+            <a href="#" class="nav-item"><span class="material-icons-outlined">article</span> Posts</a>
+            <a href="#" class="nav-item"><span class="material-icons-outlined">description</span> Pages</a>
+            <a href="#" class="nav-item active-parent"><span class="material-icons-outlined">settings</span> Settings <span class="material-icons-outlined expand-icon" style="margin-left:auto">expand_more</span></a>
+            <div class="sub-menu">
+                <a href="settings-general.html" class="sub-item active">General</a>
+                <a href="#" class="sub-item">SEO</a>
+                <a href="#" class="sub-item">Permalinks</a>
+            </div>
+        </nav>
+    </aside>
+
+    <div class="main-wrapper">
+        <header class="header">
+            <div class="breadcrumb">Settings <span>/</span> General</div>
+        </header>
+
+        <main class="main-content">
+            <div class="card">
+                <div class="card-body">
+                    
+                    <div class="form-row">
+                        <div class="form-label">Site Title</div>
+                        <div>
+                            <input type="text" class="form-input" value="NextCMS">
+                            <div class="form-hint">The name of your site. It is used in the title tag and header.</div>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-label">Tagline</div>
+                        <div>
+                            <input type="text" class="form-input" value="Just another NextCMS site">
+                            <div class="form-hint">In a few words, explain what this site is about.</div>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-label">Site URL</div>
+                        <div>
+                            <input type="text" class="form-input" value="http://localhost:3000">
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-label">Administration Email Address</div>
+                        <div>
+                            <input type="email" class="form-input" value="admin@nextcms.local">
+                            <div class="form-hint">This address is used for admin purposes.</div>
+                        </div>
+                    </div>
+
+                    <div class="separator"></div>
+
+                    <div class="form-row">
+                        <div class="form-label">Site Language</div>
+                        <div>
+                            <select class="form-select">
+                                <option>English (United States)</option>
+                                <option selected>Indonesian</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-label">Timezone</div>
+                        <div>
+                            <select class="form-select">
+                                <option>UTC+0</option>
+                                <option selected>Asia/Jakarta (UTC+7)</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-label">Date Format</div>
+                        <div>
+                            <div class="radio-group">
+                                <label class="radio-item"><input type="radio" name="date" checked> DD/MM/YYYY (11/07/2026)</label>
+                                <label class="radio-item"><input type="radio" name="date"> MM/DD/YYYY (07/11/2026)</label>
+                                <label class="radio-item"><input type="radio" name="date"> YYYY-MM-DD (2026-07-11)</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-label">Time Format</div>
+                        <div>
+                            <div class="radio-group">
+                                <label class="radio-item"><input type="radio" name="time" checked> 24-hour (23:15)</label>
+                                <label class="radio-item"><input type="radio" name="time"> 12-hour (11:15 PM)</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="separator"></div>
+
+                    <div class="form-row">
+                        <div class="form-label">Posts Per Page</div>
+                        <div>
+                            <input type="number" class="form-input" style="max-width: 100px;" value="10">
+                            <div class="form-hint">Blog pages show at most this many posts.</div>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-label">Membership</div>
+                        <div>
+                            <div class="toggle-switch">
+                                <label class="switch">
+                                  <input type="checkbox" checked>
+                                  <span class="slider"></span>
+                                </label>
+                                <span style="font-size: 14px;">Anyone can register</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-label">New User Default Role</div>
+                        <div>
+                            <select class="form-select">
+                                <option selected>Subscriber</option>
+                                <option>Author</option>
+                                <option>Editor</option>
+                                <option>Administrator</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-actions">
+                        <button class="btn-primary">Save Changes</button>
+                    </div>
+
+                </div>
+            </div>
+        </main>
+    </div>
+</body>
+</html>

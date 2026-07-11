@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Post - NextCMS</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
+    <style>
+        /* Base Styles (Copied from dashboard) */
+        :root {
+            --primary: #00704A; --primary-dark: #1E3932; --primary-light: #D4E9E2;
+            --bg: #F3F4F6; --surface: #FFFFFF; --text-primary: #111827;
+            --text-secondary: #6B7280; --border: #E5E7EB;
+            --sidebar-width: 260px; --header-height: 64px;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
+        body { background-color: var(--bg); color: var(--text-primary); display: flex; min-height: 100vh; }
+        
+        .sidebar { width: var(--sidebar-width); background-color: var(--primary-dark); color: white; position: fixed; top: 0; bottom: 0; left: 0; display: flex; flex-direction: column; z-index: 40; }
+        .sidebar-header { height: var(--header-height); display: flex; align-items: center; padding: 0 20px; border-bottom: 1px solid rgba(255,255,255,0.1); }
+        .sidebar-logo { display: flex; align-items: center; gap: 12px; color: white; text-decoration: none; font-size: 20px; font-weight: 700; }
+        .sidebar-logo .material-icons-outlined { color: var(--primary); }
+        .sidebar-nav { flex: 1; overflow-y: auto; padding: 20px 0; }
+        .nav-item { display: flex; align-items: center; padding: 12px 20px; color: rgba(255,255,255,0.7); text-decoration: none; gap: 12px; border-left: 3px solid transparent; font-size: 15px; }
+        .nav-item:hover, .nav-item.active { background-color: rgba(255,255,255,0.1); color: white; }
+        .nav-item.active-parent { color: white; border-left-color: var(--primary); background-color: rgba(255,255,255,0.05); }
+        .nav-item .expand-icon { margin-left: auto; font-size: 16px; }
+        
+        .main-wrapper { flex: 1; margin-left: var(--sidebar-width); display: flex; flex-direction: column; }
+        .header { height: var(--header-height); background-color: var(--surface); border-bottom: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; padding: 0 24px; position: sticky; top: 0; z-index: 30; }
+        .breadcrumb { font-weight: 600; font-size: 18px; display: flex; align-items: center; gap: 8px;}
+        .breadcrumb span { color: var(--text-secondary); font-weight: 400; font-size: 14px;}
+        .header-actions { display: flex; align-items: center; gap: 20px; }
+        .avatar { width: 32px; height: 32px; border-radius: 50%; background-color: var(--primary); color: white; display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 600;}
+        
+        .main-content { padding: 24px; flex: 1; }
+
+        /* Editor Specific Styles */
+        .editor-grid {
+            display: grid;
+            grid-template-columns: 1fr 320px;
+            gap: 24px;
+        }
+
+        /* Left Column */
+        .title-input {
+            width: 100%;
+            font-size: 32px;
+            font-weight: 700;
+            border: none;
+            background: transparent;
+            padding: 10px 0;
+            margin-bottom: 8px;
+            color: var(--text-primary);
+        }
+        .title-input:focus { outline: none; }
+        .title-input::placeholder { color: #9CA3AF; }
+
+        .permalink {
+            font-size: 13px;
+            color: var(--text-secondary);
+            margin-bottom: 24px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .permalink-url { color: var(--primary); text-decoration: underline; }
+        .btn-edit-slug { background: none; border: 1px solid var(--border); border-radius: 4px; padding: 2px 8px; font-size: 12px; cursor: pointer; }
+
+        /* Rich Text Editor Mock */
+        .editor-container {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+            margin-bottom: 24px;
+            overflow: hidden;
+        }
+
+        .editor-toolbar {
+            padding: 8px 12px;
+            border-bottom: 1px solid var(--border);
+            background: #F9FAFB;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 4px;
+            align-items: center;
+        }
+
+        .toolbar-btn {
+            background: none;
+            border: 1px solid transparent;
+            border-radius: 4px;
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            color: var(--text-secondary);
+        }
+        .toolbar-btn:hover { background: #E5E7EB; color: var(--text-primary); }
+        .toolbar-btn.active { background: var(--primary-light); color: var(--primary-dark); }
+        .toolbar-btn .material-icons-outlined { font-size: 18px; }
+        .toolbar-divider { width: 1px; height: 24px; background: var(--border); margin: 0 4px; }
+        
+        .toolbar-select {
+            padding: 4px 8px;
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            background: white;
+            font-size: 14px;
+        }
+
+        .editor-content {
+            padding: 24px;
+            min-height: 400px;
+            outline: none;
+            line-height: 1.6;
+        }
+        .editor-content h2 { margin-top: 1.5em; margin-bottom: 0.5em; }
+        .editor-content p { margin-bottom: 1em; }
+        .editor-content ul { margin-left: 1.5em; margin-bottom: 1em; }
+
+        .form-label { display: block; font-weight: 500; margin-bottom: 8px; font-size: 14px; }
+        .form-textarea { width: 100%; padding: 12px; border: 1px solid var(--border); border-radius: 8px; resize: vertical; min-height: 100px; font-size: 14px; }
+        .form-textarea:focus { outline: none; border-color: var(--primary); }
+        .form-input { width: 100%; padding: 8px 12px; border: 1px solid var(--border); border-radius: 6px; font-size: 14px; }
+
+        /* Right Column (Meta Boxes) */
+        .meta-box {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            margin-bottom: 16px;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+        }
+        .meta-box-header {
+            padding: 12px 16px;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 600;
+            font-size: 14px;
+        }
+        .meta-box-body { padding: 16px; }
+        
+        .meta-row { display: flex; align-items: center; gap: 8px; margin-bottom: 12px; font-size: 14px; }
+        .meta-row .material-icons-outlined { font-size: 18px; color: var(--text-secondary); }
+        .meta-row b { font-weight: 500; }
+
+        .btn-link { color: var(--primary); text-decoration: underline; background: none; border: none; cursor: pointer; font-size: 14px; }
+        
+        .actions-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 16px;
+            padding-top: 16px;
+            border-top: 1px solid var(--border);
+        }
+
+        .btn-primary { background-color: var(--primary); color: white; border: none; padding: 8px 16px; border-radius: 6px; font-size: 14px; font-weight: 500; cursor: pointer; }
+        .btn-outline { border: 1px solid var(--border); background: white; padding: 8px 16px; border-radius: 6px; font-size: 14px; font-weight: 500; cursor: pointer; color: var(--text-primary); }
+        .btn-outline:hover { background: var(--bg); }
+
+        /* Categories Checkbox Tree */
+        .category-list { max-height: 150px; overflow-y: auto; margin-bottom: 10px; border: 1px solid var(--border); padding: 8px; border-radius: 4px; }
+        .cat-item { display: flex; align-items: center; gap: 8px; margin-bottom: 4px; font-size: 14px; }
+        .cat-item.child { margin-left: 20px; }
+        
+        /* Tags */
+        .tag-chips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
+        .tag-chip {
+            background: var(--bg);
+            border: 1px solid var(--border);
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+        .tag-chip .material-icons-outlined { font-size: 14px; cursor: pointer; color: var(--text-secondary); }
+        .tag-chip .material-icons-outlined:hover { color: var(--danger); }
+
+        /* Image Upload Box */
+        .image-upload-box {
+            border: 2px dashed var(--border);
+            border-radius: 6px;
+            padding: 24px;
+            text-align: center;
+            cursor: pointer;
+            background: #F9FAFB;
+        }
+        .image-upload-box:hover { border-color: var(--primary); background: var(--primary-light); }
+        .image-upload-box .material-icons-outlined { font-size: 32px; color: var(--text-secondary); margin-bottom: 8px; }
+        .image-upload-text { font-size: 14px; color: var(--text-secondary); }
+
+        /* Google Snippet */
+        .google-snippet {
+            background: white;
+            padding: 12px;
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            margin-top: 10px;
+        }
+        .gs-url { color: #202124; font-size: 12px; }
+        .gs-title { color: #1a0dab; font-size: 18px; line-height: 1.2; margin: 4px 0; font-family: arial, sans-serif; }
+        .gs-desc { color: #4d5156; font-size: 13px; line-height: 1.4; font-family: arial, sans-serif; }
+    </style>
+</head>
+<body>
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+        <!-- Exact same sidebar as dashboard, omitting for brevity in wireframe but structurally correct -->
+        <div class="sidebar-header"><a href="#" class="sidebar-logo"><span class="material-icons-outlined">hub</span> NextCMS</a></div>
+        <nav class="sidebar-nav">
+            <a href="dashboard.html" class="nav-item"><span class="material-icons-outlined">dashboard</span> Dashboard</a>
+            <a href="#" class="nav-item active-parent"><span class="material-icons-outlined">article</span> Posts <span class="material-icons-outlined expand-icon">expand_more</span></a>
+            <a href="post-list.html" class="sub-item" style="display:block">All Posts</a>
+            <a href="post-editor.html" class="sub-item active" style="display:block">Add New</a>
+        </nav>
+    </aside>
+
+    <!-- MAIN CONTENT -->
+    <div class="main-wrapper">
+        <header class="header">
+            <div class="breadcrumb">Posts <span>/</span> Edit Post</div>
+            <div class="header-actions"><div class="avatar">A</div></div>
+        </header>
+
+        <main class="main-content">
+            <div class="editor-grid">
+                
+                <!-- LEFT COLUMN -->
+                <div class="col-main">
+                    <input type="text" class="title-input" value="The Future of Content Management Systems" placeholder="Add title">
+                    
+                    <div class="permalink">
+                        Permalink: 
+                        <a href="#" class="permalink-url">http://localhost:3000/blog/the-future-of-content-management-systems</a>
+                        <button class="btn-edit-slug">Edit</button>
+                    </div>
+
+                    <div class="editor-container">
+                        <div class="editor-toolbar">
+                            <select class="toolbar-select">
+                                <option>Paragraph</option>
+                                <option>Heading 1</option>
+                                <option>Heading 2</option>
+                                <option>Heading 3</option>
+                            </select>
+                            <div class="toolbar-divider"></div>
+                            <button class="toolbar-btn active"><span class="material-icons-outlined">format_bold</span></button>
+                            <button class="toolbar-btn"><span class="material-icons-outlined">format_italic</span></button>
+                            <button class="toolbar-btn"><span class="material-icons-outlined">format_underlined</span></button>
+                            <button class="toolbar-btn"><span class="material-icons-outlined">strikethrough_s</span></button>
+                            <div class="toolbar-divider"></div>
+                            <button class="toolbar-btn active"><span class="material-icons-outlined">format_align_left</span></button>
+                            <button class="toolbar-btn"><span class="material-icons-outlined">format_align_center</span></button>
+                            <button class="toolbar-btn"><span class="material-icons-outlined">format_align_right</span></button>
+                            <div class="toolbar-divider"></div>
+                            <button class="toolbar-btn"><span class="material-icons-outlined">format_list_bulleted</span></button>
+                            <button class="toolbar-btn"><span class="material-icons-outlined">format_list_numbered</span></button>
+                            <button class="toolbar-btn"><span class="material-icons-outlined">format_quote</span></button>
+                            <div class="toolbar-divider"></div>
+                            <button class="toolbar-btn"><span class="material-icons-outlined">link</span></button>
+                            <button class="toolbar-btn"><span class="material-icons-outlined">image</span></button>
+                            <div class="toolbar-divider"></div>
+                            <button class="toolbar-btn"><span class="material-icons-outlined">undo</span></button>
+                            <button class="toolbar-btn"><span class="material-icons-outlined">redo</span></button>
+                        </div>
+                        <div class="editor-content" contenteditable="true">
+                            <p>Content management systems have evolved significantly over the past decade. What started as simple blogging platforms have transformed into complex, headless architectures.</p>
+                            <h2>The Rise of Headless CMS</h2>
+                            <p>A headless CMS separates the content repository (body) from the presentation layer (head). This architecture provides several key advantages:</p>
+                            <ul>
+                                <li><strong>Omnichannel delivery:</strong> Push content to websites, mobile apps, and IoT devices from a single source.</li>
+                                <li><strong>Developer flexibility:</strong> Front-end teams can use modern frameworks like Next.js, React, or Vue without backend constraints.</li>
+                                <li><strong>Enhanced security:</strong> With no direct database connection from the frontend, the attack surface is minimized.</li>
+                            </ul>
+                            <p>In this article, we'll explore why Next.js is the perfect companion for modern CMS development.</p>
+                        </div>
+                    </div>
+
+                    <div style="margin-bottom: 24px;">
+                        <label class="form-label">Excerpt</label>
+                        <textarea class="form-textarea" placeholder="Write a brief summary..."></textarea>
+                    </div>
+                </div>
+
+                <!-- RIGHT COLUMN -->
+                <div class="col-sidebar">
+                    
+                    <div class="meta-box">
+                        <div class="meta-box-header">Publish</div>
+                        <div class="meta-box-body">
+                            <div class="meta-row">
+                                <span class="material-icons-outlined">vpn_key</span>
+                                <b>Status:</b> Draft <button class="btn-link">Edit</button>
+                            </div>
+                            <div class="meta-row">
+                                <span class="material-icons-outlined">visibility</span>
+                                <b>Visibility:</b> Public <button class="btn-link">Edit</button>
+                            </div>
+                            <div class="meta-row">
+                                <span class="material-icons-outlined">calendar_today</span>
+                                <b>Publish:</b> immediately <button class="btn-link">Edit</button>
+                            </div>
+                            
+                            <div class="actions-row">
+                                <button class="btn-outline">Save Draft</button>
+                                <button class="btn-primary">Publish</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="meta-box">
+                        <div class="meta-box-header">Categories</div>
+                        <div class="meta-box-body">
+                            <div class="category-list">
+                                <label class="cat-item"><input type="checkbox"> Uncategorized</label>
+                                <label class="cat-item"><input type="checkbox" checked> Technology</label>
+                                <label class="cat-item child"><input type="checkbox" checked> Web Development</label>
+                                <label class="cat-item child"><input type="checkbox"> Mobile</label>
+                                <label class="cat-item"><input type="checkbox"> Design</label>
+                            </div>
+                            <button class="btn-link" style="margin-top: 8px;">+ Add New Category</button>
+                        </div>
+                    </div>
+
+                    <div class="meta-box">
+                        <div class="meta-box-header">Tags</div>
+                        <div class="meta-box-body">
+                            <div style="display:flex; gap:8px;">
+                                <input type="text" class="form-input" placeholder="Add new tag">
+                                <button class="btn-outline">Add</button>
+                            </div>
+                            <div class="tag-chips">
+                                <div class="tag-chip">NextJS <span class="material-icons-outlined">close</span></div>
+                                <div class="tag-chip">CMS <span class="material-icons-outlined">close</span></div>
+                                <div class="tag-chip">React <span class="material-icons-outlined">close</span></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="meta-box">
+                        <div class="meta-box-header">Featured Image</div>
+                        <div class="meta-box-body">
+                            <div class="image-upload-box">
+                                <span class="material-icons-outlined">add_photo_alternate</span>
+                                <div class="image-upload-text">Set featured image</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="meta-box">
+                        <div class="meta-box-header">
+                            SEO Settings 
+                            <span class="material-icons-outlined" style="color:var(--primary); font-size:20px;">travel_explore</span>
+                        </div>
+                        <div class="meta-box-body">
+                            <label class="form-label">Meta Title</label>
+                            <input type="text" class="form-input" style="margin-bottom:12px;" value="The Future of Content Management Systems">
+                            
+                            <label class="form-label">Meta Description</label>
+                            <textarea class="form-textarea" style="min-height:80px; margin-bottom:8px;"></textarea>
+                            <div style="font-size:12px; color:var(--text-secondary); text-align:right; margin-bottom:16px;">0 / 160 chars</div>
+
+                            <label class="form-label">Search Preview</label>
+                            <div class="google-snippet">
+                                <div class="gs-url">localhost:3000 › blog › the-future-of-con...</div>
+                                <div class="gs-title">The Future of Content Management Systems - NextCMS</div>
+                                <div class="gs-desc">Content management systems have evolved significantly over the past decade. What started as simple blogging platforms...</div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </main>
+    </div>
+
+</body>
+</html>
