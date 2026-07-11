@@ -1,0 +1,228 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum Role {
+  ADMIN
+  EDITOR
+  AUTHOR
+  SUBSCRIBER
+}
+
+enum PostStatus {
+  DRAFT
+  PUBLISHED
+  PENDING
+  TRASH
+}
+
+enum PageStatus {
+  DRAFT
+  PUBLISHED
+  TRASH
+}
+
+enum MenuItemType {
+  CUSTOM
+  PAGE
+  POST
+  CATEGORY
+}
+
+model User {
+  id        String   @id @default(cuid())
+  name      String
+  email     String   @unique
+  password  String
+  role      Role     @default(SUBSCRIBER)
+  avatar    String?
+  bio       String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  posts     Post[]
+  pages     Page[]
+  media     Media[]
+  revisions Revision[]
+
+  @@map("users")
+}
+
+model Post {
+  id              String     @id @default(cuid())
+  title           String
+  slug            String     @unique
+  content         String?    @db.Text
+  excerpt         String?    @db.Text
+  status          PostStatus @default(DRAFT)
+  featuredImage   String?
+  metaTitle       String?
+  metaDescription String?    @db.Text
+  ogImage         String?
+  publishedAt     DateTime?
+  createdAt       DateTime   @default(now())
+  updatedAt       DateTime   @updatedAt
+
+  authorId   String
+  author     User       @relation(fields: [authorId], references: [id])
+  categories Category[] @relation("PostCategories")
+  tags       Tag[]      @relation("PostTags")
+
+  @@index([slug])
+  @@index([status])
+  @@index([authorId])
+  @@index([publishedAt])
+  @@map("posts")
+}
+
+model Page {
+  id              String     @id @default(cuid())
+  title           String
+  slug            String     @unique
+  content         String?    @db.Text
+  status          PageStatus @default(DRAFT)
+  template        String     @default("default")
+  menuOrder       Int        @default(0)
+  metaTitle       String?
+  metaDescription String?    @db.Text
+  ogImage         String?
+  publishedAt     DateTime?
+  createdAt       DateTime   @default(now())
+  updatedAt       DateTime   @updatedAt
+
+  authorId  String
+  author    User       @relation(fields: [authorId], references: [id])
+  parentId  String?
+  parent    Page?      @relation("PageHierarchy", fields: [parentId], references: [id])
+  children  Page[]     @relation("PageHierarchy")
+
+  @@index([slug])
+  @@index([status])
+  @@index([parentId])
+  @@map("pages")
+}
+
+model Category {
+  id          String   @id @default(cuid())
+  name        String
+  slug        String   @unique
+  description String?  @db.Text
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  parentId String?
+  parent   Category?  @relation("CategoryHierarchy", fields: [parentId], references: [id])
+  children Category[] @relation("CategoryHierarchy")
+  posts    Post[]     @relation("PostCategories")
+
+  @@index([slug])
+  @@index([parentId])
+  @@map("categories")
+}
+
+model Tag {
+  id          String   @id @default(cuid())
+  name        String
+  slug        String   @unique
+  description String?  @db.Text
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  posts Post[] @relation("PostTags")
+
+  @@index([slug])
+  @@map("tags")
+}
+
+model Media {
+  id           String   @id @default(cuid())
+  filename     String
+  originalName String
+  mimeType     String
+  size         Int
+  url          String
+  alt          String?
+  caption      String?
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  uploadedById String
+  uploadedBy   User @relation(fields: [uploadedById], references: [id])
+
+  @@index([mimeType])
+  @@index([uploadedById])
+  @@map("media")
+}
+
+model Menu {
+  id        String   @id @default(cuid())
+  name      String
+  location  String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  items MenuItem[]
+
+  @@map("menus")
+}
+
+model MenuItem {
+  id          String       @id @default(cuid())
+  label       String
+  url         String?
+  target      String       @default("_self")
+  type        MenuItemType @default(CUSTOM)
+  referenceId String?
+  order       Int          @default(0)
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+
+  menuId   String
+  menu     Menu      @relation(fields: [menuId], references: [id], onDelete: Cascade)
+  parentId String?
+  parent   MenuItem? @relation("MenuItemHierarchy", fields: [parentId], references: [id])
+  children MenuItem[] @relation("MenuItemHierarchy")
+
+  @@index([menuId])
+  @@index([parentId])
+  @@map("menu_items")
+}
+
+model Revision {
+  id         String   @id @default(cuid())
+  entityType String
+  entityId   String
+  title      String
+  content    String?  @db.Text
+  metadata   Json?
+  createdAt  DateTime @default(now())
+
+  authorId String
+  author   User @relation(fields: [authorId], references: [id])
+
+  @@index([entityType, entityId])
+  @@index([authorId])
+  @@map("revisions")
+}
+
+model SiteSettings {
+  id        String   @id @default(cuid())
+  key       String   @unique
+  value     String   @db.Text
+  updatedAt DateTime @updatedAt
+
+  @@map("site_settings")
+}
+
+model Appearance {
+  id        String   @id @default(cuid())
+  key       String   @unique
+  value     Json
+  updatedAt DateTime @updatedAt
+
+  @@map("appearance")
+}
