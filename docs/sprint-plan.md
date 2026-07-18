@@ -85,19 +85,19 @@ graph LR
 
 | # | Task | Detail | Estimasi | Status |
 |---|---|---|---|---|
-| 2.1 | Install Dependencies | `next-auth`, `zod`, `react-hook-form`, `@hookform/resolvers` | 15 min | ⬜ |
-| 2.2 | NextAuth Config | `src/lib/auth.ts` — CredentialsProvider, JWT callbacks, session strategy | 60 min | ⬜ |
-| 2.3 | Auth API Route | `src/app/api/auth/[...nextauth]/route.ts` — NextAuth handler | 15 min | ⬜ |
-| 2.4 | Type Extensions | Extend `next-auth` types untuk `id`, `role`, `avatar` di session/token | 15 min | ⬜ |
-| 2.5 | Auth Guard | `src/lib/auth-guard.ts` — `requireAuth()`, `requireRole()` helpers | 30 min | ⬜ |
-| 2.6 | Middleware | `src/middleware.ts` — route protection `/admin/*`, role-based redirect | 45 min | ⬜ |
-| 2.7 | Register API | `POST /api/register` — validasi Zod, cek duplikat email, bcrypt hash | 30 min | ⬜ |
-| 2.8 | Session Provider | `src/components/providers/session-provider.tsx` — client-side wrapper | 15 min | ⬜ |
-| 2.9 | Login Page | `src/app/(auth)/login/page.tsx` — form UI, validasi, error states | 60 min | ⬜ |
-| 2.10 | Register Page | `src/app/(auth)/register/page.tsx` — form, password strength, terms | 60 min | ⬜ |
-| 2.11 | Testing | Login/logout flow, redirect, protected routes, register flow | 30 min | ⬜ |
+| 2.1 | Install Dependencies | `next-auth`, `zod`, `react-hook-form`, `@hookform/resolvers`, `@next-auth/prisma-adapter` | 15 min | ✅ |
+| 2.2 | NextAuth Config | `src/lib/auth.ts` — CredentialsProvider, Google, GitHub, PrismaAdapter, JWT callbacks | 60 min | ✅ |
+| 2.3 | Auth API Route | `src/app/api/auth/[...nextauth]/route.ts` — NextAuth handler | 15 min | ✅ |
+| 2.4 | Type Extensions | Extend `next-auth` types untuk `id`, `role`, `avatar` di session/token | 15 min | ✅ |
+| 2.5 | Auth Guard | `src/lib/auth-guard.ts` — `requireAuth()`, `requireRole()` helpers | 30 min | ✅ |
+| 2.6 | Middleware | `src/middleware.ts` — route protection `/admin/*`, role-based redirect | 45 min | ✅ |
+| 2.7 | Register API | `POST /api/register` — validasi Zod, cek duplikat email, bcrypt hash | 30 min | ✅ |
+| 2.8 | Session Provider | `src/components/providers/session-provider.tsx` — client-side wrapper | 15 min | ✅ |
+| 2.9 | Login Page | `src/app/(auth)/login/page.tsx` — form UI, validasi, error states, SSO buttons | 60 min | ✅ |
+| 2.10 | Register Page | `src/app/(auth)/register/page.tsx` — form, password strength, SSO buttons | 60 min | ✅ |
+| 2.11 | Testing | Login/logout flow, SSO flow, redirect, protected routes, register flow | 30 min | ✅ |
 
-**Deliverables:** User bisa login/register, route admin terproteksi.
+**Deliverables:** ✅ User bisa login/register dengan credentials atau SSO (Google/GitHub), route admin terproteksi.
 
 **Dependencies:** M1
 

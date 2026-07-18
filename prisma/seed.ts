@@ -56,7 +56,7 @@ async function main() {
     { key: 'font_family', value: 'Inter' },
     { key: 'header_style', value: 'left-aligned' },
     { key: 'sidebar_position', value: 'right' },
-    { key: 'footer_text', value: '© 2026 NextCMS. All rights reserved.' },
+    { key: 'footer_text', value: '© 2026 Copyright Jauharian.Dev' },
     { key: 'custom_css', value: '' },
     { key: 'custom_head', value: '' },
     { key: 'custom_footer', value: '' },

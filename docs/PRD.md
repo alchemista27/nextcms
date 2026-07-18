@@ -9,7 +9,7 @@
 ## 1. Ringkasan Produk
 
 | Item | Detail |
-|---|---|
+| --- | --- |
 | **Nama Produk** | NextCMS |
 | **Tipe** | Content Management System (CMS) |
 | **Framework** | Next.js (App Router) |
@@ -25,7 +25,7 @@
 ## 2. Tech Stack
 
 | Layer | Teknologi |
-|---|---|
+| --- | --- |
 | **Frontend** | Next.js 14+ (App Router), React 18+, TypeScript |
 | **UI Components** | shadcn/UI |
 | **Design Guideline** | Starbucks Design System (`npx designdotmd add starbucks`) |
@@ -397,20 +397,23 @@ nextcms/
 - Link ke halaman Register
 - Validasi form real-time dengan Zod
 - Error handling (kredensial salah, akun tidak ditemukan)
+- Tombol Login via SSO (Google, GitHub)
 - Design profesional dengan branding Starbucks design system
 - Redirect ke dashboard setelah login berhasil
 
 #### Halaman Register
 - Form fields: Nama, Email, Password, Konfirmasi Password
+- Tombol Register via SSO (Google, GitHub)
 - Validasi password strength
 - Cek duplikasi email
 - Default role: `SUBSCRIBER`
 - Design konsisten dengan halaman Login
 
 #### Konfigurasi NextAuth
-- Provider: Credentials (email + password)
+- Provider: Credentials (email + password), Google, GitHub (SSO)
 - Session strategy: JWT-based session
 - Callbacks: session, jwt (include user role)
+- Sinkronisasi akun SSO dengan database (tabel Accounts & Sessions)
 - Protected routes via middleware
 
 #### Default Admin User (Seed)
