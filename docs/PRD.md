@@ -1126,3 +1126,9 @@ Semua icon di aplikasi **wajib** menggunakan Material UI Icons. Tidak diperkenan
 ---
 
 *Dokumen ini adalah panduan lengkap untuk pengembangan NextCMS. Setiap fitur harus diimplementasikan sesuai spesifikasi di atas.*
+
+---
+
+## 16. Future Features
+
+- **Upload Featured Image**: Implementasi fitur upload untuk featured image di post editor, sehingga admin bisa langsung meng-upload file image daripada hanya sekadar copy-paste link image.

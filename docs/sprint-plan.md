@@ -116,12 +116,12 @@ graph LR
 - `src/components/providers/session-provider.tsx`
 
 **Acceptance Criteria:**
-- [ ] Login dengan `admin@nextcms.local` / `admin123` berhasil redirect ke `/admin`
-- [ ] Akses `/admin` tanpa login redirect ke `/login`
-- [ ] Register user baru berhasil, default role `SUBSCRIBER`
-- [ ] Duplikat email ditolak dengan error message
-- [ ] Password minimal 6 karakter dengan strength indicator
-- [ ] Session persist setelah refresh browser
+- [x] Login dengan `admin@nextcms.local` / `admin123` berhasil redirect ke `/admin`
+- [x] Akses `/admin` tanpa login redirect ke `/login`
+- [x] Register user baru berhasil, default role `SUBSCRIBER`
+- [x] Duplikat email ditolak dengan error message
+- [x] Password minimal 6 karakter dengan strength indicator
+- [x] Session persist setelah refresh browser
 
 ---
 
@@ -151,13 +151,13 @@ graph LR
 - `src/app/layout.tsx` (update root layout)
 
 **Acceptance Criteria:**
-- [ ] Sidebar menampilkan semua menu sesuai PRD Section 7
-- [ ] Sub-menu collapsible (Posts, Pages, Users, Settings)
-- [ ] Active state highlight pada menu aktif
-- [ ] Sidebar collapse di mobile menjadi Sheet
-- [ ] User dropdown menampilkan nama, role, avatar, logout
-- [ ] Breadcrumb dinamis berdasarkan route
-- [ ] Semua icon menggunakan `@mui/icons-material`
+- [x] Sidebar menampilkan semua menu sesuai PRD Section 7
+- [x] Sub-menu collapsible (Posts, Pages, Users, Settings)
+- [x] Active state highlight pada menu aktif
+- [x] Sidebar collapse di mobile menjadi Sheet
+- [x] User dropdown menampilkan nama, role, avatar, logout
+- [x] Breadcrumb dinamis berdasarkan route
+- [x] Semua icon menggunakan `@mui/icons-material`
 
 ---
 
@@ -165,19 +165,19 @@ graph LR
 
 | # | Task | Detail | Estimasi | Status |
 |---|---|---|---|---|
-| 4.1 | Install Tiptap | `@tiptap/react`, `@tiptap/starter-kit`, semua extensions sesuai TDD §1.5 | 15 min | ⬜ |
-| 4.2 | Editor Instance | `src/components/editor/rich-text-editor.tsx` — configure Tiptap instance | 60 min | ⬜ |
-| 4.3 | Toolbar | Fixed toolbar — Bold, Italic, Underline, Strikethrough, Headings (H1-H3), Align, Lists, Blockquote, Code, Link, Image, Table, Undo/Redo | 90 min | ⬜ |
-| 4.4 | Bubble Menu | Selection-based floating menu (Bold, Italic, Link) | 45 min | ⬜ |
-| 4.5 | Image Extension | Custom extension — trigger media picker dialog, insert image node | 60 min | ⬜ |
-| 4.6 | Table Extension | Insert/edit table, tambah/hapus rows/columns | 30 min | ⬜ |
-| 4.7 | Code Block | Syntax highlighting via `lowlight` | 30 min | ⬜ |
-| 4.8 | YouTube Embed | Embed YouTube video via URL paste/dialog | 15 min | ⬜ |
-| 4.9 | Editor Styling | Typography, spacing, list styles, image sizing, responsive | 45 min | ⬜ |
-| 4.10 | Output Sanitize | DOMPurify config untuk safe HTML render di public pages | 15 min | ⬜ |
-| 4.11 | Testing | Semua formatting features, paste handling, edge cases | 30 min | ⬜ |
+| 4.1 | Install Tiptap | `@tiptap/react`, `@tiptap/starter-kit`, semua extensions sesuai TDD §1.5 | 15 min | ✅ |
+| 4.2 | Editor Instance | `src/components/editor/rich-text-editor.tsx` — configure Tiptap instance | 60 min | ✅ |
+| 4.3 | Toolbar | Fixed toolbar — Bold, Italic, Underline, Strikethrough, Headings (H1-H3), Align, Lists, Blockquote, Code, Link, Image, Table, Undo/Redo | 90 min | ✅ |
+| 4.4 | Bubble Menu | Selection-based floating menu (Bold, Italic, Link) | 45 min | ✅ |
+| 4.5 | Image Extension | Custom extension — trigger media picker dialog, insert image node | 60 min | ✅ |
+| 4.6 | Table Extension | Insert/edit table, tambah/hapus rows/columns | 30 min | ✅ |
+| 4.7 | Code Block | Syntax highlighting via `lowlight` | 30 min | ✅ |
+| 4.8 | YouTube Embed | Embed YouTube video via URL paste/dialog | 15 min | ✅ |
+| 4.9 | Editor Styling | Typography, spacing, list styles, image sizing, responsive | 45 min | ✅ |
+| 4.10 | Output Sanitize | DOMPurify config untuk safe HTML render di public pages | 15 min | ✅ |
+| 4.11 | Testing | Semua formatting features, paste handling, edge cases | 30 min | ✅ |
 
-**Deliverables:** Komponen Rich Text Editor siap digunakan di Post & Page editor.
+**Deliverables:** ✅ Komponen Rich Text Editor siap digunakan di Post & Page editor.
 
 **Dependencies:** M1
 
@@ -189,17 +189,17 @@ graph LR
 - `src/lib/sanitize.ts`
 
 **Acceptance Criteria:**
-- [ ] Semua format text berfungsi (bold, italic, underline, strikethrough)
-- [ ] Heading H1-H3 via dropdown
-- [ ] Ordered dan unordered list
-- [ ] Blockquote dan code block dengan syntax highlighting
-- [ ] Insert/edit link
-- [ ] Insert image (placeholder — integrasi media picker di Sprint 3)
-- [ ] Insert table, tambah/hapus row/column
-- [ ] YouTube embed
-- [ ] Text alignment (left, center, right)
-- [ ] Undo/Redo
-- [ ] Output HTML di-sanitize dengan DOMPurify
+- [x] Semua format text berfungsi (bold, italic, underline, strikethrough)
+- [x] Heading H1-H3 via dropdown
+- [x] Ordered dan unordered list
+- [x] Blockquote dan code block dengan syntax highlighting
+- [x] Insert/edit link
+- [x] Insert image (placeholder — integrasi media picker di Sprint 3)
+- [x] Insert table, tambah/hapus row/column
+- [x] YouTube embed
+- [x] Text alignment (left, center, right)
+- [x] Undo/Redo
+- [x] Output HTML di-sanitize dengan DOMPurify
 
 ---
 
@@ -211,13 +211,13 @@ graph LR
 
 | # | Task | Detail | Estimasi | Status |
 |---|---|---|---|---|
-| 7.1 | Zod Validators | `src/lib/validators/category.ts` — create/update schema | 15 min | ⬜ |
-| 7.2 | Server Actions | `src/actions/category.ts` — CRUD (getCategories, create, update, delete) dengan hierarchy | 45 min | ⬜ |
-| 7.3 | Category Page UI | `src/app/admin/categories/page.tsx` — 2-column: form (kiri) + table (kanan) | 90 min | ⬜ |
-| 7.4 | Hierarchy | Parent category dropdown, indented display dengan "—" prefix | 30 min | ⬜ |
-| 7.5 | Post Count | Aggregate `_count` posts per category | 15 min | ⬜ |
-| 7.6 | Inline Edit | Edit nama, slug, description langsung di tabel | 30 min | ⬜ |
-| 7.7 | Validation | Unique slug check, prevent self-referential parent | 15 min | ⬜ |
+| 7.1 | Zod Validators | `src/lib/validators/category.ts` — create/update schema | 15 min | ✅ |
+| 7.2 | Server Actions | `src/actions/category.ts` — CRUD (getCategories, create, update, delete) dengan hierarchy | 45 min | ✅ |
+| 7.3 | Category Page UI | `src/app/admin/categories/page.tsx` — 2-column: form (kiri) + table (kanan) | 90 min | ✅ |
+| 7.4 | Hierarchy | Parent category dropdown, indented display dengan "—" prefix | 30 min | ✅ |
+| 7.5 | Post Count | Aggregate `_count` posts per category | 15 min | ✅ |
+| 7.6 | Inline Edit | Edit nama, slug, description langsung di tabel | 30 min | ✅ |
+| 7.7 | Validation | Unique slug check, prevent self-referential parent | 15 min | ✅ |
 
 **Deliverables:** Full category management dengan hierarchy.
 
@@ -229,13 +229,13 @@ graph LR
 - `src/app/admin/categories/page.tsx`
 
 **Acceptance Criteria:**
-- [ ] Buat kategori baru dengan name, slug (auto-generate), parent, description
-- [ ] Slug auto-generate dari name, bisa diedit manual
-- [ ] Parent category dropdown menampilkan hierarchy
-- [ ] Tabel menampilkan kategori dengan indentasi hierarchy
-- [ ] Post count ditampilkan per kategori
-- [ ] Edit inline dan delete berfungsi
-- [ ] Slug unik — duplikat ditolak
+- [x] Buat kategori baru dengan name, slug (auto-generate), parent, description
+- [x] Slug auto-generate dari name, bisa diedit manual
+- [x] Parent category dropdown menampilkan hierarchy
+- [x] Tabel menampilkan kategori dengan indentasi hierarchy
+- [x] Post count ditampilkan per kategori
+- [x] Edit inline dan delete berfungsi
+- [x] Slug unik — duplikat ditolak
 
 ---
 
@@ -243,12 +243,12 @@ graph LR
 
 | # | Task | Detail | Estimasi | Status |
 |---|---|---|---|---|
-| 8.1 | Zod Validators | `src/lib/validators/tag.ts` — create/update schema | 10 min | ⬜ |
-| 8.2 | Server Actions | `src/actions/tag.ts` — CRUD tags | 30 min | ⬜ |
-| 8.3 | Tag Page UI | `src/app/admin/tags/page.tsx` — 2-column layout (tanpa hierarchy) | 60 min | ⬜ |
-| 8.4 | Tag Input Component | `src/components/admin/tag-input.tsx` — autocomplete tag untuk post editor | 45 min | ⬜ |
-| 8.5 | Post Count | Aggregate `_count` per tag | 15 min | ⬜ |
-| 8.6 | Inline Edit | Edit nama, slug, description | 20 min | ⬜ |
+| 8.1 | Zod Validators | `src/lib/validators/tag.ts` — create/update schema | 10 min | ✅ |
+| 8.2 | Server Actions | `src/actions/tag.ts` — CRUD tags | 30 min | ✅ |
+| 8.3 | Tag Page UI | `src/app/admin/tags/page.tsx` — 2-column layout (tanpa hierarchy) | 60 min | ✅ |
+| 8.4 | Tag Input Component | `src/components/admin/tag-input.tsx` — autocomplete tag untuk post editor | 45 min | ✅ |
+| 8.5 | Post Count | Aggregate `_count` per tag | 15 min | ✅ |
+| 8.6 | Inline Edit | Edit nama, slug, description | 20 min | ✅ |
 
 **Deliverables:** Full tag management + reusable tag input component.
 
@@ -261,10 +261,10 @@ graph LR
 - `src/components/admin/tag-input.tsx`
 
 **Acceptance Criteria:**
-- [ ] Buat/edit/hapus tag
-- [ ] Slug auto-generate, unique
-- [ ] Tag input component dengan autocomplete search
-- [ ] Post count per tag ditampilkan
+- [x] Buat/edit/hapus tag
+- [x] Slug auto-generate, unique
+- [x] Tag input component dengan autocomplete search
+- [x] Post count per tag ditampilkan
 
 ---
 
@@ -272,15 +272,15 @@ graph LR
 
 | # | Task | Detail | Estimasi | Status |
 |---|---|---|---|---|
-| 5.1 | Zod Validators | `src/lib/validators/post.ts` — CreatePostInput, UpdatePostInput | 30 min | ⬜ |
-| 5.2 | Server Actions | `src/actions/post.ts` — getPosts, getPostById, create, update, delete, bulkAction | 120 min | ⬜ |
-| 5.3 | Data Table | Install `@tanstack/react-table`, buat `src/components/admin/data-table.tsx` generic | 60 min | ⬜ |
-| 5.4 | Post List Page | `src/app/admin/posts/page.tsx` — data table, filter status tabs, search, pagination, bulk actions | 120 min | ⬜ |
-| 5.5 | Post Editor Page | `src/app/admin/posts/new/page.tsx` & `[id]/edit/page.tsx` — title, slug, editor, sidebar | 150 min | ⬜ |
-| 5.6 | Slug Input | `src/components/admin/slug-input.tsx` — auto-generate dari title, editable, uniqueness check | 20 min | ⬜ |
-| 5.7 | Auto-save | `src/hooks/use-auto-save.ts` — 60s interval untuk drafts | 30 min | ⬜ |
-| 5.8 | Status Workflow | Draft → Pending → Published, Trash soft-delete | 20 min | ⬜ |
-| 5.9 | Revalidation | `revalidatePath` pada setiap mutation | 10 min | ⬜ |
+| 5.1 | Zod Validators | `src/lib/validators/post.ts` — CreatePostInput, UpdatePostInput | 30 min | ✅ |
+| 5.2 | Server Actions | `src/actions/post.ts` — getPosts, getPostById, create, update, delete, bulkAction | 120 min | ✅ |
+| 5.3 | Data Table | Install `@tanstack/react-table`, buat `src/components/admin/data-table.tsx` generic | 60 min | ✅ |
+| 5.4 | Post List Page | `src/app/admin/posts/page.tsx` — data table, filter status tabs, search, pagination, bulk actions | 120 min | ✅ |
+| 5.5 | Post Editor Page | `src/app/admin/posts/new/page.tsx` & `[id]/edit/page.tsx` — title, slug, editor, sidebar | 150 min | ✅ |
+| 5.6 | Slug Input | `src/components/admin/slug-input.tsx` — auto-generate dari title, editable, uniqueness check | 20 min | ✅ |
+| 5.7 | Auto-save | `src/hooks/use-auto-save.ts` — 60s interval untuk drafts | 30 min | ✅ |
+| 5.8 | Status Workflow | Draft → Pending → Published, Trash soft-delete | 20 min | ✅ |
+| 5.9 | Revalidation | `revalidatePath` pada setiap mutation | 10 min | ✅ |
 
 **Deliverables:** Full post CRUD dengan editor, filter, bulk actions.
 
