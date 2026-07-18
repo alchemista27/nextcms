@@ -129,16 +129,16 @@ graph LR
 
 | # | Task | Detail | Estimasi | Status |
 |---|---|---|---|---|
-| 3.1 | Install MUI Icons | `@mui/icons-material`, `@mui/material`, `@emotion/react`, `@emotion/styled` | 15 min | ⬜ |
-| 3.2 | Install shadcn components | `button`, `card`, `dropdown-menu`, `sheet`, `separator`, `avatar`, `breadcrumb`, `skeleton`, `collapsible`, `tooltip`, `scroll-area`, `badge` | 15 min | ⬜ |
-| 3.3 | Admin Layout | `src/app/admin/layout.tsx` — wrapper dengan sidebar + header + content area | 30 min | ⬜ |
-| 3.4 | Sidebar | Collapsible sidebar, menu items dengan MUI icons, active state, sub-menus | 90 min | ⬜ |
-| 3.5 | Header | Breadcrumb, search trigger, notification bell, user dropdown, "Visit Site" | 60 min | ⬜ |
-| 3.6 | Mobile Responsive | Sheet sidebar untuk mobile, hamburger toggle, responsive breakpoints | 45 min | ⬜ |
-| 3.7 | Theme/Query Provider | `src/components/providers/query-provider.tsx`, optional theme toggle | 30 min | ⬜ |
-| 3.8 | Loading States | `admin/loading.tsx` — skeleton loaders untuk content area | 15 min | ⬜ |
+| 3.1 | Install MUI Icons | `@mui/icons-material`, `@mui/material`, `@emotion/react`, `@emotion/styled` | 15 min | ✅ |
+| 3.2 | Install shadcn components | `button`, `card`, `dropdown-menu`, `sheet`, `separator`, `avatar`, `breadcrumb`, `skeleton`, `collapsible`, `tooltip`, `scroll-area`, `badge` | 15 min | ✅ |
+| 3.3 | Admin Layout | `src/app/admin/layout.tsx` — wrapper dengan sidebar + header + content area | 30 min | ✅ |
+| 3.4 | Sidebar | Collapsible sidebar, menu items dengan MUI icons, active state, sub-menus | 90 min | ✅ |
+| 3.5 | Header | Breadcrumb, search trigger, notification bell, user dropdown, "Visit Site" | 60 min | ✅ |
+| 3.6 | Mobile Responsive | Sheet sidebar untuk mobile, hamburger toggle, responsive breakpoints | 45 min | ✅ |
+| 3.7 | Theme/Query Provider | `src/components/providers/query-provider.tsx`, optional theme toggle | 30 min | ✅ |
+| 3.8 | Loading States | `admin/loading.tsx` — skeleton loaders untuk content area | 15 min | ✅ |
 
-**Deliverables:** Admin shell yang fully functional, navigasi bekerja di semua ukuran layar.
+**Deliverables:** ✅ Admin shell yang fully functional, navigasi bekerja di semua ukuran layar.
 
 **Dependencies:** M1, M2
 
