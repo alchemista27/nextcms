@@ -16,7 +16,6 @@ export const menuItemSchema = z.object({
   type: z.string(),
   referenceId: z.string().nullable().optional(),
   target: z.string().nullable().optional(),
-  cssClass: z.string().nullable().optional(),
   order: z.number().int(),
 });
 

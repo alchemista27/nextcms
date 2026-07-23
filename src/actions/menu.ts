@@ -121,36 +121,37 @@ export async function saveMenuItems(menuId: string, itemsData: unknown) {
   try {
     const { items } = saveMenuItemsSchema.parse({ menuId, items: itemsData });
 
-    // Use a transaction to delete old items and insert new ones
     await prisma.$transaction(async (tx) => {
       // 1. Delete all existing items for this menu
       await tx.menuItem.deleteMany({
         where: { menuId },
       });
 
-      // 2. We need to handle parent IDs. Since we're inserting new items, the old UUIDs might not be valid 
-      // if we're creating them fresh. However, if the client passes consistent IDs (even temporary ones), 
-      // we can map them. The best way is to insert them in a way that respects hierarchy or just use the IDs 
-      // provided by the client if they are valid UUIDs.
-      // But we can also insert them one by one or allow Prisma to handle the relations.
-      
-      // We will assume the client generates valid CUIDs or UUIDs for new items and maintains the parentId relations correctly.
-      
+      // 2. Insert all items WITHOUT parentId first (to avoid FK constraint issues)
       for (const item of items) {
         await tx.menuItem.create({
           data: {
-            id: item.id, // Ensure client passes stable IDs
+            id: item.id,
             menuId: menuId,
-            parentId: item.parentId,
+            parentId: null, // Will be set in step 3
             label: item.label,
-            url: item.url,
-            type: item.type,
+            url: item.url || "/",
+            type: item.type as any,
             referenceId: item.referenceId,
-            target: item.target,
-            cssClass: item.cssClass,
+            target: item.target || "_self",
             order: item.order,
           },
         });
+      }
+
+      // 3. Now update parentIds for items that have a parent
+      for (const item of items) {
+        if (item.parentId) {
+          await tx.menuItem.update({
+            where: { id: item.id },
+            data: { parentId: item.parentId },
+          });
+        }
       }
     });
 

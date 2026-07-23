@@ -104,20 +104,22 @@ export async function getActivityLog() {
   await requireRole(["ADMIN", "EDITOR"]);
 
   try {
-    // For now we'll just mock this by fetching latest posts and pages since we don't have an Audit table
     const recentPosts = await prisma.post.findMany({
       take: 5,
       orderBy: { updatedAt: "desc" },
-      select: { id: true, title: true, updatedAt: true, type: true }
+      select: { id: true, title: true, updatedAt: true }
     });
 
     const recentPages = await prisma.page.findMany({
       take: 5,
       orderBy: { updatedAt: "desc" },
-      select: { id: true, title: true, updatedAt: true, type: true }
+      select: { id: true, title: true, updatedAt: true }
     });
 
-    const combined = [...recentPosts, ...recentPages]
+    const combined = [
+      ...recentPosts.map(p => ({ ...p, entityType: "Post" })),
+      ...recentPages.map(p => ({ ...p, entityType: "Page" }))
+    ]
       .sort((a, b) => b.updatedAt.getTime() - a.updatedAt.getTime())
       .slice(0, 10);
 

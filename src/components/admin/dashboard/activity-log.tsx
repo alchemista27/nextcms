@@ -28,7 +28,7 @@ export default function ActivityLog({ activities }: ActivityLogProps) {
                 <div className="w-[calc(100%-3rem)] md:w-[calc(50%-2rem)] p-3 rounded-lg border border-gray-100 bg-gray-50 shadow-sm ml-10 md:ml-0">
                   <div className="flex items-center justify-between mb-1">
                     <span className="text-xs font-semibold text-[#00704A] uppercase">
-                      {activity.type}
+                      {activity.entityType}
                     </span>
                     <span className="text-xs text-gray-400">
                       {formatDate(activity.updatedAt)}

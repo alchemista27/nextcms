@@ -1,6 +1,7 @@
 "use client";
 
-import { useState, useTransition, useMemo } from "react";
+import { useState, useTransition, useEffect } from "react";
+import { useRouter } from "next/navigation";
 import { createMenu, updateMenu, deleteMenu, saveMenuItems } from "@/actions/menu";
 import { DndContext, closestCenter, KeyboardSensor, PointerSensor, useSensor, useSensors, DragEndEvent } from "@dnd-kit/core";
 import { arrayMove, SortableContext, sortableKeyboardCoordinates, verticalListSortingStrategy, useSortable } from "@dnd-kit/sortable";
@@ -133,6 +134,7 @@ function SortableMenuItem({
 
 // --- Main Component ---
 export default function MenuBuilderClient({ menus, pages, posts, categories }: Props) {
+  const router = useRouter();
   const [isPending, startTransition] = useTransition();
   const [selectedMenuId, setSelectedMenuId] = useState<string>(menus[0]?.id || "new");
   const [menuName, setMenuName] = useState("");
@@ -149,8 +151,7 @@ export default function MenuBuilderClient({ menus, pages, posts, categories }: P
 
   const activeMenu = menus.find(m => m.id === selectedMenuId);
 
-  // Initialize working items when selected menu changes
-  useMemo(() => {
+  useEffect(() => {
     if (selectedMenuId === "new") {
       setMenuName("");
       setMenuLocation("");
@@ -160,8 +161,6 @@ export default function MenuBuilderClient({ menus, pages, posts, categories }: P
       setMenuName(activeMenu.name);
       setMenuLocation(activeMenu.location || "");
       
-      // Flatten the hierarchical items for the drag and drop list
-      // For simplicity, we just take them ordered, and compute depth based on parentId
       const flatItems = [...activeMenu.items].sort((a, b) => a.order - b.order);
       setItems(flatItems);
       
@@ -195,7 +194,7 @@ export default function MenuBuilderClient({ menus, pages, posts, categories }: P
     }
   };
 
-  const generateId = () => Math.random().toString(36).substr(2, 9);
+  const generateId = () => crypto.randomUUID();
 
   const addItems = (type: MenuItemType, selection: any[]) => {
     const newItems = selection.map(s => {
@@ -272,7 +271,6 @@ export default function MenuBuilderClient({ menus, pages, posts, categories }: P
 
           return {
             ...item,
-            id: item.id.length < 15 ? crypto.randomUUID() : item.id, // Only generate UUID for new items if they don't have one
             menuId: currentMenuId,
             parentId,
             order: index,
@@ -280,8 +278,11 @@ export default function MenuBuilderClient({ menus, pages, posts, categories }: P
         });
 
         // 3. Save Items
-        await saveMenuItems(currentMenuId, finalItems);
+        const resSave = await saveMenuItems(currentMenuId, finalItems);
+        if (!resSave.success) return alert(resSave.error);
+        
         alert("Menu saved successfully!");
+        router.refresh();
       } catch (err) {
         alert("Failed to save menu");
       }
