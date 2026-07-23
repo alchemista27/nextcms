@@ -18,7 +18,8 @@ import ImageIcon from "@mui/icons-material/Image";
 import TableChartIcon from "@mui/icons-material/TableChart";
 import YouTubeIcon from "@mui/icons-material/YouTube";
 import { clsx } from "clsx";
-import { useCallback } from "react";
+import { useCallback, useState } from "react";
+import { MediaPicker } from "@/components/admin/media-picker";
 
 interface ToolbarProps {
   editor: Editor | null;
@@ -42,13 +43,15 @@ export function Toolbar({ editor }: ToolbarProps) {
     editor.chain().focus().extendMarkRange("link").setLink({ href: url }).run();
   }, [editor]);
 
-  const addImage = useCallback(() => {
-    if (!editor) return;
-    const url = window.prompt("Image URL");
+  const [isMediaPickerOpen, setIsMediaPickerOpen] = useState(false);
 
-    if (url) {
-      editor.chain().focus().setImage({ src: url }).run();
-    }
+  const addImage = useCallback(() => {
+    setIsMediaPickerOpen(true);
+  }, []);
+
+  const handleMediaSelect = useCallback((media: { url: string }) => {
+    if (!editor) return;
+    editor.chain().focus().setImage({ src: media.url }).run();
   }, [editor]);
 
   const addYoutubeVideo = useCallback(() => {
@@ -259,6 +262,11 @@ export function Toolbar({ editor }: ToolbarProps) {
       >
         <RedoIcon fontSize="small" />
       </ToolbarButton>
+      <MediaPicker
+        open={isMediaPickerOpen}
+        onClose={() => setIsMediaPickerOpen(false)}
+        onSelect={handleMediaSelect}
+      />
     </div>
   );
 }

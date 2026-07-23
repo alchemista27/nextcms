@@ -327,14 +327,14 @@ graph LR
 
 | # | Task | Detail | Estimasi | Status |
 |---|---|---|---|---|
-| 6.1 | Zod Validators | `src/lib/validators/page.ts` | 15 min | ⬜ |
-| 6.2 | Server Actions | `src/actions/page.ts` — CRUD pages (mirip post, tanpa categories/tags) | 60 min | ⬜ |
-| 6.3 | Page List | `src/app/admin/pages/page.tsx` — data table, hierarchical indent | 60 min | ⬜ |
-| 6.4 | Page Editor | `src/app/admin/pages/new/page.tsx` & `[id]/edit/page.tsx` — editor + sidebar | 90 min | ⬜ |
-| 6.5 | Page Attributes | Sidebar: parent page dropdown (nested), template selection, menu order | 30 min | ⬜ |
-| 6.6 | Quick Edit | Inline edit di list (title, slug, status) | 30 min | ⬜ |
-| 6.7 | Hierarchy | Parent-child relationship display, nested dropdown | 30 min | ⬜ |
-| 6.8 | Revalidation | `revalidatePath` | 10 min | ⬜ |
+| 6.1 | Zod Validators | `src/lib/validators/page.ts` | 15 min | ✅ |
+| 6.2 | Server Actions | `src/actions/page.ts` — CRUD pages (mirip post, tanpa categories/tags) | 60 min | ✅ |
+| 6.3 | Page List | `src/app/admin/pages/page.tsx` — data table, hierarchical indent | 60 min | ✅ |
+| 6.4 | Page Editor | `src/app/admin/pages/new/page.tsx` & `[id]/edit/page.tsx` — editor + sidebar | 90 min | ✅ |
+| 6.5 | Page Attributes | Sidebar: parent page dropdown (nested), template selection, menu order | 30 min | ✅ |
+| 6.6 | Quick Edit | Inline edit di list (title, slug, status) | 30 min | ✅ |
+| 6.7 | Hierarchy | Parent-child relationship display, nested dropdown | 30 min | ✅ |
+| 6.8 | Revalidation | `revalidatePath` | 10 min | ✅ |
 
 **Deliverables:** Full page CRUD dengan hierarchy dan template support.
 
@@ -348,12 +348,12 @@ graph LR
 - `src/app/admin/pages/[id]/edit/page.tsx`
 
 **Acceptance Criteria:**
-- [ ] Page list dengan hierarchical indent (child pages di-indent)
-- [ ] Template selection: Default, Full Width, Sidebar
-- [ ] Parent page dropdown (hierarchical)
-- [ ] Menu order berfungsi
-- [ ] Quick edit inline
-- [ ] SEO fields berfungsi
+- [x] Page list dengan hierarchical indent (child pages di-indent)
+- [x] Template selection: Default, Full Width, Sidebar
+- [x] Parent page dropdown (hierarchical)
+- [x] Menu order berfungsi
+- [x] Quick edit inline
+- [x] SEO fields berfungsi
 
 ---
 
@@ -361,17 +361,17 @@ graph LR
 
 | # | Task | Detail | Estimasi | Status |
 |---|---|---|---|---|
-| 9.1 | Install Sharp | `sharp` untuk image processing & thumbnail | 15 min | ⬜ |
-| 9.2 | Upload API Route | `POST /api/upload` — multipart handling, file save, DB record | 90 min | ⬜ |
-| 9.3 | File Storage | `src/lib/upload.ts` — organize by year/month, unique filename, thumbnail generation | 60 min | ⬜ |
-| 9.4 | Zod Validators | `src/lib/validators/media.ts` — MIME whitelist, max size validation | 15 min | ⬜ |
-| 9.5 | Server Actions | `src/actions/media.ts` — getMedia, updateMedia metadata | 30 min | ⬜ |
-| 9.6 | Media Library Page | `src/app/admin/media/page.tsx` — grid view + list view toggle | 90 min | ⬜ |
-| 9.7 | Drag & Drop Upload | DnD upload zone + progress indicator | 60 min | ⬜ |
-| 9.8 | Media Detail | Drawer/modal — preview, alt text, caption, file info, copy URL, delete | 60 min | ⬜ |
-| 9.9 | Media Picker | `src/components/admin/media-picker.tsx` — reusable dialog: upload tab + library tab + search | 90 min | ⬜ |
-| 9.10 | Editor Integration | Integrasikan media picker ke Tiptap image extension dan Featured Image | 30 min | ⬜ |
-| 9.11 | Delete | `DELETE /api/upload/:id` — hapus file dari disk + DB record | 20 min | ⬜ |
+| 9.1 | Install Sharp | `sharp` untuk image processing & thumbnail | 15 min | ✅ |
+| 9.2 | Upload API Route | `POST /api/upload` — multipart handling, file save, DB record | 90 min | ✅ |
+| 9.3 | File Storage | `src/lib/upload.ts` — organize by year/month, unique filename, thumbnail generation | 60 min | ✅ |
+| 9.4 | Zod Validators | `src/lib/validators/media.ts` — MIME whitelist, max size validation | 15 min | ✅ |
+| 9.5 | Server Actions | `src/actions/media.ts` — getMedia, updateMedia metadata | 30 min | ✅ |
+| 9.6 | Media Library Page | `src/app/admin/media/page.tsx` — grid view + list view toggle | 90 min | ✅ |
+| 9.7 | Drag & Drop Upload | DnD upload zone + progress indicator | 60 min | ✅ |
+| 9.8 | Media Detail | Drawer/modal — preview, alt text, caption, file info, copy URL, delete | 60 min | ✅ |
+| 9.9 | Media Picker | `src/components/admin/media-picker.tsx` — reusable dialog: upload tab + library tab + search | 90 min | ✅ |
+| 9.10 | Editor Integration | Integrasikan media picker ke Tiptap image extension dan Featured Image | 30 min | ✅ |
+| 9.11 | Delete | `DELETE /api/upload/:id` — hapus file dari disk + DB record | 20 min | ✅ |
 
 **Deliverables:** Media library, upload system, reusable media picker terintegrasi ke editor.
 
@@ -388,18 +388,18 @@ graph LR
 - Update: `src/components/editor/extensions/image-upload.ts`
 
 **Acceptance Criteria:**
-- [ ] Upload file via drag & drop dan click
-- [ ] Progress indicator saat upload
-- [ ] Multi-file upload support
-- [ ] File disimpan di `public/uploads/YYYY/MM/` dengan nama unik
-- [ ] Thumbnail auto-generate untuk gambar
-- [ ] MIME type whitelist (jpg, png, gif, webp, svg, mp4, webm, pdf)
-- [ ] Max size 10MB
-- [ ] Grid view (thumbnail grid) dan list view (table) toggle
-- [ ] Media detail modal: preview, edit alt/caption, file info
-- [ ] Copy URL button
-- [ ] Delete file + record
-- [ ] Media picker dialog berfungsi di post/page editor (featured image + inline image)
+- [x] Upload file via drag & drop dan click
+- [x] Progress indicator saat upload
+- [x] Multi-file upload support
+- [x] File disimpan di `public/uploads/YYYY/MM/` dengan nama unik
+- [x] Thumbnail auto-generate untuk gambar
+- [x] MIME type whitelist (jpg, png, gif, webp, svg, mp4, webm, pdf)
+- [x] Max size 10MB
+- [x] Grid view (thumbnail grid) dan list view (table) toggle
+- [x] Media detail modal: preview, edit alt/caption, file info
+- [x] Copy URL button
+- [x] Delete file + record
+- [x] Media picker dialog berfungsi di post/page editor (featured image + inline image)
 
 ---
 
@@ -411,16 +411,16 @@ graph LR
 
 | # | Task | Detail | Estimasi | Status |
 |---|---|---|---|---|
-| 10.1 | Install DnD Kit | `@dnd-kit/core`, `@dnd-kit/sortable` | 10 min | ⬜ |
-| 10.2 | Zod Validators | `src/lib/validators/menu.ts` | 15 min | ⬜ |
-| 10.3 | Server Actions | `src/actions/menu.ts` — CRUD menus + nested menu items | 60 min | ⬜ |
-| 10.4 | Menu Page UI | `src/app/admin/menus/page.tsx` — select/create menu, assign location | 30 min | ⬜ |
-| 10.5 | Item Sources Panel | Kiri: Pages, Posts, Categories checkbox lists + Custom Links form + "Add to Menu" | 60 min | ⬜ |
-| 10.6 | Drag & Drop Tree | @dnd-kit sortable + nestable tree structure (sub-items) | 120 min | ⬜ |
-| 10.7 | Item Edit | Inline edit label, URL, target (`_self` / `_blank`), CSS class | 30 min | ⬜ |
-| 10.8 | Menu Item Types | Resolve reference: Page → slug, Post → slug, Category → slug | 30 min | ⬜ |
-| 10.9 | Save & Serialize | Flatten tree → ordered items with `parentId` + `order` fields | 30 min | ⬜ |
-| 10.10 | Preview | Visual preview of menu structure | 30 min | ⬜ |
+| 10.1 | Install DnD Kit | `@dnd-kit/core`, `@dnd-kit/sortable` | 10 min | ✅ |
+| 10.2 | Zod Validators | `src/lib/validators/menu.ts` | 15 min | ✅ |
+| 10.3 | Server Actions | `src/actions/menu.ts` — CRUD menus + nested menu items | 60 min | ✅ |
+| 10.4 | Menu Page UI | `src/app/admin/menus/page.tsx` — select/create menu, assign location | 30 min | ✅ |
+| 10.5 | Item Sources Panel | Kiri: Pages, Posts, Categories checkbox lists + Custom Links form + "Add to Menu" | 60 min | ✅ |
+| 10.6 | Drag & Drop Tree | @dnd-kit sortable + nestable tree structure (sub-items) | 120 min | ✅ |
+| 10.7 | Item Edit | Inline edit label, URL, target (`_self` / `_blank`), CSS class | 30 min | ✅ |
+| 10.8 | Menu Item Types | Resolve reference: Page → slug, Post → slug, Category → slug | 30 min | ✅ |
+| 10.9 | Save & Serialize | Flatten tree → ordered items with `parentId` + `order` fields | 30 min | ✅ |
+| 10.10 | Preview | Visual preview of menu structure | 30 min | ✅ |
 
 **Deliverables:** Full menu builder dengan drag & drop reordering dan nesting.
 
@@ -432,14 +432,14 @@ graph LR
 - `src/app/admin/menus/page.tsx`
 
 **Acceptance Criteria:**
-- [ ] Buat/hapus menu
-- [ ] Assign menu ke lokasi (Header, Footer, Sidebar)
-- [ ] Tambah item dari: Pages, Posts, Categories, Custom Links
-- [ ] Drag & drop reorder items
-- [ ] Drag to nest (sub-menu)
-- [ ] Edit label, URL, target per item
-- [ ] Save menyimpan urutan dan hierarchy yang benar
-- [ ] Delete item (cascade children optional)
+- [x] Buat/hapus menu
+- [x] Assign menu ke lokasi (Header, Footer, Sidebar)
+- [x] Tambah item dari: Pages, Posts, Categories, Custom Links
+- [x] Drag & drop reorder items
+- [x] Drag to nest (sub-menu)
+- [x] Edit label, URL, target per item
+- [x] Save menyimpan urutan dan hierarchy yang benar
+- [x] Delete item (cascade children optional)
 
 ---
 
@@ -447,14 +447,14 @@ graph LR
 
 | # | Task | Detail | Estimasi | Status |
 |---|---|---|---|---|
-| 11.1 | Zod Validators | `src/lib/validators/user.ts` — create/update schema | 15 min | ⬜ |
-| 11.2 | Server Actions | `src/actions/user.ts` — CRUD, changePassword, role change | 60 min | ⬜ |
-| 11.3 | User List Page | `src/app/admin/users/page.tsx` — data table, filter by role, search, bulk actions | 60 min | ⬜ |
-| 11.4 | User Edit Page | `src/app/admin/users/[id]/edit/page.tsx` — profile form, avatar, password change | 90 min | ⬜ |
-| 11.5 | Create User Page | `src/app/admin/users/new/page.tsx` — admin buat user baru | 30 min | ⬜ |
-| 11.6 | Own Profile | Non-admin user bisa edit profil sendiri (name, email, bio, avatar, password) | 30 min | ⬜ |
-| 11.7 | Role Guards | Middleware + server action checks: hanya ADMIN bisa akses `/admin/users` | 30 min | ⬜ |
-| 11.8 | Avatar Integration | Avatar upload via media picker | 30 min | ⬜ |
+| 11.1 | Zod Validators | `src/lib/validators/user.ts` — create/update schema | 15 min | ✅ |
+| 11.2 | Server Actions | `src/actions/user.ts` — CRUD, changePassword, role change | 60 min | ✅ |
+| 11.3 | User List Page | `src/app/admin/users/page.tsx` — data table, filter by role, search, bulk actions | 60 min | ✅ |
+| 11.4 | User Edit Page | `src/app/admin/users/[id]/edit/page.tsx` — profile form, avatar, password change | 90 min | ✅ |
+| 11.5 | Create User Page | `src/app/admin/users/new/page.tsx` — admin buat user baru | 30 min | ✅ |
+| 11.6 | Own Profile | Non-admin user bisa edit profil sendiri (name, email, bio, avatar, password) | 30 min | ✅ |
+| 11.7 | Role Guards | Middleware + server action checks: hanya ADMIN bisa akses `/admin/users` | 30 min | ✅ |
+| 11.8 | Avatar Integration | Avatar upload via media picker | 30 min | ✅ |
 
 **Deliverables:** Full user management dengan RBAC enforcement.
 
@@ -468,15 +468,15 @@ graph LR
 - `src/app/admin/users/[id]/edit/page.tsx`
 
 **Acceptance Criteria:**
-- [ ] User list: avatar, name, email, role badge, posts count, date
-- [ ] Filter by role tabs
-- [ ] Search by name/email
-- [ ] Bulk action: Change Role
-- [ ] Create user (admin only) — name, email, password, role
-- [ ] Edit user — name, email, role, bio, avatar
-- [ ] Change password (optional field)
-- [ ] Non-admin hanya bisa edit profil sendiri
-- [ ] Delete user (admin only, tidak bisa self-delete)
+- [x] User list: avatar, name, email, role badge, posts count, date
+- [x] Filter by role tabs
+- [x] Search by name/email
+- [x] Bulk action: Change Role
+- [x] Create user (admin only) — name, email, password, role
+- [x] Edit user — name, email, role, bio, avatar
+- [x] Change password (optional field)
+- [x] Non-admin hanya bisa edit profil sendiri
+- [x] Delete user (admin only, tidak bisa self-delete)
 
 ---
 

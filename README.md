@@ -4,6 +4,28 @@
 
 ---
 
+## 📸 Screenshots
+
+### Login & Register
+| Login Page | Register Page |
+|:---:|:---:|
+| ![Login Page](./screenshots/04.PNG) | ![Register Page](./screenshots/05.PNG) |
+
+### Admin Dashboard & Navigation
+| Dashboard | Posts List |
+|:---:|:---:|
+| ![Dashboard](./screenshots/01.PNG) | ![Posts List](./screenshots/02.PNG) |
+
+### Post Editor
+![Post Editor](./screenshots/03.PNG)
+
+### Media Management
+| Media Library | Media Picker — Library Tab | Media Picker — Upload Tab |
+|:---:|:---:|:---:|
+| ![Media Library](./screenshots/06.PNG) | ![Media Picker Library](./screenshots/07.PNG) | ![Media Picker Upload](./screenshots/08.PNG) |
+
+---
+
 ## 🛠️ Tech Stack & Fitur Utama
 
 - **Core Framework**: Next.js 14+ (App Router), React 18+, TypeScript.

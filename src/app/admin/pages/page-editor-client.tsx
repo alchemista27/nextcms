@@ -4,127 +4,107 @@ import { useState, useCallback } from "react";
 import { useRouter } from "next/navigation";
 import { RichTextEditor } from "@/components/editor/rich-text-editor";
 import { SlugInput } from "@/components/admin/slug-input";
-import { TagInput } from "@/components/admin/tag-input";
 import { useAutoSave } from "@/hooks/use-auto-save";
-import { createPost, updatePost } from "@/actions/post";
-import { PostInput } from "@/lib/validators/post";
+import { createPage, updatePage } from "@/actions/page";
+import { PageInput } from "@/lib/validators/page";
 import { generateSlug } from "@/lib/utils";
 import SaveIcon from "@mui/icons-material/SaveOutlined";
 import PublishIcon from "@mui/icons-material/PublicOutlined";
-import DeleteOutlineIcon from "@mui/icons-material/DeleteOutlined";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import ExpandLessIcon from "@mui/icons-material/ExpandLess";
 import PublicIcon from "@mui/icons-material/Public";
 import ImageIcon from "@mui/icons-material/ImageOutlined";
 import { MediaPicker } from "@/components/admin/media-picker";
 
-interface Category {
+interface ParentPage {
   id: string;
-  name: string;
-  slug: string;
+  title: string;
   parentId: string | null;
   depth?: number;
-  children?: Category[];
 }
 
-interface Tag {
-  id: string;
-  name: string;
-  slug: string;
-}
-
-interface Post {
+interface Page {
   id: string;
   title: string;
   slug: string;
   content: string | null;
-  excerpt: string | null;
   status: string;
-  featuredImage: string | null;
+  template: string;
+  menuOrder: number;
   metaTitle: string | null;
   metaDescription: string | null;
   ogImage: string | null;
-  categories: { id: string; name: string; slug: string }[];
-  tags: { id: string; name: string; slug: string }[];
+  parentId: string | null;
 }
 
-interface PostEditorClientProps {
-  post: Post | null;
+interface PageEditorClientProps {
+  page: Page | null;
   authorId: string;
-  allCategories: Category[];
-  allTags: Tag[];
+  allPages: ParentPage[];
 }
 
-// Build hierarchical categories
-function buildHierarchy(items: Category[], parentId: string | null = null, depth = 0): Category[] {
-  let result: Category[] = [];
+// Build hierarchical pages
+function buildHierarchy(items: ParentPage[], parentId: string | null = null, depth = 0, currentId: string | null = null): ParentPage[] {
+  let result: ParentPage[] = [];
   for (const item of items) {
+    if (item.id === currentId) continue; // Prevent self-nesting
     if (item.parentId === parentId) {
       result.push({ ...item, depth });
-      result = result.concat(buildHierarchy(items, item.id, depth + 1));
+      result = result.concat(buildHierarchy(items, item.id, depth + 1, currentId));
     }
   }
   return result;
 }
 
-type SidebarSection = "publish" | "categories" | "tags" | "featured" | "excerpt" | "seo";
+type SidebarSection = "publish" | "attributes" | "seo" | "featured";
 
-export default function PostEditorClient({ post, authorId, allCategories, allTags }: PostEditorClientProps) {
+export default function PageEditorClient({ page, authorId, allPages }: PageEditorClientProps) {
   const router = useRouter();
-  const isEditing = !!post;
+  const isEditing = !!page;
 
-  const [title, setTitle] = useState(post?.title || "");
-  const [slug, setSlug] = useState(post?.slug || "");
-  const [content, setContent] = useState(post?.content || "");
-  const [excerpt, setExcerpt] = useState(post?.excerpt || "");
-  const [status, setStatus] = useState(post?.status || "DRAFT");
-  const [featuredImage, setFeaturedImage] = useState(post?.featuredImage || "");
-  const [metaTitle, setMetaTitle] = useState(post?.metaTitle || "");
-  const [metaDescription, setMetaDescription] = useState(post?.metaDescription || "");
-  const [ogImage, setOgImage] = useState(post?.ogImage || "");
-  const [selectedCategoryIds, setSelectedCategoryIds] = useState<string[]>(
-    post?.categories.map((c) => c.id) || []
-  );
-  const [selectedTags, setSelectedTags] = useState<{ id?: string; name: string }[]>(
-    post?.tags.map((t) => ({ id: t.id, name: t.name })) || []
-  );
+  const [title, setTitle] = useState(page?.title || "");
+  const [slug, setSlug] = useState(page?.slug || "");
+  const [content, setContent] = useState(page?.content || "");
+  const [status, setStatus] = useState(page?.status || "DRAFT");
+  const [template, setTemplate] = useState(page?.template || "default");
+  const [menuOrder, setMenuOrder] = useState(page?.menuOrder || 0);
+  const [parentId, setParentId] = useState(page?.parentId || "");
+  const [metaTitle, setMetaTitle] = useState(page?.metaTitle || "");
+  const [metaDescription, setMetaDescription] = useState(page?.metaDescription || "");
+  const [ogImage, setOgImage] = useState(page?.ogImage || "");
 
   const [openSections, setOpenSections] = useState<Record<SidebarSection, boolean>>({
-    publish: true, categories: true, tags: true, featured: true, excerpt: true, seo: false,
+    publish: true, attributes: true, featured: true, seo: false,
   });
 
   const [isSaving, setIsSaving] = useState(false);
   const [saveError, setSaveError] = useState("");
   const [isMediaPickerOpen, setIsMediaPickerOpen] = useState(false);
 
-  const hierarchicalCategories = buildHierarchy(allCategories);
+  const hierarchicalPages = buildHierarchy(allPages, null, 0, page?.id || null);
 
-  const buildPostInput = useCallback((overrideStatus?: string): PostInput => {
-    const existingTagIds = selectedTags.filter((t) => t.id).map((t) => t.id!);
-    const newTagNames = selectedTags.filter((t) => !t.id).map((t) => t.name);
+  const buildPageInput = useCallback((overrideStatus?: string): PageInput => {
     return {
       title,
       slug,
       content,
-      excerpt,
       status: (overrideStatus || status) as any,
-      featuredImage: featuredImage || null,
+      template,
+      menuOrder: Number(menuOrder),
       metaTitle: metaTitle || null,
       metaDescription: metaDescription || null,
       ogImage: ogImage || null,
-      categoryIds: selectedCategoryIds,
-      tagIds: existingTagIds,
-      newTagNames,
+      parentId: parentId || null,
     };
-  }, [title, slug, content, excerpt, status, featuredImage, metaTitle, metaDescription, ogImage, selectedCategoryIds, selectedTags]);
+  }, [title, slug, content, status, template, menuOrder, metaTitle, metaDescription, ogImage, parentId]);
 
-  const autoSaveFn = useCallback(async (data: PostInput) => {
+  const autoSaveFn = useCallback(async (data: PageInput) => {
     if (!isEditing || !title) return { success: true };
-    return await updatePost(post!.id, data, authorId);
-  }, [isEditing, post, authorId, title]);
+    return await updatePage(page!.id, data, authorId);
+  }, [isEditing, page, authorId, title]);
 
   const { statusLabel, statusColor } = useAutoSave(
-    buildPostInput(),
+    buildPageInput(),
     autoSaveFn,
     { enabled: isEditing && !!title }
   );
@@ -137,11 +117,11 @@ export default function PostEditorClient({ post, authorId, allCategories, allTag
     setIsSaving(true);
     setSaveError("");
 
-    const data = buildPostInput(overrideStatus);
+    const data = buildPageInput(overrideStatus);
 
     const result = isEditing
-      ? await updatePost(post!.id, data, authorId)
-      : await createPost(data, authorId);
+      ? await updatePage(page!.id, data, authorId)
+      : await createPage(data, authorId);
 
     setIsSaving(false);
 
@@ -149,7 +129,7 @@ export default function PostEditorClient({ post, authorId, allCategories, allTag
       setSaveError(result.error || "Failed to save");
     } else {
       if (!isEditing && result.data) {
-        router.push(`/admin/posts/${(result.data as any).id}/edit`);
+        router.push(`/admin/pages/${(result.data as any).id}/edit`);
       } else {
         router.refresh();
       }
@@ -178,9 +158,9 @@ export default function PostEditorClient({ post, authorId, allCategories, allTag
       {/* Top Bar */}
       <div className="flex items-center justify-between mb-5">
         <div className="flex items-center gap-3">
-          <a href="/admin/posts" className="text-gray-400 hover:text-gray-600 text-sm">← Posts</a>
+          <a href="/admin/pages" className="text-gray-400 hover:text-gray-600 text-sm">← Pages</a>
           <h1 className="text-lg font-semibold text-gray-900">
-            {isEditing ? "Edit Post" : "New Post"}
+            {isEditing ? "Edit Page" : "New Page"}
           </h1>
           {isEditing && statusLabel && (
             <span className={`text-xs ${statusColor}`}>{statusLabel}</span>
@@ -197,7 +177,7 @@ export default function PostEditorClient({ post, authorId, allCategories, allTag
           <div className="bg-white rounded-lg border border-gray-200 shadow-sm p-4 space-y-3">
             <input
               type="text"
-              placeholder="Enter post title…"
+              placeholder="Enter page title…"
               value={title}
               onChange={(e) => setTitle(e.target.value)}
               className="w-full text-3xl font-bold text-gray-900 placeholder:text-gray-300 border-none outline-none focus:ring-0 bg-transparent resize-none"
@@ -206,7 +186,7 @@ export default function PostEditorClient({ post, authorId, allCategories, allTag
               value={slug}
               onChange={setSlug}
               title={title}
-              postId={post?.id}
+              postId={page?.id}
             />
           </div>
 
@@ -214,31 +194,8 @@ export default function PostEditorClient({ post, authorId, allCategories, allTag
           <RichTextEditor
             content={content}
             onChange={setContent}
-            placeholder="Start writing your post…"
+            placeholder="Start writing your page…"
           />
-
-          {/* Excerpt Area */}
-          <div className="bg-white rounded-lg border border-gray-200 shadow-sm overflow-hidden">
-            <button
-              className="w-full flex items-center justify-between px-4 py-3 text-sm font-semibold text-gray-800 hover:bg-gray-50 transition-colors"
-              onClick={() => toggleSection("excerpt")}
-            >
-              Excerpt
-              {openSections.excerpt ? <ExpandLessIcon fontSize="small" className="text-gray-400" /> : <ExpandMoreIcon fontSize="small" className="text-gray-400" />}
-            </button>
-            {openSections.excerpt && (
-              <div className="px-4 pb-4 pt-1 border-t border-gray-100">
-                <textarea
-                  rows={3}
-                  placeholder="Write a short description…"
-                  value={excerpt}
-                  onChange={(e) => setExcerpt(e.target.value)}
-                  className="w-full border border-gray-300 rounded px-2 py-1.5 text-sm focus:outline-none focus:ring-1 focus:ring-[#00704A] resize-none"
-                />
-                <p className="text-xs text-gray-400 mt-1">Leave blank to auto-generate from content.</p>
-              </div>
-            )}
-          </div>
 
           {/* SEO Area */}
           <div className="bg-white rounded-lg border border-gray-200 shadow-sm overflow-hidden">
@@ -252,40 +209,38 @@ export default function PostEditorClient({ post, authorId, allCategories, allTag
             {openSections.seo && (
               <div className="px-4 pb-4 pt-1 border-t border-gray-100 space-y-4">
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Meta Title</label>
+                  <label className="block text-xs font-medium text-gray-700 mb-1">Meta Title</label>
                   <input
                     type="text"
-                    placeholder={title || "Post title"}
                     value={metaTitle}
                     onChange={(e) => setMetaTitle(e.target.value)}
+                    placeholder={title || "Page Title"}
                     className="w-full border border-gray-300 rounded px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-[#00704A]"
                   />
-                  <p className="text-xs text-gray-400 mt-1">{metaTitle.length}/60 chars</p>
+                  <div className="text-right text-xs text-gray-400 mt-1">{metaTitle.length}/60</div>
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Meta Description</label>
+                  <label className="block text-xs font-medium text-gray-700 mb-1">Meta Description</label>
                   <textarea
                     rows={3}
-                    placeholder="Describe this post for search engines…"
                     value={metaDescription}
                     onChange={(e) => setMetaDescription(e.target.value)}
                     className="w-full border border-gray-300 rounded px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-[#00704A] resize-none"
                   />
-                  <p className={`text-xs mt-1 ${metaDescription.length > 160 ? "text-red-500" : "text-gray-400"}`}>
-                    {metaDescription.length}/160 chars
-                  </p>
+                  <div className="text-right text-xs text-gray-400 mt-1">{metaDescription.length}/160</div>
                 </div>
-                {/* Google preview */}
-                {(title || metaDescription) && (
-                  <div className="border border-gray-200 rounded p-4 bg-gray-50">
-                    <p className="text-xs text-gray-500 mb-2 font-medium uppercase tracking-wider">Google Search Preview</p>
-                    <div className="space-y-1">
-                      <p className="text-[20px] text-[#1a0dab] hover:underline cursor-pointer leading-snug line-clamp-1">{metaTitle || title}</p>
-                      <p className="text-[#006621] text-[14px]">nextcms.local › posts › {slug}</p>
-                      <p className="text-[#545454] text-[14px] leading-snug line-clamp-2">{metaDescription || excerpt || "No description."}</p>
-                    </div>
+                
+                {/* Search Preview */}
+                <div className="pt-2">
+                  <label className="block text-xs font-medium text-gray-700 mb-2">Google Preview</label>
+                  <div className="p-3 bg-gray-50 border border-gray-200 rounded-md">
+                    <p className="text-[#1a0dab] text-lg hover:underline cursor-pointer truncate">
+                      {metaTitle || title || "Page Title"} - NextCMS
+                    </p>
+                    <p className="text-[#006621] text-[14px]">nextcms.local › {slug}</p>
+                    <p className="text-[#545454] text-[14px] leading-snug line-clamp-2">{metaDescription || "No description."}</p>
                   </div>
-                )}
+                </div>
               </div>
             )}
           </div>
@@ -304,13 +259,12 @@ export default function PostEditorClient({ post, authorId, allCategories, allTag
                   className="w-full border border-gray-300 rounded px-2 py-1.5 text-sm focus:outline-none focus:ring-1 focus:ring-[#00704A]"
                 >
                   <option value="DRAFT">Draft</option>
-                  <option value="PENDING">Pending Review</option>
                   <option value="PUBLISHED">Published</option>
                 </select>
               </div>
               <div>
                 <label className="block text-xs text-gray-500 mb-1 font-medium uppercase tracking-wide">Visibility</label>
-                <div className="text-sm text-gray-700 flex items-center gap-1"><PublicIcon fontSize="small" className="text-gray-500"/> Public</div>
+                <div className="text-sm text-gray-700 flex items-center gap-1"><PublicIcon fontSize="small" className="text-gray-500" /> Public</div>
               </div>
               <hr className="border-gray-100" />
               <div className="flex gap-2">
@@ -334,57 +288,54 @@ export default function PostEditorClient({ post, authorId, allCategories, allTag
             </div>
           </SidebarCard>
 
-          {/* Categories */}
-          <SidebarCard id="categories" title="Categories">
-            <div className="space-y-1.5 max-h-48 overflow-y-auto pt-1">
-              {hierarchicalCategories.length === 0 ? (
-                <p className="text-xs text-gray-400">No categories yet.</p>
-              ) : (
-                hierarchicalCategories.map((cat) => (
-                  <label key={cat.id} className="flex items-center gap-2 cursor-pointer hover:bg-gray-50 px-1 py-0.5 rounded">
-                    <input
-                      type="checkbox"
-                      checked={selectedCategoryIds.includes(cat.id)}
-                      onChange={(e) => {
-                        if (e.target.checked) {
-                          setSelectedCategoryIds((prev) => [...prev, cat.id]);
-                        } else {
-                          setSelectedCategoryIds((prev) => prev.filter((id) => id !== cat.id));
-                        }
-                      }}
-                      className="rounded border-gray-300 text-[#00704A] focus:ring-[#00704A]"
-                    />
-                    <span className="text-sm text-gray-700">
-                      {"— ".repeat(cat.depth || 0)}{cat.name}
-                    </span>
-                  </label>
-                ))
-              )}
-            </div>
-            <a href="/admin/categories" target="_blank" className="text-xs text-[#00704A] hover:underline mt-2 block">
-              + Add New Category
-            </a>
-          </SidebarCard>
-
-          {/* Tags */}
-          <SidebarCard id="tags" title="Tags">
-            <div className="pt-1">
-              <TagInput
-                value={selectedTags}
-                onChange={setSelectedTags}
-                availableTags={allTags}
-                placeholder="Add tags…"
-              />
-              <p className="text-xs text-gray-400 mt-1.5">Separate tags with commas or press Enter.</p>
-            </div>
+          {/* Page Attributes */}
+          <SidebarCard id="attributes" title="Page Attributes">
+             <div className="space-y-3 pt-1">
+               <div>
+                 <label className="block text-xs text-gray-500 mb-1 font-medium uppercase tracking-wide">Parent Page</label>
+                 <select
+                   value={parentId}
+                   onChange={(e) => setParentId(e.target.value)}
+                   className="w-full border border-gray-300 rounded px-2 py-1.5 text-sm focus:outline-none focus:ring-1 focus:ring-[#00704A]"
+                 >
+                   <option value="">(No Parent)</option>
+                   {hierarchicalPages.map((p) => (
+                     <option key={p.id} value={p.id}>
+                       {"—".repeat(p.depth || 0)} {p.title}
+                     </option>
+                   ))}
+                 </select>
+               </div>
+               <div>
+                 <label className="block text-xs text-gray-500 mb-1 font-medium uppercase tracking-wide">Template</label>
+                 <select
+                   value={template}
+                   onChange={(e) => setTemplate(e.target.value)}
+                   className="w-full border border-gray-300 rounded px-2 py-1.5 text-sm focus:outline-none focus:ring-1 focus:ring-[#00704A]"
+                 >
+                   <option value="default">Default Template</option>
+                   <option value="full-width">Full Width</option>
+                   <option value="sidebar">With Sidebar</option>
+                 </select>
+               </div>
+               <div>
+                 <label className="block text-xs text-gray-500 mb-1 font-medium uppercase tracking-wide">Menu Order</label>
+                 <input
+                   type="number"
+                   value={menuOrder}
+                   onChange={(e) => setMenuOrder(Number(e.target.value))}
+                   className="w-full border border-gray-300 rounded px-2 py-1.5 text-sm focus:outline-none focus:ring-1 focus:ring-[#00704A]"
+                 />
+               </div>
+             </div>
           </SidebarCard>
 
           {/* Featured Image */}
           <SidebarCard id="featured" title="Featured Image">
             <div className="flex flex-col items-center justify-center p-6 border-2 border-dashed border-gray-300 rounded-lg bg-gray-50 text-gray-500 hover:bg-gray-100 hover:border-gray-400 transition-colors cursor-pointer" onClick={() => setIsMediaPickerOpen(true)}>
-              {featuredImage ? (
+              {ogImage ? (
                 // eslint-disable-next-line @next/next/no-img-element
-                <img src={featuredImage} alt="Featured" className="w-full h-auto rounded" />
+                <img src={ogImage} alt="Featured" className="w-full h-auto rounded" />
               ) : (
                 <>
                   <ImageIcon className="text-gray-400 mb-2" />
@@ -392,9 +343,9 @@ export default function PostEditorClient({ post, authorId, allCategories, allTag
                 </>
               )}
             </div>
-            {featuredImage && (
+            {ogImage && (
               <button 
-                onClick={() => setFeaturedImage("")}
+                onClick={() => setOgImage("")}
                 className="w-full mt-2 text-sm text-red-600 hover:underline"
               >
                 Remove image
@@ -406,7 +357,7 @@ export default function PostEditorClient({ post, authorId, allCategories, allTag
       <MediaPicker
         open={isMediaPickerOpen}
         onClose={() => setIsMediaPickerOpen(false)}
-        onSelect={(media) => setFeaturedImage(media.url)}
+        onSelect={(media) => setOgImage(media.url)}
       />
     </div>
   );

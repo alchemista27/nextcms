@@ -31,7 +31,6 @@ export function BubbleMenu({ editor }: BubbleMenuProps) {
   return (
     <TiptapBubbleMenu
       editor={editor}
-      tippyOptions={{ duration: 100 }}
       className="flex items-center space-x-1 bg-gray-900 shadow-lg border border-gray-700 rounded-lg p-1"
     >
       <button
