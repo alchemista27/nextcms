@@ -1,6 +1,7 @@
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 import { getPageById, getPages } from "@/actions/page";
+import { getRevisionCount } from "@/actions/revision";
 import PageEditorClient from "../../page-editor-client";
 import { redirect } from "next/navigation";
 import { Metadata } from "next";
@@ -18,10 +19,12 @@ export default async function EditPagePage({ params }: EditPagePageProps) {
   if (!session?.user?.id) redirect("/login");
   
   const resolvedParams = await params;
+  const id = resolvedParams.id;
 
-  const [pageResult, pagesResult] = await Promise.all([
-    getPageById(resolvedParams.id),
+  const [pageResult, allPagesResult, revisionCount] = await Promise.all([
+    getPageById(id),
     getPages(),
+    getRevisionCount("page", id),
   ]);
 
   if (!pageResult.success || !pageResult.data) {
@@ -30,9 +33,10 @@ export default async function EditPagePage({ params }: EditPagePageProps) {
 
   return (
     <PageEditorClient
-      page={pageResult.data}
+      page={pageResult.data as any}
       authorId={session.user.id}
-      allPages={pagesResult.success ? (pagesResult.data as any[]) : []}
+      allPages={allPagesResult.success ? (allPagesResult.data as any[]) : []}
+      revisionCount={typeof revisionCount === 'number' ? revisionCount : 0}
     />
   );
 }

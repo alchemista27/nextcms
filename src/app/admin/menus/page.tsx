@@ -12,8 +12,8 @@ export const metadata: Metadata = {
 export default async function MenusPage() {
   const [menusRes, pagesRes, postsRes, categoriesRes] = await Promise.all([
     getMenus(),
-    getPages(1, 100), // Get a bunch for selection
-    getPosts(1, 100),
+    getPages(),
+    getPosts({ page: 1, perPage: 100 }),
     getCategories(),
   ]);
 

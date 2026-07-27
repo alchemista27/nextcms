@@ -11,13 +11,14 @@ import { PostInput } from "@/lib/validators/post";
 import { generateSlug } from "@/lib/utils";
 import SaveIcon from "@mui/icons-material/SaveOutlined";
 import PublishIcon from "@mui/icons-material/PublicOutlined";
+import HistoryIcon from "@mui/icons-material/History";
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutlined";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import ExpandLessIcon from "@mui/icons-material/ExpandLess";
 import PublicIcon from "@mui/icons-material/Public";
 import ImageIcon from "@mui/icons-material/ImageOutlined";
 import { MediaPicker } from "@/components/admin/media-picker";
-
+import { SeoFields } from "@/components/admin/seo-fields";
 interface Category {
   id: string;
   name: string;
@@ -53,6 +54,7 @@ interface PostEditorClientProps {
   authorId: string;
   allCategories: Category[];
   allTags: Tag[];
+  revisionCount?: number;
 }
 
 // Build hierarchical categories
@@ -69,7 +71,7 @@ function buildHierarchy(items: Category[], parentId: string | null = null, depth
 
 type SidebarSection = "publish" | "categories" | "tags" | "featured" | "excerpt" | "seo";
 
-export default function PostEditorClient({ post, authorId, allCategories, allTags }: PostEditorClientProps) {
+export default function PostEditorClient({ post, authorId, allCategories, allTags, revisionCount = 0 }: PostEditorClientProps) {
   const router = useRouter();
   const isEditing = !!post;
 
@@ -241,54 +243,19 @@ export default function PostEditorClient({ post, authorId, allCategories, allTag
           </div>
 
           {/* SEO Area */}
-          <div className="bg-white rounded-lg border border-gray-200 shadow-sm overflow-hidden">
-            <button
-              className="w-full flex items-center justify-between px-4 py-3 text-sm font-semibold text-gray-800 hover:bg-gray-50 transition-colors"
-              onClick={() => toggleSection("seo")}
-            >
-              SEO Configuration
-              {openSections.seo ? <ExpandLessIcon fontSize="small" className="text-gray-400" /> : <ExpandMoreIcon fontSize="small" className="text-gray-400" />}
-            </button>
-            {openSections.seo && (
-              <div className="px-4 pb-4 pt-1 border-t border-gray-100 space-y-4">
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Meta Title</label>
-                  <input
-                    type="text"
-                    placeholder={title || "Post title"}
-                    value={metaTitle}
-                    onChange={(e) => setMetaTitle(e.target.value)}
-                    className="w-full border border-gray-300 rounded px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-[#00704A]"
-                  />
-                  <p className="text-xs text-gray-400 mt-1">{metaTitle.length}/60 chars</p>
-                </div>
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Meta Description</label>
-                  <textarea
-                    rows={3}
-                    placeholder="Describe this post for search engines…"
-                    value={metaDescription}
-                    onChange={(e) => setMetaDescription(e.target.value)}
-                    className="w-full border border-gray-300 rounded px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-[#00704A] resize-none"
-                  />
-                  <p className={`text-xs mt-1 ${metaDescription.length > 160 ? "text-red-500" : "text-gray-400"}`}>
-                    {metaDescription.length}/160 chars
-                  </p>
-                </div>
-                {/* Google preview */}
-                {(title || metaDescription) && (
-                  <div className="border border-gray-200 rounded p-4 bg-gray-50">
-                    <p className="text-xs text-gray-500 mb-2 font-medium uppercase tracking-wider">Google Search Preview</p>
-                    <div className="space-y-1">
-                      <p className="text-[20px] text-[#1a0dab] hover:underline cursor-pointer leading-snug line-clamp-1">{metaTitle || title}</p>
-                      <p className="text-[#006621] text-[14px]">nextcms.local › posts › {slug}</p>
-                      <p className="text-[#545454] text-[14px] leading-snug line-clamp-2">{metaDescription || excerpt || "No description."}</p>
-                    </div>
-                  </div>
-                )}
-              </div>
-            )}
-          </div>
+          <SeoFields
+            metaTitle={metaTitle}
+            metaDescription={metaDescription}
+            ogImage={ogImage}
+            slug={`blog/${slug}`}
+            postTitle={title}
+            excerpt={excerpt}
+            onMetaTitleChange={setMetaTitle}
+            onMetaDescriptionChange={setMetaDescription}
+            onOgImageChange={setOgImage}
+            isOpen={openSections.seo}
+            onToggle={() => toggleSection("seo")}
+          />
         </div>
 
         {/* Sidebar */}
@@ -312,6 +279,13 @@ export default function PostEditorClient({ post, authorId, allCategories, allTag
                 <label className="block text-xs text-gray-500 mb-1 font-medium uppercase tracking-wide">Visibility</label>
                 <div className="text-sm text-gray-700 flex items-center gap-1"><PublicIcon fontSize="small" className="text-gray-500"/> Public</div>
               </div>
+              {isEditing && revisionCount > 0 && (
+                <div>
+                  <a href={`/admin/revisions/post/${post.id}`} className="text-xs text-[#00704A] hover:underline flex items-center gap-1 mt-1">
+                    <HistoryIcon fontSize="small" /> {revisionCount} Revisions
+                  </a>
+                </div>
+              )}
               <hr className="border-gray-100" />
               <div className="flex gap-2">
                 <button

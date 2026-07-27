@@ -50,6 +50,8 @@ const menuItems = [
     submenu: [
       { name: "General", href: "/admin/settings/general" },
       { name: "Reading", href: "/admin/settings/reading" },
+      { name: "SEO", href: "/admin/settings/seo" },
+      { name: "Permalinks", href: "/admin/settings/permalinks" },
     ],
   },
 ];

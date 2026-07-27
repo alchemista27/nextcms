@@ -2,10 +2,9 @@
 
 import { useState, useTransition } from "react";
 import { createPost } from "@/actions/post";
-import { toast } from "sonner"; // If sonner is not installed, we'll just use basic alert or handle it gracefully
 import { useRouter } from "next/navigation";
 
-export default function QuickDraft() {
+export default function QuickDraft({ authorId }: { authorId: string }) {
   const router = useRouter();
   const [isPending, startTransition] = useTransition();
   const [title, setTitle] = useState("");
@@ -27,10 +26,12 @@ export default function QuickDraft() {
       const res = await createPost({
         title,
         slug,
-        content: `<p>${content}</p>`, // basic wrapper
+        content: `<p>${content}</p>`,
         status: "DRAFT",
-        type: "POST",
-      });
+        categoryIds: [],
+        tagIds: [],
+        newTagNames: [],
+      }, authorId);
 
       if (res.success) {
         setSuccess(true);

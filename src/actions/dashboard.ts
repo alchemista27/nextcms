@@ -70,7 +70,7 @@ export async function getChartData() {
     const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
     
     // Initialize chart data with last 6 months
-    const chartData = [];
+    const chartData: { name: string; year: number; month: number; posts: number; }[] = [];
     for (let i = 5; i >= 0; i--) {
       const d = new Date();
       d.setMonth(d.getMonth() - i);

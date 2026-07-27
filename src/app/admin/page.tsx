@@ -21,16 +21,16 @@ export default async function DashboardPage() {
     getActivityLog(),
   ]);
 
-  const stats = statsRes.success ? statsRes.data : { posts: 0, pages: 0, media: 0, users: 0 };
-  const recentPosts = recentPostsRes.success ? recentPostsRes.data : [];
-  const chartData = chartDataRes.success ? chartDataRes.data : [];
-  const activities = activityRes.success ? activityRes.data : [];
+  const stats = (statsRes.success ? statsRes.data : { posts: 0, pages: 0, media: 0, users: 0 }) ?? { posts: 0, pages: 0, media: 0, users: 0 };
+  const recentPosts = (recentPostsRes.success ? recentPostsRes.data : []) ?? [];
+  const chartData = (chartDataRes.success ? chartDataRes.data : []) ?? [];
+  const activities = (activityRes.success ? activityRes.data : []) ?? [];
 
   return (
     <div className="space-y-6">
       <div>
         <h1 className="text-2xl font-semibold text-gray-900">
-          Welcome back, {session?.user?.name || "Admin"}!
+          Welcome back, {session?.name || "Admin"}!
         </h1>
         <p className="text-sm text-gray-500 mt-1">Here is what is happening with your site today.</p>
       </div>
@@ -44,7 +44,7 @@ export default async function DashboardPage() {
         </div>
         
         <div className="lg:col-span-4 space-y-6">
-          <QuickDraft />
+          <QuickDraft authorId={session.id} />
           <ActivityLog activities={activities} />
         </div>
       </div>

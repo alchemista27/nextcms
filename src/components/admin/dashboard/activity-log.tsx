@@ -35,7 +35,7 @@ export default function ActivityLog({ activities }: ActivityLogProps) {
                     </span>
                   </div>
                   <p className="text-sm text-gray-700 line-clamp-1">
-                    Updated <span className="font-medium">"{activity.title}"</span>
+                    Updated <span className="font-medium">&quot;{activity.title}&quot;</span>
                   </p>
                 </div>
               </div>

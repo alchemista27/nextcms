@@ -55,10 +55,10 @@ export async function getUsers(page = 1, limit = 10, search = "", role = "") {
 }
 
 export async function getUserById(id: string) {
-  const session = await requireAuth();
+  const currentUser = await requireAuth();
   
   // Can only fetch if ADMIN or if fetching self
-  if (session.user.role !== "ADMIN" && session.user.id !== id) {
+  if (currentUser.role !== "ADMIN" && currentUser.id !== id) {
     return { success: false, error: "Unauthorized" };
   }
 
@@ -108,13 +108,13 @@ export async function createUser(data: unknown) {
 }
 
 export async function updateUser(id: string, data: unknown) {
-  const session = await requireAuth();
+  const currentUser = await requireAuth();
   
   try {
     let updateData: any = {};
     
     // If admin updating anyone
-    if (session.user.role === "ADMIN") {
+    if (currentUser.role === "ADMIN") {
       const validatedData = updateUserSchema.parse(data);
       updateData = { ...validatedData };
       if (updateData.password) {
@@ -124,7 +124,7 @@ export async function updateUser(id: string, data: unknown) {
       }
     } 
     // If user updating themselves
-    else if (session.user.id === id) {
+    else if (currentUser.id === id) {
       const validatedData = updateProfileSchema.parse(data);
       updateData = { ...validatedData };
       if (updateData.password) {
@@ -151,7 +151,7 @@ export async function updateUser(id: string, data: unknown) {
     });
 
     revalidatePath("/admin/users");
-    if (session.user.id === id) {
+    if (currentUser.id === id) {
       revalidatePath("/admin/profile");
     }
     
@@ -164,9 +164,9 @@ export async function updateUser(id: string, data: unknown) {
 }
 
 export async function deleteUser(id: string) {
-  const session = await requireRole(["ADMIN"]);
+  const currentUser = await requireRole(["ADMIN"]);
   
-  if (session.user.id === id) {
+  if (currentUser.id === id) {
     return { success: false, error: "Cannot delete your own account" };
   }
 
@@ -181,9 +181,9 @@ export async function deleteUser(id: string) {
 }
 
 export async function bulkActionUsers(ids: string[], action: string, value?: string) {
-  const session = await requireRole(["ADMIN"]);
+  const currentUser = await requireRole(["ADMIN"]);
   
-  if (ids.includes(session.user.id)) {
+  if (ids.includes(currentUser.id)) {
     return { success: false, error: "Cannot perform bulk actions on your own account" };
   }
 

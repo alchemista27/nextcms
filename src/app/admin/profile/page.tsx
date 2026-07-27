@@ -10,7 +10,7 @@ export const metadata: Metadata = {
 export default async function ProfilePage() {
   const session = await requireAuth();
   
-  const res = await getUserById(session.user.id);
+  const res = await getUserById(session.id);
   
   if (!res.success || !res.data) {
     return <div>Error loading profile</div>;

@@ -21,11 +21,10 @@ interface TreeMenuItem {
   menuId: string;
   parentId: string | null;
   label: string;
-  url: string;
+  url: string | null;
   type: string;
   referenceId: string | null;
-  target: string | null;
-  cssClass: string | null;
+  target: string;
   order: number;
 }
 
@@ -110,7 +109,7 @@ function SortableMenuItem({
                 <label className="block text-xs font-medium text-gray-600 mb-1">URL</label>
                 <input 
                   type="text" 
-                  value={item.url} 
+                  value={item.url ?? ""} 
                   onChange={(e) => onUpdate(item.id, { url: e.target.value })}
                   className="w-full text-sm border border-gray-300 rounded px-2 py-1.5 focus:outline-none focus:ring-1 focus:ring-[#00704A]" 
                 />
@@ -208,8 +207,7 @@ export default function MenuBuilderClient({ menus, pages, posts, categories }: P
         url: type === "CUSTOM" ? customUrl : type === "PAGE" ? `/${s.slug}` : type === "POST" ? `/blog/${s.slug}` : `/category/${s.slug}`,
         type,
         referenceId: s.id || null,
-        target: null,
-        cssClass: null,
+        target: "_self",
         order: 0
       };
     });

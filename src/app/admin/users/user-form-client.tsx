@@ -3,7 +3,7 @@
 import { useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
 import { createUser, updateUser } from "@/actions/user";
-import MediaPicker from "@/components/admin/media-picker";
+import { MediaPicker } from "@/components/admin/media-picker";
 
 interface UserFormClientProps {
   initialData?: any;
@@ -33,8 +33,8 @@ export default function UserFormClient({ initialData, isOwnProfile = false }: Us
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleMediaSelect = (url: string) => {
-    setFormData((prev) => ({ ...prev, avatar: url }));
+  const handleMediaSelect = (media: { url: string }) => {
+    setFormData((prev) => ({ ...prev, avatar: media.url }));
     setShowMediaPicker(false);
   };
 
@@ -201,6 +201,7 @@ export default function UserFormClient({ initialData, isOwnProfile = false }: Us
 
       {showMediaPicker && (
         <MediaPicker
+          open={showMediaPicker}
           onSelect={handleMediaSelect}
           onClose={() => setShowMediaPicker(false)}
         />

@@ -2,7 +2,7 @@
 
 import { useState, useTransition } from "react";
 import { saveSettings } from "@/actions/settings";
-import MediaPicker from "@/components/admin/media-picker";
+import { MediaPicker } from "@/components/admin/media-picker";
 import { useRouter } from "next/navigation";
 import ImageOutlinedIcon from "@mui/icons-material/ImageOutlined";
 
@@ -35,11 +35,11 @@ export default function AppearanceClient({ initialSettings }: AppearanceClientPr
     setFormData(prev => ({ ...prev, [name]: value }));
   };
 
-  const handleMediaSelect = (url: string) => {
+  const handleMediaSelect = (media: { url: string }) => {
     if (activeMediaTarget === "logo") {
-      setFormData(prev => ({ ...prev, appearance_logo: url }));
+      setFormData(prev => ({ ...prev, appearance_logo: media.url }));
     } else if (activeMediaTarget === "favicon") {
-      setFormData(prev => ({ ...prev, appearance_favicon: url }));
+      setFormData(prev => ({ ...prev, appearance_favicon: media.url }));
     }
     setActiveMediaTarget(null);
   };
@@ -310,6 +310,7 @@ export default function AppearanceClient({ initialSettings }: AppearanceClientPr
 
       {activeMediaTarget && (
         <MediaPicker 
+          open={!!activeMediaTarget}
           onClose={() => setActiveMediaTarget(null)}
           onSelect={handleMediaSelect}
         />

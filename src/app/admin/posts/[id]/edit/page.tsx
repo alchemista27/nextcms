@@ -3,6 +3,7 @@ import { authOptions } from "@/lib/auth";
 import { getCategories } from "@/actions/category";
 import { getTags } from "@/actions/tag";
 import { getPostById } from "@/actions/post";
+import { getRevisionCount } from "@/actions/revision";
 import PostEditorClient from "../../post-editor-client";
 import { notFound, redirect } from "next/navigation";
 import { Metadata } from "next";
@@ -24,10 +25,11 @@ export default async function EditPostPage({ params }: EditPostPageProps) {
   const session = await getServerSession(authOptions);
   if (!session?.user?.id) redirect("/login");
 
-  const [postResult, categoriesResult, tagsResult] = await Promise.all([
+  const [postResult, categoriesResult, tagsResult, revisionCount] = await Promise.all([
     getPostById(id),
     getCategories(),
     getTags(),
+    getRevisionCount("post", id),
   ]);
 
   if (!postResult.success || !postResult.data) {
@@ -40,6 +42,7 @@ export default async function EditPostPage({ params }: EditPostPageProps) {
       authorId={session.user.id}
       allCategories={categoriesResult.success ? (categoriesResult.data as any[]) : []}
       allTags={tagsResult.success ? (tagsResult.data as any[]) : []}
+      revisionCount={typeof revisionCount === 'number' ? revisionCount : 0}
     />
   );
 }

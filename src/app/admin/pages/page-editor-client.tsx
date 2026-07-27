@@ -10,12 +10,13 @@ import { PageInput } from "@/lib/validators/page";
 import { generateSlug } from "@/lib/utils";
 import SaveIcon from "@mui/icons-material/SaveOutlined";
 import PublishIcon from "@mui/icons-material/PublicOutlined";
+import HistoryIcon from "@mui/icons-material/History";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import ExpandLessIcon from "@mui/icons-material/ExpandLess";
 import PublicIcon from "@mui/icons-material/Public";
 import ImageIcon from "@mui/icons-material/ImageOutlined";
 import { MediaPicker } from "@/components/admin/media-picker";
-
+import { SeoFields } from "@/components/admin/seo-fields";
 interface ParentPage {
   id: string;
   title: string;
@@ -41,6 +42,7 @@ interface PageEditorClientProps {
   page: Page | null;
   authorId: string;
   allPages: ParentPage[];
+  revisionCount?: number;
 }
 
 // Build hierarchical pages
@@ -58,7 +60,7 @@ function buildHierarchy(items: ParentPage[], parentId: string | null = null, dep
 
 type SidebarSection = "publish" | "attributes" | "seo" | "featured";
 
-export default function PageEditorClient({ page, authorId, allPages }: PageEditorClientProps) {
+export default function PageEditorClient({ page, authorId, allPages, revisionCount = 0 }: PageEditorClientProps) {
   const router = useRouter();
   const isEditing = !!page;
 
@@ -198,52 +200,18 @@ export default function PageEditorClient({ page, authorId, allPages }: PageEdito
           />
 
           {/* SEO Area */}
-          <div className="bg-white rounded-lg border border-gray-200 shadow-sm overflow-hidden">
-            <button
-              className="w-full flex items-center justify-between px-4 py-3 text-sm font-semibold text-gray-800 hover:bg-gray-50 transition-colors"
-              onClick={() => toggleSection("seo")}
-            >
-              SEO Configuration
-              {openSections.seo ? <ExpandLessIcon fontSize="small" className="text-gray-400" /> : <ExpandMoreIcon fontSize="small" className="text-gray-400" />}
-            </button>
-            {openSections.seo && (
-              <div className="px-4 pb-4 pt-1 border-t border-gray-100 space-y-4">
-                <div>
-                  <label className="block text-xs font-medium text-gray-700 mb-1">Meta Title</label>
-                  <input
-                    type="text"
-                    value={metaTitle}
-                    onChange={(e) => setMetaTitle(e.target.value)}
-                    placeholder={title || "Page Title"}
-                    className="w-full border border-gray-300 rounded px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-[#00704A]"
-                  />
-                  <div className="text-right text-xs text-gray-400 mt-1">{metaTitle.length}/60</div>
-                </div>
-                <div>
-                  <label className="block text-xs font-medium text-gray-700 mb-1">Meta Description</label>
-                  <textarea
-                    rows={3}
-                    value={metaDescription}
-                    onChange={(e) => setMetaDescription(e.target.value)}
-                    className="w-full border border-gray-300 rounded px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-[#00704A] resize-none"
-                  />
-                  <div className="text-right text-xs text-gray-400 mt-1">{metaDescription.length}/160</div>
-                </div>
-                
-                {/* Search Preview */}
-                <div className="pt-2">
-                  <label className="block text-xs font-medium text-gray-700 mb-2">Google Preview</label>
-                  <div className="p-3 bg-gray-50 border border-gray-200 rounded-md">
-                    <p className="text-[#1a0dab] text-lg hover:underline cursor-pointer truncate">
-                      {metaTitle || title || "Page Title"} - NextCMS
-                    </p>
-                    <p className="text-[#006621] text-[14px]">nextcms.local › {slug}</p>
-                    <p className="text-[#545454] text-[14px] leading-snug line-clamp-2">{metaDescription || "No description."}</p>
-                  </div>
-                </div>
-              </div>
-            )}
-          </div>
+          <SeoFields
+            metaTitle={metaTitle}
+            metaDescription={metaDescription}
+            ogImage={ogImage}
+            slug={slug}
+            postTitle={title}
+            onMetaTitleChange={setMetaTitle}
+            onMetaDescriptionChange={setMetaDescription}
+            onOgImageChange={setOgImage}
+            isOpen={openSections.seo}
+            onToggle={() => toggleSection("seo")}
+          />
         </div>
 
         {/* Sidebar */}
@@ -266,6 +234,13 @@ export default function PageEditorClient({ page, authorId, allPages }: PageEdito
                 <label className="block text-xs text-gray-500 mb-1 font-medium uppercase tracking-wide">Visibility</label>
                 <div className="text-sm text-gray-700 flex items-center gap-1"><PublicIcon fontSize="small" className="text-gray-500" /> Public</div>
               </div>
+              {isEditing && revisionCount > 0 && (
+                <div>
+                  <a href={`/admin/revisions/page/${page.id}`} className="text-xs text-[#00704A] hover:underline flex items-center gap-1 mt-1">
+                    <HistoryIcon fontSize="small" /> {revisionCount} Revisions
+                  </a>
+                </div>
+              )}
               <hr className="border-gray-100" />
               <div className="flex gap-2">
                 <button
