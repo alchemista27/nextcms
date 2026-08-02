@@ -1,0 +1,12 @@
+homepage: https://demo.bosathemes.com/educator/template-kit/home/
+about-us: https://demo.bosathemes.com/educator/template-kit/about-us/
+team: https://demo.bosathemes.com/educator/template-kit/team/
+team-detail: https://demo.bosathemes.com/educator/template-kit/team-detail/
+gallery: https://demo.bosathemes.com/educator/template-kit/gallery/
+archive: https://demo.bosathemes.com/educator/?elementor_library=archive
+testimony: https://demo.bosathemes.com/educator/template-kit/testimonial/
+single-post: https://demo.bosathemes.com/educator/2022/06/15/college-seminar-leadership-team-works/
+contact: https://demo.bosathemes.com/educator/template-kit/contact/
+404-page: https://demo.bosathemes.com/educator/?elementor_library=404-page
+search-result-page: https://demo.bosathemes.com/educator/?elementor_library=search-results
+coming-soon-page: https://demo.bosathemes.com/educator/template-kit/coming-soon/

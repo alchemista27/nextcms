@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gallery — SMaRT School</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: { sans: ['Inter', 'sans-serif'] },
+                    colors: { primary: '#00704A', secondary: '#1E3932', accent: '#D4E9E2', graylight: '#F8F9FA' }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { font-family: 'Inter', sans-serif; color: #4B5563; }
+        .page-hero { background-image: linear-gradient(rgba(30,57,50,0.85), rgba(30,57,50,0.85)), url('https://images.unsplash.com/photo-1543269865-cbf427effbad?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80'); background-size: cover; background-position: center; }
+        .fade-in-section { opacity: 0; transform: translateY(30px); transition: opacity 0.8s ease-out, transform 0.8s ease-out; }
+        .fade-in-section.is-visible { opacity: 1; transform: none; }
+        .gallery-item { overflow: hidden; border-radius: 0.75rem; position: relative; cursor: pointer; }
+        .gallery-item img { transition: transform 0.6s ease; width: 100%; height: 100%; object-fit: cover; }
+        .gallery-item:hover img { transform: scale(1.08); }
+        .gallery-item-overlay { position: absolute; inset: 0; background: rgba(30,57,50,0.85); opacity: 0; transition: opacity 0.4s ease; display: flex; align-items: center; justify-content: center; flex-direction: column; gap: 8px; }
+        .gallery-item:hover .gallery-item-overlay { opacity: 1; }
+        .gallery-item-overlay .icon { transform: scale(0.5); transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1); }
+        .gallery-item:hover .gallery-item-overlay .icon { transform: scale(1); }
+        /* Lightbox */
+        #lightbox { position: fixed; inset: 0; background: rgba(0,0,0,0.95); z-index: 9999; display: none; align-items: center; justify-content: center; padding: 20px; }
+        #lightbox.active { display: flex; }
+        #lightbox img { max-width: 90vw; max-height: 85vh; object-fit: contain; border-radius: 8px; }
+        .filter-btn { transition: all 0.25s ease; }
+        .filter-btn.active { background-color: #00704A; color: white; border-color: #00704A; }
+    </style>
+</head>
+<body class="bg-graylight antialiased">
+    <!-- Topbar -->
+    <div class="bg-secondary text-gray-300 py-2 text-sm hidden lg:block">
+        <div class="container mx-auto px-6 md:px-12 flex justify-between items-center">
+            <div class="flex items-center gap-6">
+                <span class="flex items-center gap-2"><span class="material-icons-outlined text-sm text-primary">phone</span> +62 812 3456 7890</span>
+                <span class="flex items-center gap-2"><span class="material-icons-outlined text-sm text-primary">email</span> info@smartschool.edu</span>
+            </div>
+            <div class="flex items-center gap-4">
+                <a href="#" class="hover:text-white transition-colors">Facebook</a>
+                <a href="#" class="hover:text-white transition-colors">Instagram</a>
+            </div>
+        </div>
+    </div>
+    <!-- Navbar -->
+    <header class="sticky top-0 w-full z-50 bg-white shadow-sm">
+        <div class="container mx-auto px-6 md:px-12 py-4 flex justify-between items-center">
+            <div class="flex items-center gap-3">
+                <div class="w-12 h-12 bg-primary rounded-lg flex items-center justify-center text-white relative overflow-hidden group"><div class="absolute inset-0 bg-white/20 -translate-x-full group-hover:translate-x-full transition-transform duration-700"></div><span class="material-icons-outlined text-2xl">school</span></div>
+                <div class="flex flex-col"><span class="font-bold text-2xl text-secondary leading-none">SMaRT</span><span class="text-xs font-semibold tracking-widest text-primary uppercase">School</span></div>
+            </div>
+            <nav class="hidden lg:flex items-center gap-8 font-semibold text-gray-700">
+                <a href="index.html" class="hover:text-primary transition-colors">Home</a>
+                <a href="about-us.html" class="hover:text-primary transition-colors">About Us</a>
+                <a href="team.html" class="hover:text-primary transition-colors">Teachers</a>
+                <a href="gallery.html" class="text-primary relative after:content-[''] after:absolute after:-bottom-1 after:left-0 after:w-full after:h-0.5 after:bg-primary">Gallery</a>
+                <a href="archive.html" class="hover:text-primary transition-colors">News</a>
+                <a href="contact.html" class="hover:text-primary transition-colors">Contact</a>
+            </nav>
+            <a href="#" class="hidden lg:flex bg-primary hover:bg-secondary text-white px-6 py-2.5 rounded font-semibold transition-all shadow-md items-center gap-2">Apply Now <span class="material-icons-outlined text-sm">arrow_forward</span></a>
+        </div>
+    </header>
+
+    <!-- Page Hero -->
+    <section class="page-hero py-24 lg:py-36">
+        <div class="container mx-auto px-6 md:px-12 text-center">
+            <h1 class="text-4xl lg:text-6xl font-bold text-white mb-4">Photo Gallery</h1>
+            <p class="text-gray-300 text-lg mb-6">Capturing moments of learning, creativity, and achievement</p>
+            <nav class="flex items-center justify-center gap-2 text-sm text-gray-400">
+                <a href="index.html" class="hover:text-white transition-colors">Home</a>
+                <span class="material-icons-outlined text-sm">chevron_right</span>
+                <span class="text-accent">Gallery</span>
+            </nav>
+        </div>
+    </section>
+
+    <!-- Filter -->
+    <section class="py-6 bg-white border-b border-gray-100 sticky top-[69px] z-40 shadow-sm">
+        <div class="container mx-auto px-6 md:px-12 flex items-center gap-3 flex-wrap justify-center">
+            <button class="filter-btn active px-5 py-2 rounded-full border border-primary text-sm font-semibold" onclick="filterGallery('all', this)">All</button>
+            <button class="filter-btn px-5 py-2 rounded-full border border-gray-200 text-gray-600 text-sm font-semibold hover:border-primary hover:text-primary transition-colors" onclick="filterGallery('campus', this)">Campus</button>
+            <button class="filter-btn px-5 py-2 rounded-full border border-gray-200 text-gray-600 text-sm font-semibold hover:border-primary hover:text-primary transition-colors" onclick="filterGallery('events', this)">Events</button>
+            <button class="filter-btn px-5 py-2 rounded-full border border-gray-200 text-gray-600 text-sm font-semibold hover:border-primary hover:text-primary transition-colors" onclick="filterGallery('sports', this)">Sports</button>
+            <button class="filter-btn px-5 py-2 rounded-full border border-gray-200 text-gray-600 text-sm font-semibold hover:border-primary hover:text-primary transition-colors" onclick="filterGallery('arts', this)">Arts</button>
+        </div>
+    </section>
+
+    <!-- Gallery Grid -->
+    <section class="py-16 bg-graylight">
+        <div class="container mx-auto px-6 md:px-12">
+            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4" id="galleryGrid">
+                <div class="gallery-item aspect-square fade-in-section" data-cat="campus" onclick="openLightbox('https://images.unsplash.com/photo-1523050854058-8df90110c9f1?auto=format&fit=crop&w=1200&q=90')">
+                    <img src="https://images.unsplash.com/photo-1523050854058-8df90110c9f1?auto=format&fit=crop&w=600&q=80" alt="Campus">
+                    <div class="gallery-item-overlay"><span class="material-icons-outlined text-white text-4xl icon">zoom_in</span><p class="text-white text-sm font-semibold">Campus Life</p></div>
+                </div>
+                <div class="gallery-item aspect-square fade-in-section" data-cat="events" style="transition-delay:50ms;" onclick="openLightbox('https://images.unsplash.com/photo-1543269865-cbf427effbad?auto=format&fit=crop&w=1200&q=90')">
+                    <img src="https://images.unsplash.com/photo-1543269865-cbf427effbad?auto=format&fit=crop&w=600&q=80" alt="Choir Festival">
+                    <div class="gallery-item-overlay"><span class="material-icons-outlined text-white text-4xl icon">zoom_in</span><p class="text-white text-sm font-semibold">Choir Festival</p></div>
+                </div>
+                <div class="gallery-item aspect-square md:col-span-2 fade-in-section" data-cat="events" style="transition-delay:100ms;" onclick="openLightbox('https://images.unsplash.com/photo-1503676260728-1c00da094a0b?auto=format&fit=crop&w=1200&q=90')">
+                    <img src="https://images.unsplash.com/photo-1503676260728-1c00da094a0b?auto=format&fit=crop&w=1200&q=80" alt="Classroom">
+                    <div class="gallery-item-overlay"><span class="material-icons-outlined text-white text-4xl icon">zoom_in</span><p class="text-white text-sm font-semibold">Learning Together</p></div>
+                </div>
+                <div class="gallery-item aspect-square fade-in-section" data-cat="sports" style="transition-delay:150ms;" onclick="openLightbox('https://images.unsplash.com/photo-1461896836934-ffe607ba8211?auto=format&fit=crop&w=1200&q=90')">
+                    <img src="https://images.unsplash.com/photo-1461896836934-ffe607ba8211?auto=format&fit=crop&w=600&q=80" alt="Sports">
+                    <div class="gallery-item-overlay"><span class="material-icons-outlined text-white text-4xl icon">zoom_in</span><p class="text-white text-sm font-semibold">Athletics Day</p></div>
+                </div>
+                <div class="gallery-item aspect-square fade-in-section" data-cat="arts" style="transition-delay:200ms;" onclick="openLightbox('https://images.unsplash.com/photo-1523580494112-071d38458a4c?auto=format&fit=crop&w=1200&q=90')">
+                    <img src="https://images.unsplash.com/photo-1523580494112-071d38458a4c?auto=format&fit=crop&w=600&q=80" alt="Science Fair">
+                    <div class="gallery-item-overlay"><span class="material-icons-outlined text-white text-4xl icon">zoom_in</span><p class="text-white text-sm font-semibold">Science Fair</p></div>
+                </div>
+                <div class="gallery-item aspect-square fade-in-section" data-cat="campus" style="transition-delay:250ms;" onclick="openLightbox('https://images.unsplash.com/photo-1509062522246-3755977927d7?auto=format&fit=crop&w=1200&q=90')">
+                    <img src="https://images.unsplash.com/photo-1509062522246-3755977927d7?auto=format&fit=crop&w=600&q=80" alt="Library">
+                    <div class="gallery-item-overlay"><span class="material-icons-outlined text-white text-4xl icon">zoom_in</span><p class="text-white text-sm font-semibold">Our Library</p></div>
+                </div>
+                <div class="gallery-item aspect-square fade-in-section" data-cat="sports" style="transition-delay:300ms;" onclick="openLightbox('https://images.unsplash.com/photo-1571260899304-425dea4cf3ae?auto=format&fit=crop&w=1200&q=90')">
+                    <img src="https://images.unsplash.com/photo-1571260899304-425dea4cf3ae?auto=format&fit=crop&w=600&q=80" alt="Basketball">
+                    <div class="gallery-item-overlay"><span class="material-icons-outlined text-white text-4xl icon">zoom_in</span><p class="text-white text-sm font-semibold">Basketball Championship</p></div>
+                </div>
+                <div class="gallery-item aspect-square fade-in-section" data-cat="events" style="transition-delay:350ms;" onclick="openLightbox('https://images.unsplash.com/photo-1526628953301-3e589a6a8b74?auto=format&fit=crop&w=1200&q=90')">
+                    <img src="https://images.unsplash.com/photo-1526628953301-3e589a6a8b74?auto=format&fit=crop&w=600&q=80" alt="Exchange Program">
+                    <div class="gallery-item-overlay"><span class="material-icons-outlined text-white text-4xl icon">zoom_in</span><p class="text-white text-sm font-semibold">Student Exchange</p></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Lightbox -->
+    <div id="lightbox" onclick="closeLightbox()">
+        <button class="absolute top-6 right-6 text-white z-10" onclick="closeLightbox()"><span class="material-icons-outlined text-4xl">close</span></button>
+        <img id="lightboxImg" src="" alt="Gallery Image">
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-secondary text-gray-300 py-12 border-t-4 border-primary">
+        <div class="container mx-auto px-6 md:px-12 text-center">
+            <p class="text-sm">&copy; 2026 NextCMS — Educator Inspired Theme. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        const obs = new IntersectionObserver((entries) => { entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('is-visible'); }); }, { threshold: 0.1 });
+        document.querySelectorAll('.fade-in-section').forEach(el => obs.observe(el));
+
+        function filterGallery(cat, btn) {
+            document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            document.querySelectorAll('#galleryGrid [data-cat]').forEach(item => {
+                item.style.display = (cat === 'all' || item.dataset.cat === cat) ? '' : 'none';
+            });
+        }
+
+        function openLightbox(src) {
+            document.getElementById('lightboxImg').src = src;
+            document.getElementById('lightbox').classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+        function closeLightbox() {
+            document.getElementById('lightbox').classList.remove('active');
+            document.body.style.overflow = '';
+        }
+        document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbox(); });
+    </script>
+</body>
+</html>

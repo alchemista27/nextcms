@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us — SMaRT School</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: { sans: ['Inter', 'sans-serif'] },
+                    colors: { primary: '#00704A', secondary: '#1E3932', accent: '#D4E9E2', graylight: '#F8F9FA' }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { font-family: 'Inter', sans-serif; color: #4B5563; }
+        .page-hero { background-image: linear-gradient(rgba(30,57,50,0.85), rgba(30,57,50,0.85)), url('https://images.unsplash.com/photo-1577896851231-70ef18881754?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80'); background-size: cover; background-position: center; }
+        .fade-in-section { opacity: 0; transform: translateY(30px); transition: opacity 0.8s ease-out, transform 0.8s ease-out; }
+        .fade-in-section.is-visible { opacity: 1; transform: none; }
+        .contact-card { transition: all 0.3s ease; }
+        .contact-card:hover { transform: translateY(-8px); box-shadow: 0 20px 40px rgba(0,0,0,0.08); }
+        .contact-card:hover .contact-icon { background-color: #00704A; color: white; transform: scale(1.1) rotate(10deg); }
+        .contact-icon { transition: all 0.35s ease; }
+        .form-input { transition: border-color 0.25s, box-shadow 0.25s; }
+        .form-input:focus { outline: none; border-color: #00704A; box-shadow: 0 0 0 3px rgba(0,112,74,0.15); }
+    </style>
+</head>
+<body class="bg-graylight antialiased">
+    <!-- Topbar -->
+    <div class="bg-secondary text-gray-300 py-2 text-sm hidden lg:block">
+        <div class="container mx-auto px-6 md:px-12 flex justify-between items-center">
+            <div class="flex items-center gap-6">
+                <span class="flex items-center gap-2"><span class="material-icons-outlined text-sm text-primary">phone</span> +62 812 3456 7890</span>
+                <span class="flex items-center gap-2"><span class="material-icons-outlined text-sm text-primary">email</span> info@smartschool.edu</span>
+                <span class="flex items-center gap-2"><span class="material-icons-outlined text-sm text-primary">location_on</span> 123 Education Lane, Jakarta</span>
+            </div>
+            <div class="flex items-center gap-4">
+                <a href="#" class="hover:text-white transition-colors">Facebook</a>
+                <a href="#" class="hover:text-white transition-colors">Instagram</a>
+                <a href="#" class="hover:text-white transition-colors">YouTube</a>
+            </div>
+        </div>
+    </div>
+    <!-- Navbar -->
+    <header class="sticky top-0 w-full z-50 bg-white shadow-sm">
+        <div class="container mx-auto px-6 md:px-12 py-4 flex justify-between items-center">
+            <div class="flex items-center gap-3">
+                <div class="w-12 h-12 bg-primary rounded-lg flex items-center justify-center text-white relative overflow-hidden group"><div class="absolute inset-0 bg-white/20 -translate-x-full group-hover:translate-x-full transition-transform duration-700"></div><span class="material-icons-outlined text-2xl">school</span></div>
+                <div class="flex flex-col"><span class="font-bold text-2xl text-secondary leading-none">SMaRT</span><span class="text-xs font-semibold tracking-widest text-primary uppercase">School</span></div>
+            </div>
+            <nav class="hidden lg:flex items-center gap-8 font-semibold text-gray-700">
+                <a href="index.html" class="hover:text-primary transition-colors">Home</a>
+                <a href="about-us.html" class="hover:text-primary transition-colors">About Us</a>
+                <a href="team.html" class="hover:text-primary transition-colors">Teachers</a>
+                <a href="gallery.html" class="hover:text-primary transition-colors">Gallery</a>
+                <a href="archive.html" class="hover:text-primary transition-colors">News</a>
+                <a href="contact.html" class="text-primary relative after:content-[''] after:absolute after:-bottom-1 after:left-0 after:w-full after:h-0.5 after:bg-primary">Contact</a>
+            </nav>
+            <a href="#" class="hidden lg:flex bg-primary hover:bg-secondary text-white px-6 py-2.5 rounded font-semibold transition-all shadow-md items-center gap-2">Apply Now <span class="material-icons-outlined text-sm">arrow_forward</span></a>
+        </div>
+    </header>
+
+    <!-- Page Hero -->
+    <section class="page-hero py-24 lg:py-36">
+        <div class="container mx-auto px-6 md:px-12 text-center">
+            <h1 class="text-4xl lg:text-6xl font-bold text-white mb-4">Contact Us</h1>
+            <p class="text-gray-300 text-lg mb-6">We'd love to hear from you. Reach out and let's connect.</p>
+            <nav class="flex items-center justify-center gap-2 text-sm text-gray-400">
+                <a href="index.html" class="hover:text-white">Home</a>
+                <span class="material-icons-outlined text-sm">chevron_right</span>
+                <span class="text-accent">Contact</span>
+            </nav>
+        </div>
+    </section>
+
+    <!-- Contact Info Cards -->
+    <section class="py-16 bg-white">
+        <div class="container mx-auto px-6 md:px-12">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="contact-card bg-graylight p-8 rounded-lg text-center fade-in-section">
+                    <div class="contact-icon w-16 h-16 bg-accent text-primary rounded-full flex items-center justify-center mx-auto mb-5"><span class="material-icons-outlined text-3xl">location_on</span></div>
+                    <h3 class="font-bold text-secondary text-xl mb-3">Our Address</h3>
+                    <p class="text-gray-500 text-sm">123 Education Lane, Kebayoran Baru<br>Jakarta Selatan, 10110</p>
+                </div>
+                <div class="contact-card bg-primary p-8 rounded-lg text-center fade-in-section" style="transition-delay:100ms;">
+                    <div class="w-16 h-16 bg-white/20 text-white rounded-full flex items-center justify-center mx-auto mb-5"><span class="material-icons-outlined text-3xl">phone</span></div>
+                    <h3 class="font-bold text-white text-xl mb-3">Phone & WhatsApp</h3>
+                    <p class="text-accent/90 text-sm">+62 812 3456 7890<br>+62 21 123 4567</p>
+                </div>
+                <div class="contact-card bg-graylight p-8 rounded-lg text-center fade-in-section" style="transition-delay:200ms;">
+                    <div class="contact-icon w-16 h-16 bg-accent text-primary rounded-full flex items-center justify-center mx-auto mb-5"><span class="material-icons-outlined text-3xl">email</span></div>
+                    <h3 class="font-bold text-secondary text-xl mb-3">Email Us</h3>
+                    <p class="text-gray-500 text-sm">info@smartschool.edu<br>admissions@smartschool.edu</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Map + Form -->
+    <section class="py-8 bg-graylight">
+        <div class="container mx-auto px-6 md:px-12">
+            <!-- Map placeholder -->
+            <div class="w-full h-72 bg-secondary/10 rounded-lg mb-12 overflow-hidden relative fade-in-section border border-gray-200">
+                <div class="absolute inset-0 flex flex-col items-center justify-center text-secondary/40">
+                    <span class="material-icons-outlined text-6xl mb-3">map</span>
+                    <p class="font-semibold text-sm">Interactive Map — 123 Education Lane, Jakarta</p>
+                </div>
+                <!-- Fake map grid overlay -->
+                <div class="absolute inset-0 opacity-5">
+                    <svg width="100%" height="100%"><defs><pattern id="mapgrid" width="40" height="40" patternUnits="userSpaceOnUse"><path d="M 40 0 L 0 0 0 40" fill="none" stroke="#1E3932" stroke-width="1"/></pattern></defs><rect width="100%" height="100%" fill="url(#mapgrid)"/></svg>
+                </div>
+                <!-- Map pin -->
+                <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex flex-col items-center">
+                    <div class="w-10 h-10 bg-primary rounded-full flex items-center justify-center text-white shadow-xl animate-bounce">
+                        <span class="material-icons-outlined text-xl">place</span>
+                    </div>
+                    <div class="mt-2 px-3 py-1 bg-white rounded shadow text-xs font-bold text-secondary">SMaRT School</div>
+                </div>
+            </div>
+
+            <!-- Contact Form -->
+            <div class="flex flex-col lg:flex-row gap-12">
+                <div class="w-full lg:w-1/2 fade-in-section">
+                    <div class="flex items-center gap-2 text-primary font-semibold mb-2 uppercase tracking-widest text-sm"><span class="w-8 h-0.5 bg-primary"></span> Send a Message</div>
+                    <h2 class="text-3xl font-bold text-secondary mb-8">Get in Touch With Us</h2>
+                    <form class="space-y-5" id="contactForm">
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                            <div>
+                                <label class="block text-sm font-semibold text-secondary mb-1.5">Full Name <span class="text-red-400">*</span></label>
+                                <input type="text" placeholder="John Doe" class="form-input w-full border border-gray-200 rounded px-4 py-3 text-sm bg-white">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-semibold text-secondary mb-1.5">Email Address <span class="text-red-400">*</span></label>
+                                <input type="email" placeholder="john@example.com" class="form-input w-full border border-gray-200 rounded px-4 py-3 text-sm bg-white">
+                            </div>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-semibold text-secondary mb-1.5">Phone Number</label>
+                            <input type="tel" placeholder="+62 812 XXXX XXXX" class="form-input w-full border border-gray-200 rounded px-4 py-3 text-sm bg-white">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-semibold text-secondary mb-1.5">Subject <span class="text-red-400">*</span></label>
+                            <select class="form-input w-full border border-gray-200 rounded px-4 py-3 text-sm bg-white text-gray-600 appearance-none">
+                                <option>Select a subject</option>
+                                <option>Admissions Inquiry</option>
+                                <option>Academic Programs</option>
+                                <option>Extracurricular Activities</option>
+                                <option>Partnership Opportunities</option>
+                                <option>General Inquiry</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-semibold text-secondary mb-1.5">Message <span class="text-red-400">*</span></label>
+                            <textarea rows="5" placeholder="Write your message here..." class="form-input w-full border border-gray-200 rounded px-4 py-3 text-sm bg-white resize-none"></textarea>
+                        </div>
+                        <button type="submit" class="px-8 py-4 bg-primary hover:bg-secondary text-white rounded font-bold transition-all transform hover:-translate-y-1 shadow-md flex items-center gap-2">
+                            Send Message <span class="material-icons-outlined text-sm">send</span>
+                        </button>
+                    </form>
+                </div>
+                <!-- School Info -->
+                <div class="w-full lg:w-1/2 fade-in-section">
+                    <div class="flex items-center gap-2 text-primary font-semibold mb-2 uppercase tracking-widest text-sm"><span class="w-8 h-0.5 bg-primary"></span> School Hours</div>
+                    <h2 class="text-3xl font-bold text-secondary mb-8">Office Hours & Info</h2>
+                    <div class="bg-white rounded-lg shadow-sm border border-gray-100 p-8 mb-6">
+                        <h4 class="font-bold text-secondary mb-4">Academic Office</h4>
+                        <ul class="space-y-3 text-sm">
+                            <li class="flex justify-between border-b border-gray-50 pb-2"><span class="text-gray-500">Monday – Friday</span><span class="font-semibold text-secondary">07:00 – 17:00</span></li>
+                            <li class="flex justify-between border-b border-gray-50 pb-2"><span class="text-gray-500">Saturday</span><span class="font-semibold text-secondary">08:00 – 13:00</span></li>
+                            <li class="flex justify-between"><span class="text-gray-500">Sunday & Public Holidays</span><span class="font-semibold text-red-400">Closed</span></li>
+                        </ul>
+                    </div>
+                    <div class="bg-white rounded-lg shadow-sm border border-gray-100 p-8 mb-6">
+                        <h4 class="font-bold text-secondary mb-4">Admissions Department</h4>
+                        <ul class="space-y-3 text-sm">
+                            <li class="flex justify-between border-b border-gray-50 pb-2"><span class="text-gray-500">Monday – Friday</span><span class="font-semibold text-secondary">08:00 – 16:00</span></li>
+                            <li class="flex justify-between"><span class="text-gray-500">Registration Season</span><span class="font-semibold text-primary">Open Weekends</span></li>
+                        </ul>
+                    </div>
+                    <div class="bg-secondary text-white rounded-lg p-6">
+                        <h4 class="font-bold mb-3">Follow Us on Social Media</h4>
+                        <p class="text-accent/80 text-sm mb-4">Stay connected for the latest news, achievements, and events.</p>
+                        <div class="flex gap-3">
+                            <a href="#" class="flex items-center gap-2 px-4 py-2 bg-white/10 hover:bg-primary rounded text-sm font-semibold transition-colors"><span class="material-icons-outlined text-sm">facebook</span> Facebook</a>
+                            <a href="#" class="flex items-center gap-2 px-4 py-2 bg-white/10 hover:bg-primary rounded text-sm font-semibold transition-colors"><span class="material-icons-outlined text-sm">camera_alt</span> Instagram</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-secondary text-gray-300 py-16 border-t-4 border-primary mt-16">
+        <div class="container mx-auto px-6 md:px-12">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
+                <div>
+                    <div class="flex items-center gap-2 mb-6"><div class="w-10 h-10 bg-primary rounded flex items-center justify-center text-white"><span class="material-icons-outlined text-xl">school</span></div><span class="font-bold text-xl text-white">SMaRT School</span></div>
+                    <p class="mb-6 text-sm leading-relaxed">Providing high-quality education and nurturing environments that empower students to become leaders of tomorrow.</p>
+                </div>
+                <div>
+                    <h4 class="text-white font-bold text-lg mb-6 relative pb-2 after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-12 after:h-0.5 after:bg-primary">Quick Links</h4>
+                    <ul class="space-y-3 text-sm">
+                        <li><a href="index.html" class="hover:text-primary transition-colors flex items-center gap-2"><span class="material-icons-outlined text-xs">chevron_right</span> Home</a></li>
+                        <li><a href="about-us.html" class="hover:text-primary transition-colors flex items-center gap-2"><span class="material-icons-outlined text-xs">chevron_right</span> About Us</a></li>
+                        <li><a href="team.html" class="hover:text-primary transition-colors flex items-center gap-2"><span class="material-icons-outlined text-xs">chevron_right</span> Our Teachers</a></li>
+                        <li><a href="archive.html" class="hover:text-primary transition-colors flex items-center gap-2"><span class="material-icons-outlined text-xs">chevron_right</span> Latest News</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-white font-bold text-lg mb-6 relative pb-2 after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-12 after:h-0.5 after:bg-primary">Contact Info</h4>
+                    <ul class="space-y-4 text-sm">
+                        <li class="flex items-start gap-3"><span class="material-icons-outlined text-primary mt-0.5">location_on</span><span>123 Education Lane,<br>Jakarta, Indonesia 10110</span></li>
+                        <li class="flex items-center gap-3"><span class="material-icons-outlined text-primary">phone</span><span>+62 812 3456 7890</span></li>
+                        <li class="flex items-center gap-3"><span class="material-icons-outlined text-primary">email</span><span>info@smartschool.edu</span></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-white font-bold text-lg mb-6 relative pb-2 after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-12 after:h-0.5 after:bg-primary">Newsletter</h4>
+                    <form class="flex flex-col gap-2">
+                        <input type="email" placeholder="Your Email Address" class="bg-white/5 border border-white/10 px-4 py-2.5 rounded text-sm focus:outline-none focus:border-primary text-white">
+                        <button type="submit" class="bg-primary hover:bg-white hover:text-primary transition-colors text-white px-4 py-2.5 rounded text-sm font-bold uppercase tracking-wider">Subscribe</button>
+                    </form>
+                </div>
+            </div>
+            <div class="border-t border-white/10 mt-12 pt-8 text-center text-sm"><p>&copy; 2026 NextCMS — Educator Inspired Theme. All rights reserved.</p></div>
+        </div>
+    </footer>
+    <script>
+        const obs = new IntersectionObserver((entries) => { entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('is-visible'); }); }, { threshold: 0.1 });
+        document.querySelectorAll('.fade-in-section').forEach(el => obs.observe(el));
+    </script>
+</body>
+</html>

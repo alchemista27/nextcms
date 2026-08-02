@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sarah Jenkins — SMaRT School</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: { sans: ['Inter', 'sans-serif'] },
+                    colors: { primary: '#00704A', secondary: '#1E3932', accent: '#D4E9E2', graylight: '#F8F9FA' }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { font-family: 'Inter', sans-serif; color: #4B5563; }
+        .page-hero { background-image: linear-gradient(rgba(30,57,50,0.85), rgba(30,57,50,0.85)), url('https://images.unsplash.com/photo-1503676260728-1c00da094a0b?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80'); background-size: cover; background-position: center; }
+        .fade-in-section { opacity: 0; transform: translateY(30px); transition: opacity 0.8s ease-out, transform 0.8s ease-out; }
+        .fade-in-section.is-visible { opacity: 1; transform: none; }
+        .skill-bar { height: 6px; background: #E5E7EB; border-radius: 99px; overflow: hidden; }
+        .skill-fill { height: 100%; background: linear-gradient(90deg, #00704A, #34D399); border-radius: 99px; width: 0; transition: width 1.5s cubic-bezier(0.4, 0, 0.2, 1); }
+    </style>
+</head>
+<body class="bg-graylight antialiased">
+    <!-- Topbar -->
+    <div class="bg-secondary text-gray-300 py-2 text-sm hidden lg:block">
+        <div class="container mx-auto px-6 md:px-12 flex justify-between items-center">
+            <div class="flex items-center gap-6">
+                <span class="flex items-center gap-2"><span class="material-icons-outlined text-sm text-primary">phone</span> +62 812 3456 7890</span>
+                <span class="flex items-center gap-2"><span class="material-icons-outlined text-sm text-primary">email</span> info@smartschool.edu</span>
+            </div>
+            <div class="flex items-center gap-4">
+                <a href="#" class="hover:text-white transition-colors">Facebook</a>
+                <a href="#" class="hover:text-white transition-colors">Instagram</a>
+            </div>
+        </div>
+    </div>
+    <!-- Navbar -->
+    <header class="sticky top-0 w-full z-50 bg-white shadow-sm">
+        <div class="container mx-auto px-6 md:px-12 py-4 flex justify-between items-center">
+            <div class="flex items-center gap-3">
+                <div class="w-12 h-12 bg-primary rounded-lg flex items-center justify-center text-white relative overflow-hidden group">
+                    <div class="absolute inset-0 bg-white/20 -translate-x-full group-hover:translate-x-full transition-transform duration-700"></div>
+                    <span class="material-icons-outlined text-2xl">school</span>
+                </div>
+                <div class="flex flex-col">
+                    <span class="font-bold text-2xl text-secondary leading-none">SMaRT</span>
+                    <span class="text-xs font-semibold tracking-widest text-primary uppercase">School</span>
+                </div>
+            </div>
+            <nav class="hidden lg:flex items-center gap-8 font-semibold text-gray-700">
+                <a href="index.html" class="hover:text-primary transition-colors">Home</a>
+                <a href="about-us.html" class="hover:text-primary transition-colors">About Us</a>
+                <a href="team.html" class="text-primary relative after:content-[''] after:absolute after:-bottom-1 after:left-0 after:w-full after:h-0.5 after:bg-primary">Teachers</a>
+                <a href="gallery.html" class="hover:text-primary transition-colors">Gallery</a>
+                <a href="contact.html" class="hover:text-primary transition-colors">Contact</a>
+            </nav>
+            <a href="#" class="hidden lg:flex bg-primary hover:bg-secondary text-white px-6 py-2.5 rounded font-semibold transition-all shadow-md items-center gap-2">Apply Now <span class="material-icons-outlined text-sm">arrow_forward</span></a>
+        </div>
+    </header>
+
+    <!-- Page Hero -->
+    <section class="page-hero py-20">
+        <div class="container mx-auto px-6 md:px-12 text-center">
+            <h1 class="text-4xl lg:text-5xl font-bold text-white mb-4">Teacher Profile</h1>
+            <nav class="flex items-center justify-center gap-2 text-sm text-gray-400">
+                <a href="index.html" class="hover:text-white">Home</a>
+                <span class="material-icons-outlined text-sm">chevron_right</span>
+                <a href="team.html" class="hover:text-white">Teachers</a>
+                <span class="material-icons-outlined text-sm">chevron_right</span>
+                <span class="text-accent">Sarah Jenkins</span>
+            </nav>
+        </div>
+    </section>
+
+    <!-- Profile Section -->
+    <section class="py-20 bg-white">
+        <div class="container mx-auto px-6 md:px-12">
+            <div class="flex flex-col lg:flex-row gap-12">
+                <!-- Sidebar -->
+                <div class="w-full lg:w-1/3 fade-in-section">
+                    <div class="bg-graylight rounded-lg overflow-hidden shadow-sm border border-gray-100 sticky top-28">
+                        <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Sarah Jenkins" class="w-full aspect-square object-cover">
+                        <div class="p-8">
+                            <h2 class="text-2xl font-bold text-secondary mb-1">Sarah Jenkins</h2>
+                            <p class="text-primary font-semibold mb-6">Head of Science Department</p>
+                            <ul class="space-y-4 text-sm mb-8">
+                                <li class="flex items-center gap-3"><span class="material-icons-outlined text-primary">work</span><span><strong class="text-secondary">Experience:</strong> 12 Years</span></li>
+                                <li class="flex items-center gap-3"><span class="material-icons-outlined text-primary">school</span><span><strong class="text-secondary">Education:</strong> PhD in Biochemistry, MIT</span></li>
+                                <li class="flex items-center gap-3"><span class="material-icons-outlined text-primary">language</span><span><strong class="text-secondary">Languages:</strong> English, French</span></li>
+                                <li class="flex items-center gap-3"><span class="material-icons-outlined text-primary">email</span><span>s.jenkins@smartschool.edu</span></li>
+                            </ul>
+                            <div class="flex gap-3">
+                                <a href="#" class="flex-1 text-center py-2.5 bg-primary text-white rounded font-semibold text-sm hover:bg-secondary transition-colors">Send Message</a>
+                                <a href="#" class="w-10 h-10 bg-graylight border border-gray-200 rounded flex items-center justify-center text-gray-500 hover:text-primary hover:border-primary transition-colors"><span class="material-icons-outlined text-sm">facebook</span></a>
+                                <a href="#" class="w-10 h-10 bg-graylight border border-gray-200 rounded flex items-center justify-center text-gray-500 hover:text-primary hover:border-primary transition-colors"><span class="material-icons-outlined text-sm">camera_alt</span></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Main Content -->
+                <div class="w-full lg:w-2/3 fade-in-section">
+                    <div class="flex items-center gap-2 text-primary font-semibold mb-2 uppercase tracking-widest text-sm">
+                        <span class="w-8 h-0.5 bg-primary"></span> About Me
+                    </div>
+                    <h2 class="text-3xl font-bold text-secondary mb-6">Passionate About Making Science Accessible</h2>
+                    <p class="text-gray-600 mb-4 leading-relaxed">With over 12 years of experience in science education, I have dedicated my career to making complex scientific concepts engaging and accessible to students of all learning styles. My philosophy is grounded in inquiry-based learning — letting students discover, hypothesize, and experiment.</p>
+                    <p class="text-gray-600 mb-10 leading-relaxed">I hold a PhD in Biochemistry from MIT and have published several research papers on sustainable chemistry methods. Before joining SMaRT School, I worked as a research scientist at a leading biotech firm, an experience that gives my teaching a real-world perspective that students truly appreciate.</p>
+
+                    <!-- Skills -->
+                    <div class="mb-12">
+                        <h3 class="text-xl font-bold text-secondary mb-6">Core Competencies</h3>
+                        <div class="space-y-5" id="skillBars">
+                            <div>
+                                <div class="flex justify-between text-sm font-semibold text-secondary mb-2"><span>Biology & Life Sciences</span><span>95%</span></div>
+                                <div class="skill-bar"><div class="skill-fill" data-width="95%"></div></div>
+                            </div>
+                            <div>
+                                <div class="flex justify-between text-sm font-semibold text-secondary mb-2"><span>Chemistry</span><span>90%</span></div>
+                                <div class="skill-bar"><div class="skill-fill" data-width="90%"></div></div>
+                            </div>
+                            <div>
+                                <div class="flex justify-between text-sm font-semibold text-secondary mb-2"><span>Research Methodology</span><span>88%</span></div>
+                                <div class="skill-bar"><div class="skill-fill" data-width="88%"></div></div>
+                            </div>
+                            <div>
+                                <div class="flex justify-between text-sm font-semibold text-secondary mb-2"><span>Student Mentorship</span><span>98%</span></div>
+                                <div class="skill-bar"><div class="skill-fill" data-width="98%"></div></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Education Timeline -->
+                    <div class="mb-12">
+                        <h3 class="text-xl font-bold text-secondary mb-6">Education & Experience</h3>
+                        <div class="relative border-l-2 border-accent pl-8 space-y-8">
+                            <div class="relative">
+                                <div class="absolute -left-[41px] w-4 h-4 rounded-full bg-primary border-4 border-white shadow"></div>
+                                <span class="inline-block px-3 py-1 bg-accent text-primary text-xs font-bold rounded mb-2">2012 – Present</span>
+                                <h4 class="font-bold text-secondary">Head of Science Department</h4>
+                                <p class="text-sm text-primary font-medium mb-1">SMaRT School, Jakarta</p>
+                                <p class="text-sm text-gray-500">Leading a team of 8 science educators, developing curriculum, and overseeing the school's science lab program.</p>
+                            </div>
+                            <div class="relative">
+                                <div class="absolute -left-[41px] w-4 h-4 rounded-full bg-accent border-4 border-white shadow"></div>
+                                <span class="inline-block px-3 py-1 bg-gray-100 text-gray-600 text-xs font-bold rounded mb-2">2008 – 2012</span>
+                                <h4 class="font-bold text-secondary">Research Scientist</h4>
+                                <p class="text-sm text-primary font-medium mb-1">BioTechnica Corp, Singapore</p>
+                                <p class="text-sm text-gray-500">Conducted research on sustainable biochemistry solutions, published 4 peer-reviewed papers.</p>
+                            </div>
+                            <div class="relative">
+                                <div class="absolute -left-[41px] w-4 h-4 rounded-full bg-accent border-4 border-white shadow"></div>
+                                <span class="inline-block px-3 py-1 bg-gray-100 text-gray-600 text-xs font-bold rounded mb-2">2004 – 2008</span>
+                                <h4 class="font-bold text-secondary">PhD in Biochemistry</h4>
+                                <p class="text-sm text-primary font-medium">Massachusetts Institute of Technology (MIT)</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Other Teachers -->
+                    <div>
+                        <h3 class="text-xl font-bold text-secondary mb-6">Other Faculty Members</h3>
+                        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                            <a href="team-detail.html" class="flex items-center gap-3 p-3 bg-graylight rounded-lg hover:shadow-md transition-shadow group">
+                                <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?ixlib=rb-4.0.3&auto=format&fit=crop&w=100&q=80" class="w-12 h-12 rounded-full object-cover" alt="Michael Chen">
+                                <div><h5 class="font-bold text-secondary text-sm group-hover:text-primary transition-colors">Dr. Michael Chen</h5><p class="text-xs text-gray-500">Mathematics</p></div>
+                            </a>
+                            <a href="team-detail.html" class="flex items-center gap-3 p-3 bg-graylight rounded-lg hover:shadow-md transition-shadow group">
+                                <img src="https://images.unsplash.com/photo-1580894732444-8ecded7900cd?ixlib=rb-4.0.3&auto=format&fit=crop&w=100&q=80" class="w-12 h-12 rounded-full object-cover" alt="Emily Smith">
+                                <div><h5 class="font-bold text-secondary text-sm group-hover:text-primary transition-colors">Dr. Emily Smith</h5><p class="text-xs text-gray-500">Literature & Arts</p></div>
+                            </a>
+                            <a href="team-detail.html" class="flex items-center gap-3 p-3 bg-graylight rounded-lg hover:shadow-md transition-shadow group">
+                                <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=100&q=80" class="w-12 h-12 rounded-full object-cover" alt="James Wilson">
+                                <div><h5 class="font-bold text-secondary text-sm group-hover:text-primary transition-colors">James Wilson</h5><p class="text-xs text-gray-500">Physical Education</p></div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-secondary text-gray-300 py-12 border-t-4 border-primary">
+        <div class="container mx-auto px-6 md:px-12 text-center">
+            <p class="text-sm">&copy; 2026 NextCMS — Educator Inspired Theme. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        const obs = new IntersectionObserver((entries) => { entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('is-visible'); }); }, { threshold: 0.1 });
+        document.querySelectorAll('.fade-in-section').forEach(el => obs.observe(el));
+
+        // Skill bar animation
+        const skillObs = new IntersectionObserver((entries) => {
+            entries.forEach(e => {
+                if (e.isIntersecting) {
+                    e.target.querySelectorAll('.skill-fill').forEach(bar => {
+                        bar.style.width = bar.dataset.width;
+                    });
+                    skillObs.unobserve(e.target);
+                }
+            });
+        }, { threshold: 0.3 });
+        const skillBarsEl = document.getElementById('skillBars');
+        if (skillBarsEl) skillObs.observe(skillBarsEl);
+    </script>
+</body>
+</html>

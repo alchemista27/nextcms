@@ -1520,14 +1520,15 @@ sequenceDiagram
 
 | Task | Detail | Waktu |
 |---|---|---|
-| Server Actions | Get/update appearance settings (JSON values) | 30 min |
-| Settings Form | Logo, favicon (media picker), colors (color picker), font, header style | 90 min |
+| Server Actions | Get/update appearance settings (JSON values), Theme selection | 30 min |
+| Theme Selector | Opsi tema (School Profile, Company Profile, News, Store) | 30 min |
+| General Settings | Logo, favicon, colors (color picker), font | 45 min |
+| Theme Settings Form| Form dinamis berdasarkan tema aktif (misal: School Profile Hero, Visi Misi, Kepsek, dll) | 90 min |
 | Custom CSS/Script | Textarea/code-editor fields | 30 min |
-| Color Picker | Komponen color picker (via Popover + input hex) | 45 min |
-| Live Preview | Preview changes before save (optional) | 30 min |
-| Apply Theme | Load appearance settings di public layout (CSS variables) | 45 min |
+| Color Picker | Komponen color picker (via Popover + input hex) | 30 min |
+| Apply Theme | Load theme settings (theme active, specific content) ke front-end | 45 min |
 
-**Deliverables:** Full appearance customization.
+**Deliverables:** Full appearance customization (Themes) dengan pengaturan konten spesifik per tema yang editable di dashboard.
 
 **Dependencies:** M1, M2, M3, M9
 

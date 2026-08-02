@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Testimonials — SMaRT School</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: { sans: ['Inter', 'sans-serif'] },
+                    colors: { primary: '#00704A', secondary: '#1E3932', accent: '#D4E9E2', graylight: '#F8F9FA' }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { font-family: 'Inter', sans-serif; color: #4B5563; }
+        .page-hero { background-image: linear-gradient(rgba(30,57,50,0.85), rgba(30,57,50,0.85)), url('https://images.unsplash.com/photo-1577896851231-70ef18881754?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80'); background-size: cover; background-position: center; }
+        .fade-in-section { opacity: 0; transform: translateY(30px); transition: opacity 0.8s ease-out, transform 0.8s ease-out; }
+        .fade-in-section.is-visible { opacity: 1; transform: none; }
+        .testimonial-card { transition: all 0.35s ease; }
+        .testimonial-card:hover { transform: translateY(-10px); box-shadow: 0 25px 50px rgba(0,0,0,0.1); }
+        .star { color: #FFC107; }
+    </style>
+</head>
+<body class="bg-graylight antialiased">
+    <!-- Topbar -->
+    <div class="bg-secondary text-gray-300 py-2 text-sm hidden lg:block">
+        <div class="container mx-auto px-6 md:px-12 flex justify-between items-center">
+            <div class="flex items-center gap-6">
+                <span class="flex items-center gap-2"><span class="material-icons-outlined text-sm text-primary">phone</span> +62 812 3456 7890</span>
+                <span class="flex items-center gap-2"><span class="material-icons-outlined text-sm text-primary">email</span> info@smartschool.edu</span>
+            </div>
+            <div class="flex items-center gap-4">
+                <a href="#" class="hover:text-white transition-colors">Facebook</a>
+                <a href="#" class="hover:text-white transition-colors">Instagram</a>
+            </div>
+        </div>
+    </div>
+    <!-- Navbar -->
+    <header class="sticky top-0 w-full z-50 bg-white shadow-sm">
+        <div class="container mx-auto px-6 md:px-12 py-4 flex justify-between items-center">
+            <div class="flex items-center gap-3">
+                <div class="w-12 h-12 bg-primary rounded-lg flex items-center justify-center text-white relative overflow-hidden group"><div class="absolute inset-0 bg-white/20 -translate-x-full group-hover:translate-x-full transition-transform duration-700"></div><span class="material-icons-outlined text-2xl">school</span></div>
+                <div class="flex flex-col"><span class="font-bold text-2xl text-secondary leading-none">SMaRT</span><span class="text-xs font-semibold tracking-widest text-primary uppercase">School</span></div>
+            </div>
+            <nav class="hidden lg:flex items-center gap-8 font-semibold text-gray-700">
+                <a href="index.html" class="hover:text-primary transition-colors">Home</a>
+                <a href="about-us.html" class="hover:text-primary transition-colors">About Us</a>
+                <a href="team.html" class="hover:text-primary transition-colors">Teachers</a>
+                <a href="gallery.html" class="hover:text-primary transition-colors">Gallery</a>
+                <a href="archive.html" class="hover:text-primary transition-colors">News</a>
+                <a href="contact.html" class="hover:text-primary transition-colors">Contact</a>
+            </nav>
+            <a href="#" class="hidden lg:flex bg-primary hover:bg-secondary text-white px-6 py-2.5 rounded font-semibold transition-all shadow-md items-center gap-2">Apply Now <span class="material-icons-outlined text-sm">arrow_forward</span></a>
+        </div>
+    </header>
+
+    <!-- Page Hero -->
+    <section class="page-hero py-24 lg:py-36">
+        <div class="container mx-auto px-6 md:px-12 text-center">
+            <h1 class="text-4xl lg:text-6xl font-bold text-white mb-4">Testimonials</h1>
+            <p class="text-gray-300 text-lg mb-6">What our students, parents, and alumni say about SMaRT School</p>
+            <nav class="flex items-center justify-center gap-2 text-sm text-gray-400">
+                <a href="index.html" class="hover:text-white">Home</a>
+                <span class="material-icons-outlined text-sm">chevron_right</span>
+                <span class="text-accent">Testimonials</span>
+            </nav>
+        </div>
+    </section>
+
+    <!-- Stats Banner -->
+    <section class="py-12 bg-primary">
+        <div class="container mx-auto px-6 md:px-12 grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+            <div><h3 class="text-4xl font-bold text-white">98%</h3><p class="text-accent text-sm font-medium mt-1">Parent Satisfaction</p></div>
+            <div><h3 class="text-4xl font-bold text-white">4.9</h3><p class="text-accent text-sm font-medium mt-1">Average Rating</p></div>
+            <div><h3 class="text-4xl font-bold text-white">12k+</h3><p class="text-accent text-sm font-medium mt-1">Alumni Worldwide</p></div>
+            <div><h3 class="text-4xl font-bold text-white">25+</h3><p class="text-accent text-sm font-medium mt-1">Years of Excellence</p></div>
+        </div>
+    </section>
+
+    <!-- Testimonials Grid -->
+    <section class="py-20 bg-graylight">
+        <div class="container mx-auto px-6 md:px-12">
+            <div class="text-center max-w-2xl mx-auto mb-16 fade-in-section">
+                <div class="flex items-center justify-center gap-2 text-primary font-semibold mb-2 uppercase tracking-widest text-sm"><span class="w-8 h-0.5 bg-primary"></span> Voices <span class="w-8 h-0.5 bg-primary"></span></div>
+                <h2 class="text-3xl md:text-4xl font-bold text-secondary">What Our Community Says</h2>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Testimonial cards -->
+                <div class="testimonial-card bg-white p-8 rounded-lg shadow-sm border border-gray-100 fade-in-section">
+                    <div class="flex gap-1 mb-4"><span class="star material-icons-outlined text-sm">star</span><span class="star material-icons-outlined text-sm">star</span><span class="star material-icons-outlined text-sm">star</span><span class="star material-icons-outlined text-sm">star</span><span class="star material-icons-outlined text-sm">star</span></div>
+                    <span class="material-icons-outlined text-5xl text-accent mb-4">format_quote</span>
+                    <p class="text-gray-600 mb-6 italic leading-relaxed">"SMaRT School transformed my daughter's life. The teachers are incredibly dedicated and the learning environment fosters genuine curiosity. She went from a shy student to a confident leader."</p>
+                    <div class="flex items-center gap-3 pt-4 border-t border-gray-100">
+                        <img src="https://i.pravatar.cc/100?img=5" class="w-12 h-12 rounded-full object-cover" alt="Parent">
+                        <div><h5 class="font-bold text-secondary">Mrs. Ratna Dewi</h5><p class="text-xs text-primary font-medium">Parent of Class XII Student</p></div>
+                    </div>
+                </div>
+                <div class="testimonial-card bg-white p-8 rounded-lg shadow-sm border border-gray-100 fade-in-section" style="transition-delay:100ms;">
+                    <div class="flex gap-1 mb-4"><span class="star material-icons-outlined text-sm">star</span><span class="star material-icons-outlined text-sm">star</span><span class="star material-icons-outlined text-sm">star</span><span class="star material-icons-outlined text-sm">star</span><span class="star material-icons-outlined text-sm">star</span></div>
+                    <span class="material-icons-outlined text-5xl text-accent mb-4">format_quote</span>
+                    <p class="text-gray-600 mb-6 italic leading-relaxed">"I graduated from SMaRT School in 2018 and the values instilled here guided me all the way to a scholarship at NUS Singapore. This school doesn't just teach — it shapes character."</p>
+                    <div class="flex items-center gap-3 pt-4 border-t border-gray-100">
+                        <img src="https://i.pravatar.cc/100?img=11" class="w-12 h-12 rounded-full object-cover" alt="Alumni">
+                        <div><h5 class="font-bold text-secondary">Ahmad Fauzan</h5><p class="text-xs text-primary font-medium">Alumni, Class of 2018</p></div>
+                    </div>
+                </div>
+                <div class="testimonial-card bg-secondary p-8 rounded-lg shadow-sm fade-in-section" style="transition-delay:200ms;">
+                    <div class="flex gap-1 mb-4"><span class="star material-icons-outlined text-sm">star</span><span class="star material-icons-outlined text-sm">star</span><span class="star material-icons-outlined text-sm">star</span><span class="star material-icons-outlined text-sm">star</span><span class="star material-icons-outlined text-sm">star</span></div>
+                    <span class="material-icons-outlined text-5xl text-accent mb-4">format_quote</span>
+                    <p class="text-accent/90 mb-6 italic leading-relaxed">"The science lab facilities are world-class. My son developed a passion for robotics here and is now competing at the national level. We could not be more proud."</p>
+                    <div class="flex items-center gap-3 pt-4 border-t border-white/10">
+                        <img src="https://i.pravatar.cc/100?img=33" class="w-12 h-12 rounded-full object-cover" alt="Parent">
+                        <div><h5 class="font-bold text-white">Mr. Baskoro Susanto</h5><p class="text-xs text-primary font-medium">Parent of Class X Student</p></div>
+                    </div>
+                </div>
+                <div class="testimonial-card bg-white p-8 rounded-lg shadow-sm border border-gray-100 fade-in-section" style="transition-delay:300ms;">
+                    <div class="flex gap-1 mb-4"><span class="star material-icons-outlined text-sm">star</span><span class="star material-icons-outlined text-sm">star</span><span class="star material-icons-outlined text-sm">star</span><span class="star material-icons-outlined text-sm">star</span><span class="star material-icons-outlined text-sm">star_half</span></div>
+                    <span class="material-icons-outlined text-5xl text-accent mb-4">format_quote</span>
+                    <p class="text-gray-600 mb-6 italic leading-relaxed">"The extracurricular programs are what set SMaRT School apart. My involvement in the choir changed my life. I'm now studying Music at the Berklee School of Music."</p>
+                    <div class="flex items-center gap-3 pt-4 border-t border-gray-100">
+                        <img src="https://i.pravatar.cc/100?img=48" class="w-12 h-12 rounded-full object-cover" alt="Alumni">
+                        <div><h5 class="font-bold text-secondary">Siti Rahma</h5><p class="text-xs text-primary font-medium">Alumni, Class of 2022</p></div>
+                    </div>
+                </div>
+                <div class="testimonial-card bg-white p-8 rounded-lg shadow-sm border border-gray-100 fade-in-section" style="transition-delay:400ms;">
+                    <div class="flex gap-1 mb-4"><span class="star material-icons-outlined text-sm">star</span><span class="star material-icons-outlined text-sm">star</span><span class="star material-icons-outlined text-sm">star</span><span class="star material-icons-outlined text-sm">star</span><span class="star material-icons-outlined text-sm">star</span></div>
+                    <span class="material-icons-outlined text-5xl text-accent mb-4">format_quote</span>
+                    <p class="text-gray-600 mb-6 italic leading-relaxed">"As a current student, I feel genuinely supported here. The teachers treat us as individuals, not just students. The campus is vibrant, motivating, and full of opportunity."</p>
+                    <div class="flex items-center gap-3 pt-4 border-t border-gray-100">
+                        <img src="https://i.pravatar.cc/100?img=12" class="w-12 h-12 rounded-full object-cover" alt="Student">
+                        <div><h5 class="font-bold text-secondary">Rizky Pratama</h5><p class="text-xs text-primary font-medium">Current Student, Class XI</p></div>
+                    </div>
+                </div>
+                <div class="testimonial-card bg-white p-8 rounded-lg shadow-sm border border-gray-100 fade-in-section" style="transition-delay:500ms;">
+                    <div class="flex gap-1 mb-4"><span class="star material-icons-outlined text-sm">star</span><span class="star material-icons-outlined text-sm">star</span><span class="star material-icons-outlined text-sm">star</span><span class="star material-icons-outlined text-sm">star</span><span class="star material-icons-outlined text-sm">star</span></div>
+                    <span class="material-icons-outlined text-5xl text-accent mb-4">format_quote</span>
+                    <p class="text-gray-600 mb-6 italic leading-relaxed">"The global exchange program was a life-changing experience. Spending a semester in Japan while studying at SMaRT School broadened my perspective in ways I never expected."</p>
+                    <div class="flex items-center gap-3 pt-4 border-t border-gray-100">
+                        <img src="https://i.pravatar.cc/100?img=25" class="w-12 h-12 rounded-full object-cover" alt="Student">
+                        <div><h5 class="font-bold text-secondary">Anisa Putri</h5><p class="text-xs text-primary font-medium">Alumni, Class of 2024</p></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="py-20 bg-secondary relative overflow-hidden">
+        <div class="absolute inset-0 opacity-10"><svg class="w-full h-full" viewBox="0 0 100 100" preserveAspectRatio="none"><defs><pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse"><path d="M 10 0 L 0 0 0 10" fill="none" stroke="white" stroke-width="0.5"/></pattern></defs><rect width="100" height="100" fill="url(#grid)"/></svg></div>
+        <div class="container mx-auto px-6 md:px-12 relative z-10 text-center">
+            <h2 class="text-3xl md:text-4xl font-bold text-white mb-6">Join the SMaRT School Family</h2>
+            <p class="text-accent/80 mb-10 max-w-xl mx-auto">Thousands of students, parents, and alumni trust SMaRT School. We'd love for you to become part of our story.</p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                <a href="contact.html" class="px-8 py-4 bg-primary hover:bg-white hover:text-primary text-white rounded font-bold transition-all transform hover:-translate-y-1">Enroll Now</a>
+                <a href="contact.html" class="px-8 py-4 border-2 border-white hover:bg-white text-white hover:text-secondary rounded font-bold transition-all transform hover:-translate-y-1">Contact Us</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-secondary text-gray-300 py-12 border-t-4 border-primary">
+        <div class="container mx-auto px-6 md:px-12 text-center">
+            <p class="text-sm">&copy; 2026 NextCMS — Educator Inspired Theme. All rights reserved.</p>
+        </div>
+    </footer>
+    <script>
+        const obs = new IntersectionObserver((entries) => { entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('is-visible'); }); }, { threshold: 0.1 });
+        document.querySelectorAll('.fade-in-section').forEach(el => obs.observe(el));
+    </script>
+</body>
+</html>

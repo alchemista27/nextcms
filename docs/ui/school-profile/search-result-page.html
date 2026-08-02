@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search Results — SMaRT School</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: { sans: ['Inter', 'sans-serif'] },
+                    colors: { primary: '#00704A', secondary: '#1E3932', accent: '#D4E9E2', graylight: '#F8F9FA' }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { font-family: 'Inter', sans-serif; color: #4B5563; }
+        .page-hero { background-color: #1E3932; }
+        .fade-in-section { opacity: 0; transform: translateY(30px); transition: opacity 0.8s ease-out, transform 0.8s ease-out; }
+        .fade-in-section.is-visible { opacity: 1; transform: none; }
+        .result-card:hover h3 { color: #00704A; }
+    </style>
+</head>
+<body class="bg-graylight antialiased flex flex-col min-h-screen">
+    <!-- Navbar -->
+    <header class="sticky top-0 w-full z-50 bg-white shadow-sm flex-shrink-0">
+        <div class="container mx-auto px-6 md:px-12 py-4 flex justify-between items-center">
+            <a href="index.html" class="flex items-center gap-3">
+                <div class="w-12 h-12 bg-primary rounded-lg flex items-center justify-center text-white"><span class="material-icons-outlined text-2xl">school</span></div>
+                <div class="flex flex-col"><span class="font-bold text-2xl text-secondary leading-none">SMaRT</span><span class="text-xs font-semibold tracking-widest text-primary uppercase">School</span></div>
+            </a>
+            <nav class="hidden lg:flex items-center gap-8 font-semibold text-gray-700">
+                <a href="index.html" class="hover:text-primary transition-colors">Home</a>
+                <a href="about-us.html" class="hover:text-primary transition-colors">About Us</a>
+                <a href="archive.html" class="hover:text-primary transition-colors">News</a>
+                <a href="contact.html" class="hover:text-primary transition-colors">Contact</a>
+            </nav>
+            <div class="hidden lg:flex"><a href="#" class="bg-primary hover:bg-secondary text-white px-6 py-2.5 rounded font-semibold transition-all shadow-md items-center gap-2">Apply Now</a></div>
+        </div>
+    </header>
+
+    <!-- Header / Search Bar -->
+    <section class="page-hero py-12">
+        <div class="container mx-auto px-6 md:px-12 text-center max-w-3xl">
+            <h1 class="text-3xl font-bold text-white mb-6">Search Results for: "Science"</h1>
+            <form class="flex w-full">
+                <input type="text" value="Science" class="flex-1 border-0 rounded-l px-6 py-4 text-gray-700 focus:outline-none focus:ring-2 focus:ring-primary text-lg">
+                <button type="submit" class="bg-primary text-white px-8 rounded-r hover:bg-[#005e3e] transition-colors"><span class="material-icons-outlined text-xl">search</span></button>
+            </form>
+            <p class="text-accent mt-4 text-sm">Found 4 results</p>
+        </div>
+    </section>
+
+    <!-- Results List -->
+    <main class="flex-grow py-16 bg-graylight">
+        <div class="container mx-auto px-6 md:px-12 max-w-4xl">
+            <div class="space-y-6">
+                <!-- Result 1 -->
+                <div class="result-card bg-white p-6 rounded-lg shadow-sm border border-gray-100 flex flex-col md:flex-row gap-6 fade-in-section">
+                    <img src="https://images.unsplash.com/photo-1523580494112-071d38458a4c?auto=format&fit=crop&w=300&q=80" alt="News" class="w-full md:w-48 h-32 object-cover rounded">
+                    <div>
+                        <div class="flex gap-2 mb-2"><span class="text-xs bg-primary/10 text-primary px-2 py-0.5 rounded font-semibold">News & Events</span><span class="text-xs text-gray-400">Oct 15, 2026</span></div>
+                        <h3 class="text-xl font-bold text-secondary mb-2 transition-colors"><a href="single-post.html">Annual Science Exhibition Brings Innovation to Light</a></h3>
+                        <p class="text-gray-500 text-sm line-clamp-2">Students showcased remarkable projects focusing on renewable energy and robotics at this year's science fair.</p>
+                    </div>
+                </div>
+                <!-- Result 2 -->
+                <div class="result-card bg-white p-6 rounded-lg shadow-sm border border-gray-100 flex flex-col md:flex-row gap-6 fade-in-section" style="transition-delay:100ms;">
+                    <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=300&q=80" alt="Teacher" class="w-full md:w-48 h-32 object-cover rounded top-object">
+                    <div>
+                        <div class="flex gap-2 mb-2"><span class="text-xs bg-secondary/10 text-secondary px-2 py-0.5 rounded font-semibold">Teacher Profile</span></div>
+                        <h3 class="text-xl font-bold text-secondary mb-2 transition-colors"><a href="team-detail.html">Sarah Jenkins - Head of Science</a></h3>
+                        <p class="text-gray-500 text-sm line-clamp-2">With over 12 years of experience in science education, I have dedicated my career to making complex scientific concepts engaging and accessible.</p>
+                    </div>
+                </div>
+                <!-- Result 3 -->
+                <div class="result-card bg-white p-6 rounded-lg shadow-sm border border-gray-100 flex flex-col md:flex-row gap-6 fade-in-section" style="transition-delay:200ms;">
+                    <img src="https://images.unsplash.com/photo-1559839734-2b71ea197ec2?auto=format&fit=crop&w=300&q=80" alt="Teacher" class="w-full md:w-48 h-32 object-cover rounded top-object">
+                    <div>
+                        <div class="flex gap-2 mb-2"><span class="text-xs bg-secondary/10 text-secondary px-2 py-0.5 rounded font-semibold">Teacher Profile</span></div>
+                        <h3 class="text-xl font-bold text-secondary mb-2 transition-colors"><a href="team-detail.html">Dr. Linda Park - Biology & Chemistry</a></h3>
+                        <p class="text-gray-500 text-sm line-clamp-2">Specializing in Life Sciences, Dr. Park brings real-world laboratory experience into the high school classroom.</p>
+                    </div>
+                </div>
+                <!-- Result 4 -->
+                <div class="result-card bg-white p-6 rounded-lg shadow-sm border border-gray-100 flex flex-col md:flex-row gap-6 fade-in-section" style="transition-delay:300ms;">
+                    <div class="w-full md:w-48 h-32 bg-gray-200 rounded flex items-center justify-center text-gray-400"><span class="material-icons-outlined text-4xl">description</span></div>
+                    <div>
+                        <div class="flex gap-2 mb-2"><span class="text-xs bg-gray-200 text-gray-600 px-2 py-0.5 rounded font-semibold">Page</span></div>
+                        <h3 class="text-xl font-bold text-secondary mb-2 transition-colors"><a href="about-us.html">Academics & Curriculum</a></h3>
+                        <p class="text-gray-500 text-sm line-clamp-2">Our curriculum is designed to challenge students. The Science and Technology tracks provide hands-on experience in our state-of-the-art labs.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Pagination -->
+            <div class="flex items-center justify-center gap-2 mt-12 fade-in-section">
+                <a href="#" class="w-10 h-10 flex items-center justify-center rounded border border-gray-200 text-gray-500"><span class="material-icons-outlined text-sm">chevron_left</span></a>
+                <a href="#" class="w-10 h-10 flex items-center justify-center rounded bg-primary text-white font-bold">1</a>
+                <a href="#" class="w-10 h-10 flex items-center justify-center rounded border border-gray-200 text-gray-500"><span class="material-icons-outlined text-sm">chevron_right</span></a>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-secondary text-gray-300 py-12 border-t-4 border-primary">
+        <div class="container mx-auto px-6 md:px-12 text-center">
+            <p class="text-sm">&copy; 2026 NextCMS — Educator Inspired Theme. All rights reserved.</p>
+        </div>
+    </footer>
+    <script>
+        const obs = new IntersectionObserver((entries) => { entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('is-visible'); }); }, { threshold: 0.1 });
+        document.querySelectorAll('.fade-in-section').forEach(el => obs.observe(el));
+    </script>
+</body>
+</html>

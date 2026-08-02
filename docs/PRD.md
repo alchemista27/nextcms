@@ -626,7 +626,15 @@ Manajemen halaman statis mirip WordPress.
 
 #### Halaman Appearance (`/admin/appearance`)
 
-**Pengaturan yang tersedia:**
+Sistem Appearance (Themes) memungkinkan admin untuk mengganti tema situs. Saat ini, opsi tema yang direncanakan adalah:
+1. **Profil Sekolah (School Profile)** - Tema awal yang tersedia.
+2. **Company Profile** (Mendatang)
+3. **Portal Berita** (Mendatang)
+4. **Toko Online** (Mendatang)
+
+Setiap tema akan memiliki fitur "Settings" spesifik yang muncul di dashboard saat tema tersebut diaktifkan. Seluruh bagian frontend dari tema yang aktif (seperti teks hero, gambar, fitur, dll) harus dapat diedit secara dinamis melalui dashboard admin, tidak bersifat statis (hardcoded) di dalam file.
+
+**Pengaturan Global (General Appearance):**
 
 | Setting | Deskripsi | Tipe Input |
 |---|---|---|
@@ -635,13 +643,18 @@ Manajemen halaman statis mirip WordPress.
 | Primary Color | Warna utama tema | Color picker |
 | Secondary Color | Warna sekunder | Color picker |
 | Font Family | Font heading & body | Dropdown |
-| Header Style | Layout header publik | Radio (Centered, Left-aligned, Minimal) |
-| Footer Text | Teks copyright footer | Textarea |
-| Footer Widgets | Widget di footer | Toggle + config |
-| Sidebar Position | Posisi sidebar halaman publik | Radio (Left, Right, None) |
 | Custom CSS | CSS kustom tambahan | Code editor (textarea) |
 | Custom Header Script | Script tambahan di `<head>` | Textarea |
 | Custom Footer Script | Script tambahan sebelum `</body>` | Textarea |
+
+**Pengaturan Spesifik Tema (Contoh: School Profile):**
+Saat tema School Profile aktif, akan muncul tab/menu khusus untuk mengatur konten halamannya, seperti:
+- **Hero Section**: Judul utama, subtitle, background image, CTA buttons.
+- **Visi & Misi**: Teks visi, daftar misi.
+- **Pesan Kepala Sekolah**: Foto kepala sekolah, teks sambutan.
+- **Statistik Sekolah**: Angka kepuasan, jumlah siswa, dll.
+- **CTA Section**: Teks ajakan, background CTA, link tombol.
+(Seluruh elemen frontend yang dibuat di `docs/ui/school-profile/` akan dibuat editable).
 
 ---
 

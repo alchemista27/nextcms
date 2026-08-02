@@ -23,6 +23,23 @@ export async function getMenus() {
   }
 }
 
+export async function getMenuByLocation(location: string) {
+  try {
+    const menu = await prisma.menu.findFirst({
+      where: { location },
+      include: {
+        items: {
+          orderBy: { order: "asc" },
+        },
+      },
+    });
+    return { success: true, data: menu };
+  } catch (error) {
+    console.error("Failed to fetch menu by location:", error);
+    return { success: false, error: "Failed to fetch menu by location" };
+  }
+}
+
 export async function getMenuById(id: string) {
   await requireRole(["ADMIN"]);
   try {

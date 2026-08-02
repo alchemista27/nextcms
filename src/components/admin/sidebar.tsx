@@ -13,11 +13,33 @@ import MenuIcon from "@mui/icons-material/MenuOutlined";
 import GroupIcon from "@mui/icons-material/GroupOutlined";
 import PaletteIcon from "@mui/icons-material/PaletteOutlined";
 import SettingsIcon from "@mui/icons-material/SettingsOutlined";
+import SchoolIcon from "@mui/icons-material/SchoolOutlined";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
+import TuneIcon from "@mui/icons-material/TuneOutlined";
 import { clsx } from "clsx";
 
-const menuItems = [
+// Theme-specific menu definitions
+const themeMenus: Record<
+  string,
+  { name: string; icon: any; submenu: { name: string; href: string }[] }
+> = {
+  "school-profile": {
+    name: "School Profile",
+    icon: SchoolIcon,
+    submenu: [
+      { name: "Hero Section", href: "/admin/theme/school-profile/hero" },
+      { name: "About & Features", href: "/admin/theme/school-profile/about" },
+      { name: "Statistics", href: "/admin/theme/school-profile/stats" },
+      { name: "Teachers", href: "/admin/theme/school-profile/teachers" },
+      { name: "Vision & Mission", href: "/admin/theme/school-profile/vision" },
+      { name: "CTA Section", href: "/admin/theme/school-profile/cta" },
+      { name: "Contact Info", href: "/admin/theme/school-profile/contact" },
+    ],
+  },
+};
+
+const staticMenuItems = [
   { name: "Dashboard", href: "/admin", icon: DashboardIcon },
   {
     name: "Posts",
@@ -42,27 +64,54 @@ const menuItems = [
   { name: "Media", href: "/admin/media", icon: PermMediaIcon },
   { name: "Menus", href: "/admin/menus", icon: MenuIcon },
   { name: "Users", href: "/admin/users", icon: GroupIcon },
-  { name: "Appearance", href: "/admin/appearance", icon: PaletteIcon },
-  {
-    name: "Settings",
-    href: "/admin/settings",
-    icon: SettingsIcon,
-    submenu: [
-      { name: "General", href: "/admin/settings/general" },
-      { name: "Reading", href: "/admin/settings/reading" },
-      { name: "SEO", href: "/admin/settings/seo" },
-      { name: "Permalinks", href: "/admin/settings/permalinks" },
-    ],
-  },
 ];
 
-export function Sidebar({ isOpen, setIsOpen }: { isOpen: boolean; setIsOpen: (val: boolean) => void }) {
+const appearanceMenu = {
+  name: "Appearance",
+  href: "/admin/appearance",
+  icon: PaletteIcon,
+  submenu: [
+    { name: "Select Theme", href: "/admin/appearance" },
+  ],
+};
+
+const settingsMenu = {
+  name: "Settings",
+  href: "/admin/settings",
+  icon: SettingsIcon,
+  submenu: [
+    { name: "General", href: "/admin/settings/general" },
+    { name: "SEO", href: "/admin/settings/seo" },
+    { name: "Permalinks", href: "/admin/settings/permalinks" },
+  ],
+};
+
+export function Sidebar({
+  isOpen,
+  setIsOpen,
+  activeTheme,
+}: {
+  isOpen: boolean;
+  setIsOpen: (val: boolean) => void;
+  activeTheme?: string;
+}) {
   const pathname = usePathname();
-  const [expandedMenus, setExpandedMenus] = useState<Record<string, boolean>>({});
+  const [expandedMenus, setExpandedMenus] = useState<Record<string, boolean>>(
+    {}
+  );
 
   const toggleSubMenu = (name: string) => {
     setExpandedMenus((prev) => ({ ...prev, [name]: !prev[name] }));
   };
+
+  const themeMenu = activeTheme ? themeMenus[activeTheme] : null;
+
+  const allMenuItems = [
+    ...staticMenuItems,
+    appearanceMenu,
+    ...(themeMenu ? [{ ...themeMenu, href: `/admin/theme/${activeTheme}` }] : []),
+    settingsMenu,
+  ];
 
   return (
     <>
@@ -85,7 +134,9 @@ export function Sidebar({ isOpen, setIsOpen }: { isOpen: boolean; setIsOpen: (va
         <div className="flex items-center justify-center h-16 border-b border-white/10 shrink-0">
           <div className="flex items-center space-x-2">
             <div className="w-8 h-8 rounded-full bg-white flex items-center justify-center">
-              <span className="text-[#00704A] font-bold text-xl leading-none">N</span>
+              <span className="text-[#00704A] font-bold text-xl leading-none">
+                N
+              </span>
             </div>
             <span className="text-xl font-bold tracking-wide">NextCMS</span>
           </div>
@@ -93,20 +144,51 @@ export function Sidebar({ isOpen, setIsOpen }: { isOpen: boolean; setIsOpen: (va
 
         {/* Navigation items */}
         <nav className="flex-1 overflow-y-auto py-4 space-y-1 px-3 custom-scrollbar">
-          {menuItems.map((item) => {
-            const isActive = pathname === item.href || (pathname.startsWith(item.href) && item.href !== "/admin");
+          {/* Active theme badge if set */}
+          {themeMenu && (
+            <div className="mb-3 px-3 py-1.5 rounded-md bg-[#00704A]/20 border border-[#00704A]/30">
+              <div className="flex items-center gap-2">
+                <TuneIcon className="w-3.5 h-3.5 text-[#D4E9E2]" />
+                <span className="text-[10px] font-semibold text-[#D4E9E2] uppercase tracking-widest">
+                  Active Theme
+                </span>
+              </div>
+              <p className="text-xs text-white/90 font-medium mt-0.5 ml-5">
+                {themeMenu.name}
+              </p>
+            </div>
+          )}
+
+          {allMenuItems.map((item) => {
+            const isActive =
+              pathname === item.href ||
+              (item.href !== "/admin" && pathname.startsWith(item.href));
             const Icon = item.icon;
-            const hasSubmenu = !!item.submenu;
+            const hasSubmenu = !!(item as any).submenu;
             const isExpanded = expandedMenus[item.name];
+            const isThemeItem = activeTheme && item.href === `/admin/theme/${activeTheme}`;
 
             return (
               <div key={item.name}>
+                {/* Divider before theme menu */}
+                {isThemeItem && (
+                  <div className="my-2 border-t border-white/10 pt-2">
+                    <p className="px-3 text-[10px] font-bold text-white/40 uppercase tracking-widest mb-1">
+                      Theme Settings
+                    </p>
+                  </div>
+                )}
+
                 {hasSubmenu ? (
                   <button
                     onClick={() => toggleSubMenu(item.name)}
                     className={clsx(
                       "w-full flex items-center justify-between px-3 py-2.5 rounded-md transition-colors text-sm font-medium",
-                      isActive ? "bg-[#00704A] text-white" : "text-white/80 hover:bg-white/10 hover:text-white"
+                      isActive
+                        ? "bg-[#00704A] text-white"
+                        : isThemeItem
+                        ? "text-[#D4E9E2] hover:bg-white/10 hover:text-white"
+                        : "text-white/80 hover:bg-white/10 hover:text-white"
                     )}
                   >
                     <div className="flex items-center space-x-3">
@@ -124,7 +206,9 @@ export function Sidebar({ isOpen, setIsOpen }: { isOpen: boolean; setIsOpen: (va
                     href={item.href}
                     className={clsx(
                       "w-full flex items-center space-x-3 px-3 py-2.5 rounded-md transition-colors text-sm font-medium",
-                      isActive ? "bg-[#00704A] text-white" : "text-white/80 hover:bg-white/10 hover:text-white"
+                      isActive
+                        ? "bg-[#00704A] text-white"
+                        : "text-white/80 hover:bg-white/10 hover:text-white"
                     )}
                   >
                     <Icon className="w-5 h-5" />
@@ -135,7 +219,7 @@ export function Sidebar({ isOpen, setIsOpen }: { isOpen: boolean; setIsOpen: (va
                 {/* Submenu */}
                 {hasSubmenu && isExpanded && (
                   <div className="mt-1 space-y-1 pl-11 pr-2">
-                    {item.submenu!.map((sub) => {
+                    {(item as any).submenu.map((sub: any) => {
                       const isSubActive = pathname === sub.href;
                       return (
                         <Link
@@ -143,7 +227,9 @@ export function Sidebar({ isOpen, setIsOpen }: { isOpen: boolean; setIsOpen: (va
                           href={sub.href}
                           className={clsx(
                             "block w-full text-left px-3 py-2 rounded-md text-sm transition-colors",
-                            isSubActive ? "text-white font-medium" : "text-white/70 hover:text-white hover:bg-white/5"
+                            isSubActive
+                              ? "text-white font-medium"
+                              : "text-white/70 hover:text-white hover:bg-white/5"
                           )}
                         >
                           {sub.name}
@@ -165,7 +251,9 @@ export function Sidebar({ isOpen, setIsOpen }: { isOpen: boolean; setIsOpen: (va
             </div>
             <div className="flex-1 min-w-0">
               <p className="text-sm font-medium text-white truncate">Admin</p>
-              <p className="text-xs text-white/60 truncate bg-[#00704A] px-1.5 py-0.5 rounded inline-block mt-0.5">Administrator</p>
+              <p className="text-xs text-white/60 truncate bg-[#00704A] px-1.5 py-0.5 rounded inline-block mt-0.5">
+                Administrator
+              </p>
             </div>
           </div>
         </div>

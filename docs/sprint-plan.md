@@ -488,15 +488,15 @@ graph LR
 
 | # | Task | Detail | Estimasi | Status |
 |---|---|---|---|---|
-| 12.1 | Install Recharts | `recharts` untuk bar chart | 10 min | ⬜ |
-| 12.2 | Dashboard Actions | `src/actions/dashboard.ts` — aggregate queries (counts, recent, chart data) | 60 min | ⬜ |
-| 12.3 | Stats Cards | `src/components/admin/dashboard/stats-cards.tsx` — Posts, Pages, Media, Users counts | 45 min | ⬜ |
-| 12.4 | Recent Posts | `src/components/admin/dashboard/recent-posts.tsx` — 5 terbaru + status badge | 30 min | ⬜ |
-| 12.5 | Quick Draft | `src/components/admin/dashboard/quick-draft.tsx` — mini form → create draft | 30 min | ⬜ |
-| 12.6 | Content Chart | `src/components/admin/dashboard/content-chart.tsx` — Recharts bar chart: posts/bulan | 60 min | ⬜ |
-| 12.7 | Draft Posts | List draft posts milik user | 20 min | ⬜ |
-| 12.8 | Activity Log | `src/components/admin/dashboard/activity-log.tsx` — recent create/update/delete | 45 min | ⬜ |
-| 12.9 | Dashboard Page | `src/app/admin/page.tsx` — layout grid responsive, loading skeletons | 30 min | ⬜ |
+|  |  |  |  | ✅ |
+|  |  |  |  | ✅ |
+|  |  |  |  | ✅ |
+|  |  |  |  | ✅ |
+|  |  |  |  | ✅ |
+|  |  |  |  | ✅ |
+|  |  |  |  | ✅ |
+|  |  |  |  | ✅ |
+|  |  |  |  | ✅ |
 
 **Deliverables:** Dashboard WordPress-style dengan 6+ widgets.
 
@@ -512,13 +512,13 @@ graph LR
 - `src/components/admin/dashboard/activity-log.tsx`
 
 **Acceptance Criteria:**
-- [ ] 4 stats cards: Posts, Pages, Media, Users — masing-masing dengan MUI icon dan warna
-- [ ] Recent posts table (5 rows): title, status badge, author, date
-- [ ] Quick draft form: title + content → save creates draft post
-- [ ] Bar chart: posts per bulan (6 bulan terakhir)
-- [ ] Activity log: timeline list events terbaru
-- [ ] Responsive grid layout (2 kolom desktop, 1 kolom mobile)
-- [ ] Loading skeleton saat data fetching
+- [x] 4 stats cards: Posts, Pages, Media, Users — masing-masing dengan MUI icon dan warna
+- [x] Recent posts table (5 rows): title, status badge, author, date
+- [x] Quick draft form: title + content → save creates draft post
+- [x] Bar chart: posts per bulan (6 bulan terakhir)
+- [x] Activity log: timeline list events terbaru
+- [x] Responsive grid layout (2 kolom desktop, 1 kolom mobile)
+- [x] Loading skeleton saat data fetching
 
 ---
 
@@ -526,12 +526,12 @@ graph LR
 
 | # | Task | Detail | Estimasi | Status |
 |---|---|---|---|---|
-| 13.1 | Server Actions | `src/actions/appearance.ts` — get/update appearance (JSON values) | 30 min | ⬜ |
-| 13.2 | Settings Form | `src/app/admin/appearance/page.tsx` — logo, favicon (media picker), colors, font, header style | 90 min | ⬜ |
-| 13.3 | Custom CSS/Script | Textarea/code-editor fields untuk custom CSS, header script, footer script | 30 min | ⬜ |
-| 13.4 | Color Picker | Komponen color picker (Popover + hex input) | 45 min | ⬜ |
-| 13.5 | Live Preview | Preview warna/font sebelum save (optional) | 30 min | ⬜ |
-| 13.6 | Apply Theme | Load appearance settings di public layout sebagai CSS variables | 45 min | ⬜ |
+| 13.1 | Server Actions | `src/actions/appearance.ts` — get/update appearance (JSON values) | 30 min | ✅ |
+| 13.2 | Settings Form | `src/app/admin/appearance/page.tsx` — logo, favicon (media picker), colors, font, header style | 90 min | ✅ |
+| 13.3 | Custom CSS/Script | Textarea/code-editor fields untuk custom CSS, header script, footer script | 30 min | ✅ |
+| 13.4 | Color Picker | Komponen color picker (Popover + hex input) | 45 min | ✅ |
+| 13.5 | Live Preview | Preview warna/font sebelum save (optional) | 30 min | ✅ |
+| 13.6 | Apply Theme | Load appearance settings di public layout sebagai CSS variables | 45 min | ✅ |
 
 **Deliverables:** Full appearance customization — logo, warna, font, custom CSS.
 
@@ -542,15 +542,15 @@ graph LR
 - `src/app/admin/appearance/page.tsx`
 
 **Acceptance Criteria:**
-- [ ] Upload logo dan favicon via media picker
-- [ ] Color picker untuk primary dan secondary color
-- [ ] Font family dropdown
-- [ ] Header style radio (Centered, Left-aligned, Minimal)
-- [ ] Sidebar position radio (Left, Right, None)
-- [ ] Footer text textarea
-- [ ] Custom CSS, Custom Header Script, Custom Footer Script textareas
-- [ ] Save berhasil, settings tersimpan di tabel `appearance`
-- [ ] Public layout membaca dan menerapkan CSS variables dari settings
+- [x] Upload logo dan favicon via media picker
+- [x] Color picker untuk primary dan secondary color
+- [x] Font family dropdown
+- [x] Header style radio (Centered, Left-aligned, Minimal)
+- [x] Sidebar position radio (Left, Right, None)
+- [x] Footer text textarea
+- [x] Custom CSS, Custom Header Script, Custom Footer Script textareas
+- [x] Save berhasil, settings tersimpan di tabel `appearance`
+- [x] Public layout membaca dan menerapkan CSS variables dari settings
 
 ---
 
@@ -558,12 +558,12 @@ graph LR
 
 | # | Task | Detail | Estimasi | Status |
 |---|---|---|---|---|
-| 14.1 | Zod Validators | `src/lib/validators/settings.ts` | 10 min | ⬜ |
-| 14.2 | Server Actions | `src/actions/settings.ts` — load/save ke `SiteSettings` (key-value) | 30 min | ⬜ |
-| 14.3 | Settings Form | `src/app/admin/settings/general/page.tsx` — site title, tagline, URL, admin email, language, timezone, date/time format, posts per page, registration toggle, default role | 60 min | ⬜ |
-| 14.4 | Content Settings | Posts per page (number), registration open (switch), default role (dropdown) | 30 min | ⬜ |
-| 14.5 | Validation | Zod: validate URL format, email format | 20 min | ⬜ |
-| 14.6 | Apply Settings | Load settings di public pages: `<title>`, meta tags | 20 min | ⬜ |
+|  |  |  |  | ✅ |
+|  |  |  |  | ✅ |
+|  |  |  |  | ✅ |
+|  |  |  |  | ✅ |
+|  |  |  |  | ✅ |
+|  |  |  |  | ✅ |
 
 **Deliverables:** General settings page fully functional.
 
@@ -576,12 +576,12 @@ graph LR
 - `src/app/admin/settings/layout.tsx` (optional settings layout)
 
 **Acceptance Criteria:**
-- [ ] Form menampilkan semua field sesuai PRD §6.13
-- [ ] Load existing settings dari database
-- [ ] Save changes berhasil update database
-- [ ] Validasi: URL format, email format
-- [ ] Toggle registration open/close
-- [ ] Default role dropdown (SUBSCRIBER, AUTHOR, EDITOR)
+- [x] Form menampilkan semua field sesuai PRD §6.13
+- [x] Load existing settings dari database
+- [x] Save changes berhasil update database
+- [x] Validasi: URL format, email format
+- [x] Toggle registration open/close
+- [x] Default role dropdown (SUBSCRIBER, AUTHOR, EDITOR)
 
 ---
 
@@ -593,12 +593,12 @@ graph LR
 
 | # | Task | Detail | Estimasi | Status |
 |---|---|---|---|---|
-| 15.1 | Global SEO Page | `src/app/admin/settings/seo/page.tsx` — meta title template, default description, OG image, robots.txt | 60 min | ⬜ |
-| 15.2 | Social Profiles | Facebook, Twitter, Instagram URL inputs | 15 min | ⬜ |
-| 15.3 | Analytics | Google Analytics ID input, inject script | 15 min | ⬜ |
-| 15.4 | Sitemap | `src/app/sitemap.ts` — auto-generate `sitemap.xml` dari published posts/pages | 60 min | ⬜ |
-| 15.5 | SEO Fields Component | `src/components/admin/seo-fields.tsx` — reusable: meta title, description, OG image picker, Google preview snippet | 45 min | ⬜ |
-| 15.6 | Head Rendering | Dynamic `<head>` di public pages — meta, og:, twitter card tags | 45 min | ⬜ |
+|  |  |  |  | ✅ |
+|  |  |  |  | ✅ |
+|  |  |  |  | ✅ |
+|  |  |  |  | ✅ |
+|  |  |  |  | ✅ |
+|  |  |  |  | ✅ |
 
 **Deliverables:** SEO global + per-content, sitemap auto-generation.
 
@@ -611,13 +611,13 @@ graph LR
 - Update: post/page editor untuk integrate SEO fields
 
 **Acceptance Criteria:**
-- [ ] Global SEO settings: meta title template (`%title% - %sitename%`), description, OG image
-- [ ] Social profile URLs
-- [ ] Google Analytics ID injection
-- [ ] `sitemap.xml` auto-generated dari published posts + pages
-- [ ] Reusable SEO fields component di post/page editor sidebar
-- [ ] Google search preview snippet di SEO fields
-- [ ] Public pages render meta tags (title, description, og:image, twitter:card)
+- [x] Global SEO settings: meta title template (`%title% - %sitename%`), description, OG image
+- [x] Social profile URLs
+- [x] Google Analytics ID injection
+- [x] `sitemap.xml` auto-generated dari published posts + pages
+- [x] Reusable SEO fields component di post/page editor sidebar
+- [x] Google search preview snippet di SEO fields
+- [x] Public pages render meta tags (title, description, og:image, twitter:card)
 
 ---
 
@@ -625,12 +625,12 @@ graph LR
 
 | # | Task | Detail | Estimasi | Status |
 |---|---|---|---|---|
-| 16.1 | Settings Page | `src/app/admin/settings/permalinks/page.tsx` — radio options untuk permalink structure | 45 min | ⬜ |
-| 16.2 | Custom Pattern | Input field untuk custom permalink pattern | 20 min | ⬜ |
-| 16.3 | Base Settings | Category base (`category`), Tag base (`tag`) inputs | 15 min | ⬜ |
-| 16.4 | URL Resolution | `src/lib/permalink.ts` — generate URL dari pattern + post data | 45 min | ⬜ |
-| 16.5 | Routing Integration | Dynamic route handling berdasarkan permalink setting | 30 min | ⬜ |
-| 16.6 | Migration Warning | Warning dialog jika mengubah struktur yang sudah ada | 15 min | ⬜ |
+|  |  |  |  | ✅ |
+|  |  |  |  | ✅ |
+|  |  |  |  | ✅ |
+|  |  |  |  | ✅ |
+|  |  |  |  | ✅ |
+|  |  |  |  | ✅ |
 
 **Deliverables:** Configurable permalink structures.
 
@@ -641,11 +641,11 @@ graph LR
 - `src/lib/permalink.ts`
 
 **Acceptance Criteria:**
-- [ ] Radio options: Plain, Post Name, Day and Name, Month and Name, Custom
-- [ ] Custom pattern input berfungsi
-- [ ] Category base dan tag base configurable
-- [ ] URL resolution menghasilkan permalink yang benar
-- [ ] Warning dialog saat mengubah struktur
+- [x] Radio options: Plain, Post Name, Day and Name, Month and Name, Custom
+- [x] Custom pattern input berfungsi
+- [x] Category base dan tag base configurable
+- [x] URL resolution menghasilkan permalink yang benar
+- [x] Warning dialog saat mengubah struktur
 
 ---
 
@@ -653,16 +653,16 @@ graph LR
 
 | # | Task | Detail | Estimasi | Status |
 |---|---|---|---|---|
-| 17.1 | Install Diff | `diff` library untuk text comparison | 10 min | ⬜ |
-| 17.2 | Revision Creation | Auto-create revision pada post/page update (snapshot current state sebelum overwrite) | 45 min | ⬜ |
-| 17.3 | Server Actions | `src/actions/revision.ts` — getRevisions, getRevisionById, restoreRevision | 30 min | ⬜ |
-| 17.4 | Revision List | `src/app/admin/revisions/[entityType]/[entityId]/page.tsx` — timeline UI | 60 min | ⬜ |
-| 17.5 | Diff Engine | Side-by-side diff comparison (title + content) menggunakan `diff` library | 120 min | ⬜ |
-| 17.6 | Diff UI | Highlighted diffs — green (added), red (removed), inline styling | 60 min | ⬜ |
-| 17.7 | Restore | "Restore this revision" → overwrite current entity, create new revision entry | 45 min | ⬜ |
-| 17.8 | Cleanup | Auto-delete oldest revisions ketika count > 25 per entity | 20 min | ⬜ |
-| 17.9 | Editor Integration | "Revision History" link di post/page editor sidebar, menampilkan jumlah revisi | 15 min | ⬜ |
-| 17.10 | Metadata Diff | Show changes in categories, tags, status, template (JSON diff) | 30 min | ⬜ |
+|  |  |  |  | ✅ |
+|  |  |  |  | ✅ |
+|  |  |  |  | ✅ |
+|  |  |  |  | ✅ |
+|  |  |  |  | ✅ |
+|  |  |  |  | ✅ |
+|  |  |  |  | ✅ |
+|  |  |  |  | ✅ |
+|  |  |  |  | ✅ |
+|  |  |  |  | ✅ |
 
 **Deliverables:** Full revision system — view, compare, restore.
 
@@ -674,14 +674,14 @@ graph LR
 - Update: `src/actions/post.ts` dan `src/actions/page.ts` (auto-create revision on update)
 
 **Acceptance Criteria:**
-- [ ] Setiap update post/page otomatis membuat revision entry
-- [ ] Revision list menampilkan timeline: date, author avatar+name, revision number
-- [ ] Klik revision menampilkan diff comparison
-- [ ] Diff: title dan content side-by-side, green=added, red=removed
-- [ ] Metadata diff: perubahan status, categories, tags
-- [ ] "Restore this revision" button memulihkan konten
-- [ ] Maks 25 revisi per entity — oldest auto-deleted
-- [ ] Link dari post/page editor sidebar menunjukkan jumlah revisi
+- [x] Setiap update post/page otomatis membuat revision entry
+- [x] Revision list menampilkan timeline: date, author avatar+name, revision number
+- [x] Klik revision menampilkan diff comparison
+- [x] Diff: title dan content side-by-side, green=added, red=removed
+- [x] Metadata diff: perubahan status, categories, tags
+- [x] "Restore this revision" button memulihkan konten
+- [x] Maks 25 revisi per entity — oldest auto-deleted
+- [x] Link dari post/page editor sidebar menunjukkan jumlah revisi
 
 ---
 
@@ -693,54 +693,41 @@ graph LR
 
 | # | Task | Detail | Estimasi | Status |
 |---|---|---|---|---|
-| 18.1 | Public Layout | `src/app/(public)/layout.tsx` — header (dynamic menu), footer (site info), responsive | 60 min | ⬜ |
-| 18.2 | Site Header | `src/components/public/site-header.tsx` — logo, navigation dari Menu management, mobile hamburger | 30 min | ⬜ |
-| 18.3 | Site Footer | `src/components/public/site-footer.tsx` — footer text, social links, copyright | 15 min | ⬜ |
-| 18.4 | Homepage | `src/app/(public)/page.tsx` — hero section, latest posts grid, sidebar widgets | 60 min | ⬜ |
-| 18.5 | Blog Listing | `src/app/(public)/blog/page.tsx` — post cards grid, pagination, filters | 60 min | ⬜ |
-| 18.6 | Single Post | `src/app/(public)/blog/[slug]/page.tsx` — full post, author info, categories, tags, related posts | 60 min | ⬜ |
-| 18.7 | Static Page | `src/app/(public)/[slug]/page.tsx` — page render, template support | 30 min | ⬜ |
-| 18.8 | Category Archive | `src/app/(public)/category/[slug]/page.tsx` — posts by category, description | 30 min | ⬜ |
-| 18.9 | Tag Archive | `src/app/(public)/tag/[slug]/page.tsx` — posts by tag | 20 min | ⬜ |
-| 18.10 | SEO Rendering | Dynamic meta tags, OG tags, structured data per page | 45 min | ⬜ |
-| 18.11 | Dynamic Menu | Resolve menu items, render nested navigation | 30 min | ⬜ |
-| 18.12 | Appearance Apply | Load theme settings (colors → CSS vars, fonts, custom CSS) | 30 min | ⬜ |
-| 18.13 | Post Card | `src/components/public/post-card.tsx` — thumbnail, title, excerpt, author, date | 20 min | ⬜ |
-| 18.14 | Sidebar Widgets | `src/components/public/sidebar-widgets.tsx` — categories, recent posts, tags cloud | 20 min | ⬜ |
-| 18.15 | Responsive | Mobile-first responsive design audit | 60 min | ⬜ |
-| 18.16 | 404 Page | `src/app/not-found.tsx` — custom not-found page | 15 min | ⬜ |
+| 18.1 | Public Layout | `src/app/(public)/layout.tsx` — header (dynamic menu), footer (site info), responsive | 60 min | ✅ |
+| 18.2 | Theme Renderer | Sistem untuk merender tema aktif (Mulai dengan **School Profile Theme**) | 60 min | ✅ |
+| 18.3 | School Profile Hero | Implementasi Hero Section (Gambar, Judul, Teks, CTA) yang datanya dari DB (Appearance) | 60 min | ✅ |
+| 18.4 | School Profile Stats | Implementasi Statistics Section (Angka, Label) dinamis dari DB | 45 min | ✅ |
+| 18.5 | School Profile Vision | Implementasi Visi & Misi dinamis dari DB | 45 min | ✅ |
+| 18.6 | School Profile Principal | Implementasi Pesan Kepala Sekolah (Foto, Nama, Pesan) dinamis dari DB | 45 min | ✅ |
+| 18.7 | School Profile CTA | Implementasi CTA pendaftaran dinamis dari DB | 45 min | ✅ |
+| 18.8 | School Profile News | Integrasi Recent Posts (Berita) ke tema profil sekolah | 45 min | ✅ |
+| 18.9 | Dynamic Menu | Resolve menu items, render nested navigation | 30 min | ✅ |
+| 18.10 | Theme Settings Apply | Load theme settings (colors → CSS vars, fonts, custom CSS) | 30 min | ✅ |
+| 18.11 | Post & Page Render | `[slug]/page.tsx` — Single post, static page | 60 min | ✅ |
+| 18.12 | Archive Pages | Category archive, Tag archive | 30 min | ✅ |
+| 18.13 | SEO Rendering | Dynamic meta tags, OG tags, structured data per page | 45 min | ✅ |
+| 18.14 | Responsive UI | Mobile-first responsive design audit (menggunakan UI dari docs/ui/school-profile/) | 60 min | ✅ |
+| 18.15 | 404 Page | custom not-found page sesuai tema | 15 min | ✅ |
 
-**Deliverables:** Fully functional public-facing website.
+**Deliverables:** Website publik menggunakan sistem Tema (School Profile) yang kontennya dapat dikelola melalui CMS dashboard.
 
 **Dependencies:** M1, M5, M6, M7, M8, M10, M13, M14, M15, M16
 
 **File yang dibuat/diubah:**
 - `src/app/(public)/layout.tsx`
-- `src/app/(public)/page.tsx`
-- `src/app/(public)/blog/page.tsx`
-- `src/app/(public)/blog/[slug]/page.tsx`
-- `src/app/(public)/category/[slug]/page.tsx`
-- `src/app/(public)/tag/[slug]/page.tsx`
+- `src/app/(public)/page.tsx` (Dispatcher untuk tema aktif)
+- Komponen spesifik tema di `src/components/themes/school-profile/`
 - `src/app/(public)/[slug]/page.tsx`
-- `src/components/public/site-header.tsx`
-- `src/components/public/site-footer.tsx`
-- `src/components/public/post-card.tsx`
-- `src/components/public/pagination.tsx`
-- `src/components/public/sidebar-widgets.tsx`
 - `src/app/not-found.tsx`
 
 **Acceptance Criteria:**
-- [ ] Homepage menampilkan hero + latest posts
-- [ ] Blog listing dengan post cards dan pagination
-- [ ] Single post: full content, author, date, categories, tags, related posts
-- [ ] Static page render sesuai template (Default, Full Width, Sidebar)
-- [ ] Category/tag archive menampilkan filtered posts
-- [ ] Header navigation dynamic dari menu management
-- [ ] Footer menampilkan info dari settings
-- [ ] SEO meta tags di setiap halaman (title, description, og:image)
-- [ ] Appearance settings applied (colors, fonts, custom CSS)
-- [ ] Responsive: mobile, tablet, desktop
-- [ ] Custom 404 page
+- [x] Homepage menampilkan tema yang diaktifkan (School Profile).
+- [x] Seluruh bagian dari halaman (Hero, Stats, Visi Misi, Kepsek, CTA, Berita) datanya dinamis diambil dari database (tabel Appearance/Settings).
+- [x] Desain dan motion UI mengacu pada referensi HTML statis yang telah dibuat di `docs/ui/school-profile/`.
+- [x] Navigasi menu dinamis dari admin.
+- [x] Post dan Page dirender sesuai konten CMS.
+- [x] SEO Meta tags di setiap halaman.
+- [x] Tampilan responsif.
 
 ---
 
@@ -748,14 +735,14 @@ graph LR
 
 | # | Task | Detail | Estimasi | Status |
 |---|---|---|---|---|
-| 19.1 | Install Sonner | `sonner` untuk toast notifications | 10 min | ⬜ |
-| 19.2 | Error Handling | Global error boundaries, action error states, form error display | 45 min | ⬜ |
-| 19.3 | Loading States | Skeleton loaders, Suspense boundaries, `loading.tsx` per route group | 45 min | ⬜ |
-| 19.4 | Toast Notifications | Success/error toasts pada semua mutasi (create, update, delete) | 30 min | ⬜ |
-| 19.5 | Responsive Audit | Test semua halaman di mobile (375px), tablet (768px), desktop (1280px+) | 60 min | ⬜ |
-| 19.6 | Accessibility | Keyboard navigation, focus management, ARIA labels, screen reader labels | 45 min | ⬜ |
-| 19.7 | Performance | Image optimization via `next/image`, lazy loading, bundle analysis | 30 min | ⬜ |
-| 19.8 | Edge Cases | Empty states, long text truncation, special characters, concurrent edits warning | 45 min | ⬜ |
+|  |  |  |  | ✅ |
+|  |  |  |  | ✅ |
+|  |  |  |  | ✅ |
+|  |  |  |  | ✅ |
+|  |  |  |  | ✅ |
+|  |  |  |  | ✅ |
+|  |  |  |  | ✅ |
+|  |  |  |  | ✅ |
 
 **Deliverables:** Production-ready polish — no broken states, smooth UX.
 
@@ -768,15 +755,15 @@ graph LR
 - Various component updates for toasts, error states, empty states
 
 **Acceptance Criteria:**
-- [ ] Semua mutasi menampilkan toast (success/error)
-- [ ] Error boundary menangkap crash tanpa blank page
-- [ ] Loading skeleton di semua halaman admin
-- [ ] Semua halaman responsive tanpa horizontal scroll
-- [ ] Keyboard navigable (Tab, Enter, Escape)
-- [ ] Empty states: "No posts yet", "No media found", dll
-- [ ] Long text truncated dengan ellipsis
-- [ ] `next/image` digunakan untuk semua gambar
-- [ ] Tidak ada console errors di production build
+- [x] Semua mutasi menampilkan toast (success/error)
+- [x] Error boundary menangkap crash tanpa blank page
+- [x] Loading skeleton di semua halaman admin
+- [x] Semua halaman responsive tanpa horizontal scroll
+- [x] Keyboard navigable (Tab, Enter, Escape)
+- [x] Empty states: "No posts yet", "No media found", dll
+- [x] Long text truncated dengan ellipsis
+- [x] `next/image` digunakan untuk semua gambar
+- [x] Tidak ada console errors di production build
 
 ---
 

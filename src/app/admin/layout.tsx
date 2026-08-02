@@ -1,4 +1,5 @@
 import { AdminShell } from "@/components/admin/admin-shell";
+import { getAppearanceSettings } from "@/actions/appearance";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -6,10 +7,13 @@ export const metadata: Metadata = {
   description: "NextCMS Admin Dashboard",
 };
 
-export default function AdminLayout({
+export default async function AdminLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  return <AdminShell>{children}</AdminShell>;
+  const { data: appearance } = await getAppearanceSettings();
+  const activeTheme = (appearance?.active_theme as string) || "school-profile";
+
+  return <AdminShell activeTheme={activeTheme}>{children}</AdminShell>;
 }

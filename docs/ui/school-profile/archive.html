@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>News & Events — SMaRT School</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: { sans: ['Inter', 'sans-serif'] },
+                    colors: { primary: '#00704A', secondary: '#1E3932', accent: '#D4E9E2', graylight: '#F8F9FA' }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { font-family: 'Inter', sans-serif; color: #4B5563; }
+        .page-hero { background-image: linear-gradient(rgba(30,57,50,0.85), rgba(30,57,50,0.85)), url('https://images.unsplash.com/photo-1503676260728-1c00da094a0b?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80'); background-size: cover; background-position: center; }
+        .fade-in-section { opacity: 0; transform: translateY(30px); transition: opacity 0.8s ease-out, transform 0.8s ease-out; }
+        .fade-in-section.is-visible { opacity: 1; transform: none; }
+        .news-card { transition: all 0.3s ease; }
+        .news-card:hover { transform: translateY(-8px); box-shadow: 0 20px 40px rgba(0,0,0,0.1); }
+        .news-card img { transition: transform 0.6s ease; }
+        .news-card:hover img { transform: scale(1.06); }
+        .news-card .top-line { transform: scaleX(0); transition: transform 0.4s ease; transform-origin: left; }
+        .news-card:hover .top-line { transform: scaleX(1); }
+    </style>
+</head>
+<body class="bg-graylight antialiased">
+    <!-- Topbar -->
+    <div class="bg-secondary text-gray-300 py-2 text-sm hidden lg:block">
+        <div class="container mx-auto px-6 md:px-12 flex justify-between items-center">
+            <div class="flex items-center gap-6">
+                <span class="flex items-center gap-2"><span class="material-icons-outlined text-sm text-primary">phone</span> +62 812 3456 7890</span>
+                <span class="flex items-center gap-2"><span class="material-icons-outlined text-sm text-primary">email</span> info@smartschool.edu</span>
+            </div>
+            <div class="flex items-center gap-4">
+                <a href="#" class="hover:text-white transition-colors">Facebook</a>
+                <a href="#" class="hover:text-white transition-colors">Instagram</a>
+            </div>
+        </div>
+    </div>
+    <!-- Navbar -->
+    <header class="sticky top-0 w-full z-50 bg-white shadow-sm">
+        <div class="container mx-auto px-6 md:px-12 py-4 flex justify-between items-center">
+            <div class="flex items-center gap-3">
+                <div class="w-12 h-12 bg-primary rounded-lg flex items-center justify-center text-white relative overflow-hidden group"><div class="absolute inset-0 bg-white/20 -translate-x-full group-hover:translate-x-full transition-transform duration-700"></div><span class="material-icons-outlined text-2xl">school</span></div>
+                <div class="flex flex-col"><span class="font-bold text-2xl text-secondary leading-none">SMaRT</span><span class="text-xs font-semibold tracking-widest text-primary uppercase">School</span></div>
+            </div>
+            <nav class="hidden lg:flex items-center gap-8 font-semibold text-gray-700">
+                <a href="index.html" class="hover:text-primary transition-colors">Home</a>
+                <a href="about-us.html" class="hover:text-primary transition-colors">About Us</a>
+                <a href="team.html" class="hover:text-primary transition-colors">Teachers</a>
+                <a href="gallery.html" class="hover:text-primary transition-colors">Gallery</a>
+                <a href="archive.html" class="text-primary relative after:content-[''] after:absolute after:-bottom-1 after:left-0 after:w-full after:h-0.5 after:bg-primary">News</a>
+                <a href="contact.html" class="hover:text-primary transition-colors">Contact</a>
+            </nav>
+            <a href="#" class="hidden lg:flex bg-primary hover:bg-secondary text-white px-6 py-2.5 rounded font-semibold transition-all shadow-md items-center gap-2">Apply Now <span class="material-icons-outlined text-sm">arrow_forward</span></a>
+        </div>
+    </header>
+
+    <!-- Page Hero -->
+    <section class="page-hero py-24 lg:py-36">
+        <div class="container mx-auto px-6 md:px-12 text-center">
+            <h1 class="text-4xl lg:text-6xl font-bold text-white mb-4">News & Events</h1>
+            <p class="text-gray-300 text-lg mb-6">Stay up-to-date with the latest from SMaRT School</p>
+            <nav class="flex items-center justify-center gap-2 text-sm text-gray-400">
+                <a href="index.html" class="hover:text-white">Home</a>
+                <span class="material-icons-outlined text-sm">chevron_right</span>
+                <span class="text-accent">News & Events</span>
+            </nav>
+        </div>
+    </section>
+
+    <!-- Content + Sidebar -->
+    <section class="py-20 bg-graylight">
+        <div class="container mx-auto px-6 md:px-12">
+            <div class="flex flex-col lg:flex-row gap-12">
+                <!-- Posts -->
+                <div class="w-full lg:w-2/3">
+                    <!-- Featured Post -->
+                    <div class="news-card bg-white rounded-lg shadow-sm border border-gray-100 overflow-hidden mb-8 fade-in-section">
+                        <div class="relative w-full aspect-video overflow-hidden">
+                            <img src="https://images.unsplash.com/photo-1523580494112-071d38458a4c?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" alt="Featured" class="w-full h-full object-cover">
+                            <span class="absolute top-4 left-4 px-3 py-1 bg-primary text-white text-xs font-bold rounded">Featured</span>
+                        </div>
+                        <div class="p-8 relative">
+                            <div class="top-line absolute top-0 left-0 right-0 h-0.5 bg-gradient-to-r from-primary to-transparent"></div>
+                            <div class="flex items-center gap-4 text-xs text-gray-400 font-semibold uppercase tracking-wider mb-4">
+                                <span class="flex items-center gap-1"><span class="material-icons-outlined text-sm text-primary">calendar_today</span> October 15, 2026</span>
+                                <span class="flex items-center gap-1"><span class="material-icons-outlined text-sm text-primary">person</span> Admin</span>
+                                <span class="flex items-center gap-1"><span class="material-icons-outlined text-sm text-primary">folder</span> Events</span>
+                            </div>
+                            <h2 class="text-2xl font-bold text-secondary mb-4 hover:text-primary transition-colors"><a href="single-post.html">Annual Science Exhibition Brings Innovation to Light</a></h2>
+                            <p class="text-gray-500 mb-6">Students showcased remarkable projects focusing on renewable energy, artificial intelligence, and robotics at this year's grand science exhibition, attracting judges from top universities nationwide.</p>
+                            <a href="single-post.html" class="inline-flex items-center gap-2 px-6 py-2.5 bg-primary text-white rounded font-semibold hover:bg-secondary transition-colors">Read More <span class="material-icons-outlined text-sm">arrow_forward</span></a>
+                        </div>
+                    </div>
+
+                    <!-- Post Grid -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                        <div class="news-card bg-white rounded-lg shadow-sm border border-gray-100 overflow-hidden fade-in-section" style="transition-delay:100ms;">
+                            <div class="relative w-full aspect-video overflow-hidden"><img src="https://images.unsplash.com/photo-1503676260728-1c00da094a0b?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="News" class="w-full h-full object-cover"></div>
+                            <div class="p-6 relative">
+                                <div class="top-line absolute top-0 left-0 right-0 h-0.5 bg-gradient-to-r from-primary to-transparent"></div>
+                                <div class="flex items-center gap-3 text-xs text-gray-400 font-semibold mb-3"><span>Oct 10</span><span>·</span><span class="text-primary">Academic</span></div>
+                                <h3 class="font-bold text-secondary mb-3 hover:text-primary transition-colors"><a href="single-post.html">New Global Curriculum Standards Implemented This Term</a></h3>
+                                <p class="text-sm text-gray-500 mb-4 line-clamp-2">International benchmarking has been integrated into core subjects to better prepare students for a connected world.</p>
+                                <a href="single-post.html" class="text-primary text-sm font-bold flex items-center gap-1 hover:gap-2 transition-all">Read Article <span class="material-icons-outlined text-sm">arrow_right_alt</span></a>
+                            </div>
+                        </div>
+                        <div class="news-card bg-white rounded-lg shadow-sm border border-gray-100 overflow-hidden fade-in-section" style="transition-delay:200ms;">
+                            <div class="relative w-full aspect-video overflow-hidden"><img src="https://images.unsplash.com/photo-1509062522246-3755977927d7?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="News" class="w-full h-full object-cover"></div>
+                            <div class="p-6 relative">
+                                <div class="top-line absolute top-0 left-0 right-0 h-0.5 bg-gradient-to-r from-primary to-transparent"></div>
+                                <div class="flex items-center gap-3 text-xs text-gray-400 font-semibold mb-3"><span>Oct 5</span><span>·</span><span class="text-primary">Sports</span></div>
+                                <h3 class="font-bold text-secondary mb-3 hover:text-primary transition-colors"><a href="single-post.html">SMaRT School Wins Regional Basketball Championship</a></h3>
+                                <p class="text-sm text-gray-500 mb-4 line-clamp-2">A thrilling final match secured the regional trophy for our varsity team for the third consecutive year.</p>
+                                <a href="single-post.html" class="text-primary text-sm font-bold flex items-center gap-1 hover:gap-2 transition-all">Read Article <span class="material-icons-outlined text-sm">arrow_right_alt</span></a>
+                            </div>
+                        </div>
+                        <div class="news-card bg-white rounded-lg shadow-sm border border-gray-100 overflow-hidden fade-in-section" style="transition-delay:300ms;">
+                            <div class="relative w-full aspect-video overflow-hidden"><img src="https://images.unsplash.com/photo-1526628953301-3e589a6a8b74?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="News" class="w-full h-full object-cover"></div>
+                            <div class="p-6 relative">
+                                <div class="top-line absolute top-0 left-0 right-0 h-0.5 bg-gradient-to-r from-primary to-transparent"></div>
+                                <div class="flex items-center gap-3 text-xs text-gray-400 font-semibold mb-3"><span>Sep 28</span><span>·</span><span class="text-primary">Global</span></div>
+                                <h3 class="font-bold text-secondary mb-3 hover:text-primary transition-colors"><a href="single-post.html">15 Students Selected for Japan Exchange Program</a></h3>
+                                <p class="text-sm text-gray-500 mb-4 line-clamp-2">An exciting opportunity for our top students to immerse themselves in Japanese culture and academics.</p>
+                                <a href="single-post.html" class="text-primary text-sm font-bold flex items-center gap-1 hover:gap-2 transition-all">Read Article <span class="material-icons-outlined text-sm">arrow_right_alt</span></a>
+                            </div>
+                        </div>
+                        <div class="news-card bg-white rounded-lg shadow-sm border border-gray-100 overflow-hidden fade-in-section" style="transition-delay:400ms;">
+                            <div class="relative w-full aspect-video overflow-hidden"><img src="https://images.unsplash.com/photo-1543269865-cbf427effbad?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="News" class="w-full h-full object-cover"></div>
+                            <div class="p-6 relative">
+                                <div class="top-line absolute top-0 left-0 right-0 h-0.5 bg-gradient-to-r from-primary to-transparent"></div>
+                                <div class="flex items-center gap-3 text-xs text-gray-400 font-semibold mb-3"><span>Sep 20</span><span>·</span><span class="text-primary">Arts</span></div>
+                                <h3 class="font-bold text-secondary mb-3 hover:text-primary transition-colors"><a href="single-post.html">Choir Group Wins Gold at International Festival</a></h3>
+                                <p class="text-sm text-gray-500 mb-4 line-clamp-2">Our 40-member choir swept the competition at the Pan-Asian Choral Festival held in Singapore.</p>
+                                <a href="single-post.html" class="text-primary text-sm font-bold flex items-center gap-1 hover:gap-2 transition-all">Read Article <span class="material-icons-outlined text-sm">arrow_right_alt</span></a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Pagination -->
+                    <div class="flex items-center justify-center gap-2 mt-12">
+                        <a href="#" class="w-10 h-10 flex items-center justify-center rounded border border-gray-200 text-gray-500 hover:border-primary hover:text-primary transition-colors"><span class="material-icons-outlined text-sm">chevron_left</span></a>
+                        <a href="#" class="w-10 h-10 flex items-center justify-center rounded bg-primary text-white font-bold">1</a>
+                        <a href="#" class="w-10 h-10 flex items-center justify-center rounded border border-gray-200 text-gray-700 hover:border-primary hover:text-primary transition-colors font-bold">2</a>
+                        <a href="#" class="w-10 h-10 flex items-center justify-center rounded border border-gray-200 text-gray-700 hover:border-primary hover:text-primary transition-colors font-bold">3</a>
+                        <a href="#" class="w-10 h-10 flex items-center justify-center rounded border border-gray-200 text-gray-500 hover:border-primary hover:text-primary transition-colors"><span class="material-icons-outlined text-sm">chevron_right</span></a>
+                    </div>
+                </div>
+
+                <!-- Sidebar -->
+                <aside class="w-full lg:w-1/3 space-y-8">
+                    <div class="bg-white rounded-lg shadow-sm border border-gray-100 p-6 fade-in-section">
+                        <h4 class="font-bold text-secondary text-lg mb-4 pb-3 border-b border-gray-100 relative after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-10 after:h-0.5 after:bg-primary">Search</h4>
+                        <form class="flex">
+                            <input type="text" placeholder="Search news..." class="flex-1 border border-gray-200 rounded-l px-4 py-2.5 text-sm focus:outline-none focus:border-primary">
+                            <button class="bg-primary text-white px-4 rounded-r hover:bg-secondary transition-colors"><span class="material-icons-outlined text-sm">search</span></button>
+                        </form>
+                    </div>
+                    <div class="bg-white rounded-lg shadow-sm border border-gray-100 p-6 fade-in-section">
+                        <h4 class="font-bold text-secondary text-lg mb-4 pb-3 border-b border-gray-100 relative after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-10 after:h-0.5 after:bg-primary">Categories</h4>
+                        <ul class="space-y-2">
+                            <li><a href="#" class="flex justify-between items-center py-2 text-gray-600 hover:text-primary transition-colors text-sm border-b border-gray-50"><span>Academic</span><span class="text-xs bg-accent text-primary px-2 py-0.5 rounded-full font-bold">8</span></a></li>
+                            <li><a href="#" class="flex justify-between items-center py-2 text-gray-600 hover:text-primary transition-colors text-sm border-b border-gray-50"><span>Events</span><span class="text-xs bg-accent text-primary px-2 py-0.5 rounded-full font-bold">12</span></a></li>
+                            <li><a href="#" class="flex justify-between items-center py-2 text-gray-600 hover:text-primary transition-colors text-sm border-b border-gray-50"><span>Sports</span><span class="text-xs bg-accent text-primary px-2 py-0.5 rounded-full font-bold">6</span></a></li>
+                            <li><a href="#" class="flex justify-between items-center py-2 text-gray-600 hover:text-primary transition-colors text-sm border-b border-gray-50"><span>Arts & Culture</span><span class="text-xs bg-accent text-primary px-2 py-0.5 rounded-full font-bold">5</span></a></li>
+                            <li><a href="#" class="flex justify-between items-center py-2 text-gray-600 hover:text-primary transition-colors text-sm"><span>Global Programs</span><span class="text-xs bg-accent text-primary px-2 py-0.5 rounded-full font-bold">4</span></a></li>
+                        </ul>
+                    </div>
+                    <div class="bg-white rounded-lg shadow-sm border border-gray-100 p-6 fade-in-section">
+                        <h4 class="font-bold text-secondary text-lg mb-4 pb-3 border-b border-gray-100 relative after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-10 after:h-0.5 after:bg-primary">Recent Posts</h4>
+                        <ul class="space-y-4">
+                            <li class="flex gap-3">
+                                <img src="https://images.unsplash.com/photo-1523580494112-071d38458a4c?auto=format&fit=crop&w=100&q=80" class="w-16 h-16 rounded object-cover shrink-0" alt="">
+                                <div><a href="single-post.html" class="text-sm font-bold text-secondary hover:text-primary transition-colors line-clamp-2">Annual Science Exhibition Brings Innovation to Light</a><p class="text-xs text-gray-400 mt-1">Oct 15, 2026</p></div>
+                            </li>
+                            <li class="flex gap-3">
+                                <img src="https://images.unsplash.com/photo-1509062522246-3755977927d7?auto=format&fit=crop&w=100&q=80" class="w-16 h-16 rounded object-cover shrink-0" alt="">
+                                <div><a href="single-post.html" class="text-sm font-bold text-secondary hover:text-primary transition-colors line-clamp-2">SMaRT School Wins Regional Basketball Championship</a><p class="text-xs text-gray-400 mt-1">Oct 5, 2026</p></div>
+                            </li>
+                            <li class="flex gap-3">
+                                <img src="https://images.unsplash.com/photo-1543269865-cbf427effbad?auto=format&fit=crop&w=100&q=80" class="w-16 h-16 rounded object-cover shrink-0" alt="">
+                                <div><a href="single-post.html" class="text-sm font-bold text-secondary hover:text-primary transition-colors line-clamp-2">Choir Group Wins Gold at International Festival</a><p class="text-xs text-gray-400 mt-1">Sep 20, 2026</p></div>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="bg-secondary text-white rounded-lg p-6 fade-in-section">
+                        <h4 class="font-bold text-lg mb-3">Stay in the Loop</h4>
+                        <p class="text-accent/80 text-sm mb-4">Subscribe to receive the latest news and updates from SMaRT School.</p>
+                        <form class="flex flex-col gap-2">
+                            <input type="email" placeholder="Your Email" class="bg-white/10 border border-white/20 px-4 py-2.5 rounded text-sm text-white focus:outline-none focus:border-primary">
+                            <button type="submit" class="bg-primary hover:bg-white hover:text-primary transition-colors text-white px-4 py-2.5 rounded text-sm font-bold">Subscribe</button>
+                        </form>
+                    </div>
+                </aside>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-secondary text-gray-300 py-12 border-t-4 border-primary">
+        <div class="container mx-auto px-6 md:px-12 text-center">
+            <p class="text-sm">&copy; 2026 NextCMS — Educator Inspired Theme. All rights reserved.</p>
+        </div>
+    </footer>
+    <script>
+        const obs = new IntersectionObserver((entries) => { entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('is-visible'); }); }, { threshold: 0.1 });
+        document.querySelectorAll('.fade-in-section').forEach(el => obs.observe(el));
+    </script>
+</body>
+</html>

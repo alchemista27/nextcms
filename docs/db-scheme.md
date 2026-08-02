@@ -499,6 +499,8 @@ CREATE TYPE "MenuItemType" AS ENUM ('CUSTOM', 'PAGE', 'POST', 'CATEGORY');
 
 | Key | Tipe JSON Value | Deskripsi | Default |
 |---|---|---|---|
+| `active_theme` | `string` | Tema yang sedang aktif | `"school-profile"` |
+| `theme_school_profile`| `object` | Pengaturan spesifik tema School Profile (Hero, Visi, Misi, Kepsek, CTA) | `{}` |
 | `logo` | `string \| null` | URL logo situs | `null` |
 | `favicon` | `string \| null` | URL favicon | `null` |
 | `primary_color` | `string` | Warna utama (hex) | `"#00704A"` |
@@ -1265,6 +1267,14 @@ async function main() {
 
   // ─── 4. Appearance Settings ──────────────────────
   const appearances = [
+    { key: "active_theme",     value: "school-profile" },
+    { key: "theme_school_profile", value: {
+        hero: { title: "Welcome to Our School", subtitle: "Building the future", backgroundImage: null },
+        visionMission: { vision: "To be the best", missions: ["Mission 1", "Mission 2"] },
+        principal: { name: "John Doe", message: "Welcome to our website", image: null },
+        stats: { students: 1000, teachers: 50, awards: 20 },
+        cta: { title: "Join Us", subtitle: "Enroll today", buttonText: "Apply", buttonUrl: "/contact" }
+    }},
     { key: "logo",             value: null },
     { key: "favicon",          value: null },
     { key: "primary_color",    value: "#00704A" },
