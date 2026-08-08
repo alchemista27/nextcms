@@ -196,7 +196,7 @@ export default function AppearanceClient({ initialSettings }: AppearanceClientPr
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">Header Style</label>
                 <div className="space-y-2">
-                  {["CENTERED", "LEFT_ALIGNED", "MINIMAL"].map(style => (
+                  {["CENTERED", "LEFT_ALIGNED", "MINIMAL"].map((style: any) => (
                     <label key={style} className="flex items-center gap-2 text-sm">
                       <input 
                         type="radio" 
@@ -215,7 +215,7 @@ export default function AppearanceClient({ initialSettings }: AppearanceClientPr
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">Sidebar Position</label>
                 <div className="space-y-2">
-                  {["LEFT", "RIGHT", "NONE"].map(pos => (
+                  {["LEFT", "RIGHT", "NONE"].map((pos: any) => (
                     <label key={pos} className="flex items-center gap-2 text-sm">
                       <input 
                         type="radio" 

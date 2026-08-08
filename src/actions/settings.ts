@@ -12,7 +12,7 @@ export async function getSettings(keys: string[]) {
     
     // Convert array of objects to key-value map
     const result = keys.reduce((acc, key) => {
-      const setting = settings.find(s => s.key === key);
+      const setting = settings.find((s: any) => s.key === key);
       acc[key] = setting ? setting.value : null;
       return acc;
     }, {} as Record<string, string | null>);

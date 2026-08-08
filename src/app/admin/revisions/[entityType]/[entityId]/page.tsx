@@ -20,7 +20,7 @@ export default async function RevisionsPage({ params }: RevisionsPageProps) {
     notFound();
   }
 
-  const revisions = res.data.map(r => ({
+  const revisions = res.data.map((r: any) => ({
     id: r.id,
     title: r.title,
     content: r.content || "",

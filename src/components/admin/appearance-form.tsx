@@ -44,7 +44,7 @@ export default function AppearanceForm({ initialData }: { initialData: Partial<A
     
     // Convert comma separated string to array if needed for missions
     if (typeof data.theme_school_profile?.visionMission?.missions === 'string') {
-       data.theme_school_profile.visionMission.missions = (data.theme_school_profile.visionMission.missions as string).split(',').map(m => m.trim());
+       data.theme_school_profile.visionMission.missions = (data.theme_school_profile.visionMission.missions as string).split(',').map((m: any) => m.trim());
     }
 
     try {

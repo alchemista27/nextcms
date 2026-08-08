@@ -145,7 +145,7 @@ export default function MenuBuilderClient({ menus, posts, categories }: Props) {
   const [customLabel, setCustomLabel] = useState("");
   const [customUrl, setCustomUrl] = useState("https://");
 
-  const activeMenu = menus.find(m => m.id === selectedMenuId);
+  const activeMenu = menus.find((m: any) => m.id === selectedMenuId);
 
   useEffect(() => {
     if (selectedMenuId === "new") {
@@ -166,7 +166,7 @@ export default function MenuBuilderClient({ menus, posts, categories }: Props) {
         return (newDepthMap[parentId] || 0) + 1;
       };
       
-      flatItems.forEach(item => {
+      flatItems.forEach((item: any) => {
         newDepthMap[item.id] = calculateDepth(item.parentId);
       });
       setDepthMap(newDepthMap);
@@ -193,7 +193,7 @@ export default function MenuBuilderClient({ menus, posts, categories }: Props) {
   const generateId = () => crypto.randomUUID();
 
   const addItems = (type: MenuItemType, selection: any[]) => {
-    const newItems = selection.map(s => {
+    const newItems = selection.map((s: any) => {
       const id = generateId();
       setDepthMap(prev => ({ ...prev, [id]: 0 }));
       return {
@@ -218,11 +218,11 @@ export default function MenuBuilderClient({ menus, posts, categories }: Props) {
   };
 
   const updateItem = (id: string, data: Partial<TreeMenuItem>) => {
-    setItems(items.map(item => item.id === id ? { ...item, ...data } : item));
+    setItems(items.map((item: any) => item.id === id ? { ...item, ...data } : item));
   };
 
   const deleteItem = (id: string) => {
-    setItems(items.filter(item => item.id !== id));
+    setItems(items.filter((item: any) => item.id !== id));
   };
 
   const indentItem = (id: string) => {
@@ -335,7 +335,7 @@ export default function MenuBuilderClient({ menus, posts, categories }: Props) {
               Posts <ExpandMoreIcon fontSize="small" className="group-open:rotate-180 transition-transform"/>
             </summary>
             <div className="p-3 border-t border-gray-200 max-h-60 overflow-y-auto">
-              {posts.map(p => (
+              {posts.map((p: any) => (
                 <div key={p.id} className="flex justify-between items-center py-1">
                   <span className="text-sm">{p.title}</span>
                   <button onClick={() => addItems("POST", [p])} className="text-xs text-[#0f7f6d] hover:underline">Add</button>
@@ -350,7 +350,7 @@ export default function MenuBuilderClient({ menus, posts, categories }: Props) {
               Categories <ExpandMoreIcon fontSize="small" className="group-open:rotate-180 transition-transform"/>
             </summary>
             <div className="p-3 border-t border-gray-200 max-h-60 overflow-y-auto">
-              {categories.map(c => (
+              {categories.map((c: any) => (
                 <div key={c.id} className="flex justify-between items-center py-1">
                   <span className="text-sm">{c.name}</span>
                   <button onClick={() => addItems("CATEGORY", [c])} className="text-xs text-[#0f7f6d] hover:underline">Add</button>
@@ -374,7 +374,7 @@ export default function MenuBuilderClient({ menus, posts, categories }: Props) {
               className="text-sm border border-gray-300 rounded px-2 py-1.5 min-w-[200px]"
             >
               <option value="new">— Create a new menu —</option>
-              {menus.map(m => (
+              {menus.map((m: any) => (
                 <option key={m.id} value={m.id}>{m.name}</option>
               ))}
             </select>
@@ -432,7 +432,7 @@ export default function MenuBuilderClient({ menus, posts, categories }: Props) {
               ) : (
                 <DndContext sensors={sensors} collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
                   <SortableContext items={items} strategy={verticalListSortingStrategy}>
-                    {items.map(item => (
+                    {items.map((item: any) => (
                       <SortableMenuItem 
                         key={item.id} 
                         item={item} 

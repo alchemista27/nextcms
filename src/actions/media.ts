@@ -30,7 +30,7 @@ export async function getMedia(page = 1, perPage = 20, search = "") {
       prisma.media.count({ where }),
     ]);
     
-    const mappedMedia = media.map(m => {
+    const mappedMedia = media.map((m: any) => {
       const { uploadedBy, ...rest } = m;
       return {
         ...rest,

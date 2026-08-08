@@ -233,7 +233,7 @@ export default function SchoolProfileTheme({ settings, recentPosts, primaryMenu 
                 );
               })
             ) : (
-              [1, 2, 3].map(i => (
+              [1, 2, 3].map((i: any) => (
                 <div key={i} className="bg-white p-6 rounded-lg shadow-sm border border-gray-100">
                   <h3 className="text-lg font-bold text-[#454545] mb-2">Sample Post {i}</h3>
                   <p className="text-sm text-gray-500">Add posts in the admin dashboard to see them here.</p>

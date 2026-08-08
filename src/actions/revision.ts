@@ -12,7 +12,7 @@ export async function getRevisions(entityType: string, entityId: string) {
       include: { author: { select: { id: true, avatar: true, sharedUser: { select: { full_name: true } } } } },
     });
     
-    const mappedRevisions = revisions.map(r => {
+    const mappedRevisions = revisions.map((r: any) => {
       const { author, ...rest } = r;
       return {
         ...rest,
@@ -107,7 +107,7 @@ export async function restoreRevision(id: string, authorId: string) {
 
     if (latestRevisions.length > 0) {
       await prisma.revision.deleteMany({
-        where: { id: { in: latestRevisions.map(r => r.id) } },
+        where: { id: { in: latestRevisions.map((r: any) => r.id) } },
       });
     }
 

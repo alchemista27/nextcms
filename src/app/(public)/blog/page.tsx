@@ -23,7 +23,7 @@ export default async function BlogPage() {
     }
   });
 
-  const mappedPosts = posts.map(p => {
+  const mappedPosts = posts.map((p: any) => {
     const { author, ...rest } = p;
     return {
       ...rest,

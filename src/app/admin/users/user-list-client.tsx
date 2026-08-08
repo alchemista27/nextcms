@@ -63,7 +63,7 @@ export default function UserListClient({
   const handleSelectAll = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.checked) {
       // Don't select the current user
-      const selectable = initialData.filter(u => u.id !== currentUserId).map((u) => u.id);
+      const selectable = initialData.filter((u: any) => u.id !== currentUserId).map((u: any) => u.id);
       setSelectedIds(selectable);
     } else {
       setSelectedIds([]);
@@ -185,7 +185,7 @@ export default function UserListClient({
                 <th className="w-12 px-4 py-3 text-center">
                   <input
                     type="checkbox"
-                    checked={selectedIds.length === initialData.filter(u => u.id !== currentUserId).length && initialData.length > 0}
+                    checked={selectedIds.length === initialData.filter((u: any) => u.id !== currentUserId).length && initialData.length > 0}
                     onChange={handleSelectAll}
                     className="rounded border-gray-300 text-[#0f7f6d] focus:ring-[#0f7f6d]"
                   />

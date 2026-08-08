@@ -83,7 +83,7 @@ export default function PermalinksClient({ initialSettings }: PermalinksClientPr
                           placeholder="/%category%/%postname%/"
                         />
                         <div className="flex flex-wrap gap-2 mt-2">
-                          {['%year%', '%monthnum%', '%day%', '%hour%', '%minute%', '%second%', '%post_id%', '%postname%', '%category%', '%author%'].map(tag => (
+                          {['%year%', '%monthnum%', '%day%', '%hour%', '%minute%', '%second%', '%post_id%', '%postname%', '%category%', '%author%'].map((tag: any) => (
                             <button
                               key={tag}
                               type="button"

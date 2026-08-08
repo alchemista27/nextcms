@@ -31,7 +31,7 @@ export default function StatsSectionForm({ initialData }: { initialData: any }) 
   return (
     <form onSubmit={handleSubmit} className="space-y-5 bg-white border border-gray-200 rounded-xl p-6">
       <div className="grid grid-cols-2 gap-4">
-        {fields.map(f => (
+        {fields.map((f: any) => (
           <div key={f.key}>
             <label className="block text-sm font-medium text-gray-700 mb-1">
               {f.label}

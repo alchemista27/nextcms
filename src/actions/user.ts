@@ -39,7 +39,7 @@ export async function getUsers(page = 1, limit = 10, search = "", role = "") {
     ]);
 
     // Map sharedUser data to name and email for the frontend
-    const mappedUsers = users.map(u => {
+    const mappedUsers = users.map((u: any) => {
       const { sharedUser, ...rest } = u;
       return {
         ...rest,

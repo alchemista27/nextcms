@@ -58,7 +58,7 @@ export async function getPosts({ status, search, page = 1, perPage = 20 }: GetPo
       counts.ALL += row._count._all;
     }
     // Map the author name from sharedUser
-    const mappedPosts = posts.map(p => {
+    const mappedPosts = posts.map((p: any) => {
       const { author, ...rest } = p;
       return {
         ...rest,
@@ -137,7 +137,7 @@ export async function createPost(data: PostInput, authorId: string) {
   try {
     const validated = postSchema.safeParse(data);
     if (!validated.success) {
-      return { success: false, error: "Invalid data: " + validated.error.issues.map(i => i.message).join(", ") };
+      return { success: false, error: "Invalid data: " + validated.error.issues.map((i: any) => i.message).join(", ") };
     }
 
     const { title, slug, content, excerpt, status, featuredImage, metaTitle, metaDescription, ogImage, publishedAt, categoryIds, tagIds, newTagNames } = validated.data;
@@ -153,7 +153,7 @@ export async function createPost(data: PostInput, authorId: string) {
       ? await upsertNewTags(newTagNames)
       : [];
 
-    const allTagIds = [...(tagIds || []), ...createdTags.map(t => t.id)];
+    const allTagIds = [...(tagIds || []), ...createdTags.map((t: any) => t.id)];
 
     const post = await prisma.post.create({
       data: {
@@ -169,10 +169,10 @@ export async function createPost(data: PostInput, authorId: string) {
         publishedAt: status === "PUBLISHED" ? (publishedAt ? new Date(publishedAt) : new Date()) : null,
         authorId,
         categories: categoryIds && categoryIds.length > 0
-          ? { connect: categoryIds.map(id => ({ id })) }
+          ? { connect: categoryIds.map((id: any) => ({ id })) }
           : undefined,
         tags: allTagIds.length > 0
-          ? { connect: allTagIds.map(id => ({ id })) }
+          ? { connect: allTagIds.map((id: any) => ({ id })) }
           : undefined,
       },
     });
@@ -201,7 +201,7 @@ export async function updatePost(id: string, data: PostInput, authorId: string) 
   try {
     const validated = postSchema.safeParse(data);
     if (!validated.success) {
-      return { success: false, error: "Invalid data: " + validated.error.issues.map(i => i.message).join(", ") };
+      return { success: false, error: "Invalid data: " + validated.error.issues.map((i: any) => i.message).join(", ") };
     }
 
     const { title, slug, content, excerpt, status, featuredImage, metaTitle, metaDescription, ogImage, publishedAt, categoryIds, tagIds, newTagNames } = validated.data;
@@ -217,7 +217,7 @@ export async function updatePost(id: string, data: PostInput, authorId: string) 
       ? await upsertNewTags(newTagNames)
       : [];
 
-    const allTagIds = [...(tagIds || []), ...createdTags.map(t => t.id)];
+    const allTagIds = [...(tagIds || []), ...createdTags.map((t: any) => t.id)];
 
     // Get current post to determine if publishedAt should be set
     const currentPost = await prisma.post.findUnique({ where: { id } });
@@ -240,10 +240,10 @@ export async function updatePost(id: string, data: PostInput, authorId: string) 
           ? null
           : undefined,
         categories: {
-          set: (categoryIds || []).map(id => ({ id })),
+          set: (categoryIds || []).map((id: any) => ({ id })),
         },
         tags: {
-          set: allTagIds.map(id => ({ id })),
+          set: allTagIds.map((id: any) => ({ id })),
         },
       },
     });
