@@ -10,7 +10,7 @@ export async function getAppearanceSettings() {
     const settings = await prisma.appearance.findMany();
     
     // Transform array of {key, value} to a key-value object
-    const formattedSettings = settings.reduce((acc: Record<string, any>, curr) => {
+    const formattedSettings = settings.reduce((acc: Record<string, any>, curr: any) => {
       acc[curr.key] = curr.value;
       return acc;
     }, {});
