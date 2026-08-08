@@ -1,36 +1,57 @@
-import { getAppearanceSettings } from "@/actions/appearance";
-import { getPosts } from "@/actions/post";
-import { getMenuByLocation } from "@/actions/menu";
-import SchoolProfileTheme from "@/components/themes/school-profile/theme-renderer";
+import HeroSection from "@/components/themes/school-profile/home/hero";
+import InfoBoxesSection from "@/components/themes/school-profile/home/info-boxes";
+import AboutSection from "@/components/themes/school-profile/home/about-section";
+import StatsSection from "@/components/themes/school-profile/home/stats-section";
+import TeachersSection from "@/components/themes/school-profile/home/teachers-section";
+import GallerySection from "@/components/themes/school-profile/home/gallery-section";
+import TestimonialSection from "@/components/themes/school-profile/home/testimonial-section";
+import NewsSection from "@/components/themes/school-profile/home/news-section";
+import CtaSection from "@/components/themes/school-profile/home/cta-section";
 
-export const metadata = {
-  title: "Home - NextCMS",
-};
-
-export const dynamic = "force-dynamic";
+import prisma from "@/lib/prisma";
 
 export default async function PublicHomePage() {
-  const { data: appearance } = await getAppearanceSettings();
-  
-  const activeTheme = appearance?.active_theme || "school-profile";
+  // Fetch data for the home page in parallel
+  const [teachers, gallery, testimonials, news] = await Promise.all([
+    prisma.teamMember.findMany({ orderBy: { order: "asc" }, take: 4 }),
+    prisma.galleryImage.findMany({ orderBy: { createdAt: "desc" }, take: 3 }),
+    prisma.testimonial.findMany({ where: { isPublished: true }, orderBy: { createdAt: "desc" }, take: 3 }),
+    prisma.post.findMany({
+      where: { status: "PUBLISHED" },
+      orderBy: { publishedAt: "desc" },
+      take: 3,
+      include: {
+        author: {
+          include: {
+            sharedUser: true,
+          }
+        },
+        categories: true,
+      },
+    }),
+  ]);
 
-  // Fetch recent posts for the news section
-  const { data: posts = [] } = await getPosts({ status: "PUBLISHED", page: 1, perPage: 3 });
+  // Format news author data to match the component's expectation
+  const formattedNews = news.map(post => ({
+    ...post,
+    author: {
+      user_metadata: {
+        full_name: post.author?.sharedUser?.full_name || "Admin"
+      }
+    }
+  }));
 
-  // Fetch primary menu
-  const { data: primaryMenu } = await getMenuByLocation("HEADER") || await getMenuByLocation("Primary Menu");
-
-  if (activeTheme === "school-profile") {
-    return <SchoolProfileTheme settings={appearance?.theme_school_profile} recentPosts={posts} primaryMenu={primaryMenu} />;
-  }
-
-  // Fallback for other themes (Company Profile, News Portal, etc.)
   return (
-    <div className="flex items-center justify-center min-h-[60vh]">
-      <div className="text-center">
-        <h1 className="text-4xl font-bold mb-4">Welcome to NextCMS</h1>
-        <p className="text-xl text-gray-600">The theme &quot;{activeTheme}&quot; is currently under construction.</p>
-      </div>
-    </div>
+    <>
+      <HeroSection />
+      <InfoBoxesSection />
+      <AboutSection />
+      <StatsSection />
+      <TeachersSection teachers={teachers} />
+      <GallerySection images={gallery} />
+      <TestimonialSection testimonials={testimonials} />
+      <NewsSection posts={formattedNews} />
+      <CtaSection />
+    </>
   );
 }

@@ -1,4 +1,3 @@
-import { Prisma } from '@prisma/client'
 import prisma from '../src/lib/prisma'
 async function main() {
   // Admin user should be created via Supabase Auth and SIM, so we skip seeding it here.
@@ -32,8 +31,8 @@ async function main() {
 
   // Seed appearance
   const appearance = [
-    { key: 'logo', value: Prisma.JsonNull },
-    { key: 'favicon', value: Prisma.JsonNull },
+    { key: 'logo', value: null },
+    { key: 'favicon', value: null },
     { key: 'primary_color', value: '#00704A' },
     { key: 'secondary_color', value: '#1E3932' },
     { key: 'font_family', value: 'Inter' },

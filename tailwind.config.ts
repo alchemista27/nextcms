@@ -15,6 +15,10 @@ const config: Config = {
         neutral: "#F7F8F8",
         surface: "#FFFFFF",
         border: "#E3E8E7",
+        schoolPrimary: "var(--primary-color)",
+        schoolSecondary: "var(--secondary-color)",
+        schoolAccent: "#D4E9E2",
+        schoolGraylight: "#F8F9FA",
       },
       backgroundImage: {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",

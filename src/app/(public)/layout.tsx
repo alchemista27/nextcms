@@ -3,6 +3,8 @@ import Image from "next/image";
 import { getAppearanceSettings } from "@/actions/appearance";
 import { Inter } from "next/font/google";
 import { Toaster } from "sonner";
+import PublicHeader from "@/components/themes/school-profile/layout/public-header";
+import PublicFooter from "@/components/themes/school-profile/layout/public-footer";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -29,10 +31,14 @@ export default async function PublicLayout({ children }: { children: ReactNode }
         }} />
       </head>
       <body className={`${inter.className} min-h-screen flex flex-col`}>
+        <PublicHeader />
+        
         {/* Main Content */}
         <main className="flex-grow">
           {children}
         </main>
+
+        <PublicFooter />
 
         <Toaster position="bottom-right" richColors closeButton />
       </body>
