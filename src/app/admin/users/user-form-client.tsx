@@ -94,7 +94,7 @@ export default function UserFormClient({ initialData, isOwnProfile = false }: Us
             <button
               type="button"
               onClick={() => setShowMediaPicker(true)}
-              className="text-[#00704A] text-sm hover:underline font-medium"
+              className="text-[#0f7f6d] text-sm hover:underline font-medium"
             >
               Set Profile Picture
             </button>
@@ -119,7 +119,7 @@ export default function UserFormClient({ initialData, isOwnProfile = false }: Us
                 value={formData.name}
                 onChange={handleChange}
                 required
-                className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-1 focus:ring-[#00704A]"
+                className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-1 focus:ring-[#0f7f6d]"
               />
             </div>
 
@@ -131,7 +131,7 @@ export default function UserFormClient({ initialData, isOwnProfile = false }: Us
                 value={formData.email}
                 onChange={handleChange}
                 required
-                className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-1 focus:ring-[#00704A]"
+                className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-1 focus:ring-[#0f7f6d]"
               />
             </div>
 
@@ -146,7 +146,7 @@ export default function UserFormClient({ initialData, isOwnProfile = false }: Us
                 onChange={handleChange}
                 required={!isEdit}
                 minLength={6}
-                className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-1 focus:ring-[#00704A]"
+                className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-1 focus:ring-[#0f7f6d]"
               />
             </div>
 
@@ -157,11 +157,10 @@ export default function UserFormClient({ initialData, isOwnProfile = false }: Us
                   name="role"
                   value={formData.role}
                   onChange={handleChange}
-                  className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-1 focus:ring-[#00704A]"
+                  className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-1 focus:ring-[#0f7f6d]"
                 >
                   <option value="SUBSCRIBER">Subscriber</option>
-                  <option value="AUTHOR">Author</option>
-                  <option value="EDITOR">Editor</option>
+                  <option value="CONTRIBUTOR">Contributor</option>
                   <option value="ADMIN">Administrator</option>
                 </select>
               </div>
@@ -174,7 +173,7 @@ export default function UserFormClient({ initialData, isOwnProfile = false }: Us
                 value={formData.bio}
                 onChange={handleChange}
                 rows={4}
-                className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-1 focus:ring-[#00704A]"
+                className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-1 focus:ring-[#0f7f6d]"
                 placeholder="Share a little biographical information to fill out your profile."
               />
             </div>
@@ -192,7 +191,7 @@ export default function UserFormClient({ initialData, isOwnProfile = false }: Us
           <button
             type="submit"
             disabled={isPending}
-            className="px-4 py-2 bg-[#00704A] hover:bg-[#1E3932] text-white font-medium rounded-md text-sm disabled:opacity-50"
+            className="px-4 py-2 bg-[#0f7f6d] hover:bg-[#454545] text-white font-medium rounded-md text-sm disabled:opacity-50"
           >
             {isPending ? "Saving..." : isEdit ? "Update User" : "Add New User"}
           </button>

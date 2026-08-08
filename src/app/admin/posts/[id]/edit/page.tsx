@@ -1,5 +1,4 @@
-import { getServerSession } from "next-auth";
-import { authOptions } from "@/lib/auth";
+import { getCurrentUser } from "@/lib/auth-guard";
 import { getCategories } from "@/actions/category";
 import { getTags } from "@/actions/tag";
 import { getPostById } from "@/actions/post";
@@ -22,8 +21,8 @@ export async function generateMetadata({ params }: EditPostPageProps): Promise<M
 
 export default async function EditPostPage({ params }: EditPostPageProps) {
   const { id } = await params;
-  const session = await getServerSession(authOptions);
-  if (!session?.user?.id) redirect("/login");
+  const user = await getCurrentUser();
+  if (!user) redirect("/login");
 
   const [postResult, categoriesResult, tagsResult, revisionCount] = await Promise.all([
     getPostById(id),
@@ -39,7 +38,7 @@ export default async function EditPostPage({ params }: EditPostPageProps) {
   return (
     <PostEditorClient
       post={postResult.data as any}
-      authorId={session.user.id}
+      authorId={user.id}
       allCategories={categoriesResult.success ? (categoriesResult.data as any[]) : []}
       allTags={tagsResult.success ? (tagsResult.data as any[]) : []}
       revisionCount={typeof revisionCount === 'number' ? revisionCount : 0}

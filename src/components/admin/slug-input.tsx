@@ -77,7 +77,7 @@ export function SlugInput({ value, onChange, title, postId }: SlugInputProps) {
   return (
     <div className="flex items-center gap-2 text-sm text-gray-500 flex-wrap">
       <span className="text-gray-400">Permalink:</span>
-      <span className="text-gray-400">…/posts/</span>
+      <span className="text-gray-400">/</span>
 
       {isEditing ? (
         <div className="flex items-center gap-1.5">
@@ -93,9 +93,9 @@ export function SlugInput({ value, onChange, title, postId }: SlugInputProps) {
               if (e.key === "Enter") handleConfirm();
               if (e.key === "Escape") handleCancel();
             }}
-            className="border border-[#00704A] rounded px-2 py-0.5 text-sm text-gray-800 focus:outline-none focus:ring-1 focus:ring-[#00704A] min-w-[200px]"
+            className="border border-[#0f7f6d] rounded px-2 py-0.5 text-sm text-gray-800 focus:outline-none focus:ring-1 focus:ring-[#0f7f6d] min-w-[200px]"
           />
-          <button onClick={handleConfirm} className="text-[#00704A] hover:text-[#1E3932] p-0.5">
+          <button onClick={handleConfirm} className="text-[#0f7f6d] hover:text-[#454545] p-0.5">
             <CheckIcon fontSize="small" />
           </button>
           <button onClick={handleCancel} className="text-gray-400 hover:text-gray-600 p-0.5">
@@ -107,7 +107,7 @@ export function SlugInput({ value, onChange, title, postId }: SlugInputProps) {
           <span className="font-medium text-gray-700 underline decoration-dotted">{value || "—"}</span>
           <button
             onClick={handleStartEdit}
-            className="text-[#00704A] hover:text-[#1E3932] transition-colors"
+            className="text-[#0f7f6d] hover:text-[#454545] transition-colors"
             title="Edit permalink"
           >
             <EditIcon fontSize="small" />

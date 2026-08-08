@@ -37,7 +37,6 @@ interface Menu {
 
 interface Props {
   menus: Menu[];
-  pages: any[];
   posts: any[];
   categories: any[];
 }
@@ -80,10 +79,10 @@ function SortableMenuItem({
         </div>
         
         <div className="flex items-center gap-1">
-          <button onClick={() => onOutdent(item.id)} disabled={depth === 0} className="p-1 text-gray-400 hover:text-[#00704A] disabled:opacity-30 disabled:cursor-not-allowed">
+          <button onClick={() => onOutdent(item.id)} disabled={depth === 0} className="p-1 text-gray-400 hover:text-[#0f7f6d] disabled:opacity-30 disabled:cursor-not-allowed">
             <KeyboardBackspaceIcon fontSize="small" />
           </button>
-          <button onClick={() => onIndent(item.id)} className="p-1 text-gray-400 hover:text-[#00704A]">
+          <button onClick={() => onIndent(item.id)} className="p-1 text-gray-400 hover:text-[#0f7f6d]">
             <ArrowRightAltIcon fontSize="small" />
           </button>
           <button onClick={() => setExpanded(!expanded)} className="p-1 text-gray-400 hover:text-gray-700">
@@ -101,20 +100,18 @@ function SortableMenuItem({
                 type="text" 
                 value={item.label} 
                 onChange={(e) => onUpdate(item.id, { label: e.target.value })}
-                className="w-full text-sm border border-gray-300 rounded px-2 py-1.5 focus:outline-none focus:ring-1 focus:ring-[#00704A]" 
+                className="w-full text-sm border border-gray-300 rounded px-2 py-1.5 focus:outline-none focus:ring-1 focus:ring-[#0f7f6d]" 
               />
             </div>
-            {item.type === "CUSTOM" && (
-              <div className="flex-1">
-                <label className="block text-xs font-medium text-gray-600 mb-1">URL</label>
-                <input 
-                  type="text" 
-                  value={item.url ?? ""} 
-                  onChange={(e) => onUpdate(item.id, { url: e.target.value })}
-                  className="w-full text-sm border border-gray-300 rounded px-2 py-1.5 focus:outline-none focus:ring-1 focus:ring-[#00704A]" 
-                />
-              </div>
-            )}
+            <div className="flex-1">
+              <label className="block text-xs font-medium text-gray-600 mb-1">URL</label>
+              <input 
+                type="text" 
+                value={item.url ?? ""} 
+                onChange={(e) => onUpdate(item.id, { url: e.target.value })}
+                className="w-full text-sm border border-gray-300 rounded px-2 py-1.5 focus:outline-none focus:ring-1 focus:ring-[#0f7f6d]" 
+              />
+            </div>
           </div>
           <div className="flex justify-between items-center mt-2">
             <button onClick={() => onDelete(item.id)} className="text-red-600 hover:underline text-xs flex items-center gap-1">
@@ -132,7 +129,7 @@ function SortableMenuItem({
 
 
 // --- Main Component ---
-export default function MenuBuilderClient({ menus, pages, posts, categories }: Props) {
+export default function MenuBuilderClient({ menus, posts, categories }: Props) {
   const router = useRouter();
   const [isPending, startTransition] = useTransition();
   const [selectedMenuId, setSelectedMenuId] = useState<string>(menus[0]?.id || "new");
@@ -204,7 +201,7 @@ export default function MenuBuilderClient({ menus, pages, posts, categories }: P
         menuId: selectedMenuId !== "new" ? selectedMenuId : "",
         parentId: null,
         label: s.title || s.name || customLabel,
-        url: type === "CUSTOM" ? customUrl : type === "PAGE" ? `/${s.slug}` : type === "POST" ? `/blog/${s.slug}` : `/category/${s.slug}`,
+        url: type === "CUSTOM" ? customUrl : type === "PAGE" ? `/${s.slug}` : type === "POST" ? `/${s.slug}` : `/category/${s.slug}`,
         type,
         referenceId: s.id || null,
         target: "_self",
@@ -312,11 +309,11 @@ export default function MenuBuilderClient({ menus, pages, posts, categories }: P
             <div className="p-3 border-t border-gray-200 space-y-3">
               <div>
                 <label className="block text-xs mb-1 text-gray-600">URL</label>
-                <input type="text" value={customUrl} onChange={e => setCustomUrl(e.target.value)} className="w-full text-sm border border-gray-300 rounded px-2 py-1.5 focus:outline-none focus:border-[#00704A]" />
+                <input type="text" value={customUrl} onChange={e => setCustomUrl(e.target.value)} className="w-full text-sm border border-gray-300 rounded px-2 py-1.5 focus:outline-none focus:border-[#0f7f6d]" />
               </div>
               <div>
                 <label className="block text-xs mb-1 text-gray-600">Link Text</label>
-                <input type="text" value={customLabel} onChange={e => setCustomLabel(e.target.value)} className="w-full text-sm border border-gray-300 rounded px-2 py-1.5 focus:outline-none focus:border-[#00704A]" />
+                <input type="text" value={customLabel} onChange={e => setCustomLabel(e.target.value)} className="w-full text-sm border border-gray-300 rounded px-2 py-1.5 focus:outline-none focus:border-[#0f7f6d]" />
               </div>
               <div className="flex justify-end">
                 <button 
@@ -330,20 +327,7 @@ export default function MenuBuilderClient({ menus, pages, posts, categories }: P
             </div>
           </details>
 
-          {/* Pages */}
-          <details className="group border border-gray-200 rounded">
-            <summary className="p-3 font-medium text-sm cursor-pointer list-none flex justify-between bg-gray-50 hover:bg-gray-100">
-              Pages <ExpandMoreIcon fontSize="small" className="group-open:rotate-180 transition-transform"/>
-            </summary>
-            <div className="p-3 border-t border-gray-200 max-h-60 overflow-y-auto">
-              {pages.map(p => (
-                <div key={p.id} className="flex justify-between items-center py-1">
-                  <span className="text-sm">{p.title}</span>
-                  <button onClick={() => addItems("PAGE", [p])} className="text-xs text-[#00704A] hover:underline">Add</button>
-                </div>
-              ))}
-            </div>
-          </details>
+
 
           {/* Posts */}
           <details className="group border border-gray-200 rounded">
@@ -354,7 +338,7 @@ export default function MenuBuilderClient({ menus, pages, posts, categories }: P
               {posts.map(p => (
                 <div key={p.id} className="flex justify-between items-center py-1">
                   <span className="text-sm">{p.title}</span>
-                  <button onClick={() => addItems("POST", [p])} className="text-xs text-[#00704A] hover:underline">Add</button>
+                  <button onClick={() => addItems("POST", [p])} className="text-xs text-[#0f7f6d] hover:underline">Add</button>
                 </div>
               ))}
             </div>
@@ -369,7 +353,7 @@ export default function MenuBuilderClient({ menus, pages, posts, categories }: P
               {categories.map(c => (
                 <div key={c.id} className="flex justify-between items-center py-1">
                   <span className="text-sm">{c.name}</span>
-                  <button onClick={() => addItems("CATEGORY", [c])} className="text-xs text-[#00704A] hover:underline">Add</button>
+                  <button onClick={() => addItems("CATEGORY", [c])} className="text-xs text-[#0f7f6d] hover:underline">Add</button>
                 </div>
               ))}
             </div>
@@ -398,7 +382,7 @@ export default function MenuBuilderClient({ menus, pages, posts, categories }: P
           <button 
             onClick={handleSave} 
             disabled={isPending || !menuName}
-            className="px-4 py-2 bg-[#00704A] text-white text-sm font-medium rounded hover:bg-[#1E3932] disabled:opacity-50"
+            className="px-4 py-2 bg-[#0f7f6d] text-white text-sm font-medium rounded hover:bg-[#454545] disabled:opacity-50"
           >
             {isPending ? "Saving..." : "Save Menu"}
           </button>
@@ -414,7 +398,7 @@ export default function MenuBuilderClient({ menus, pages, posts, categories }: P
                 value={menuName}
                 onChange={e => setMenuName(e.target.value)}
                 placeholder="e.g. Primary Menu"
-                className="w-full max-w-sm border border-gray-300 rounded px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-[#00704A]" 
+                className="w-full max-w-sm border border-gray-300 rounded px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-[#0f7f6d]" 
               />
             </div>
             <div>
@@ -422,7 +406,7 @@ export default function MenuBuilderClient({ menus, pages, posts, categories }: P
               <select 
                 value={menuLocation}
                 onChange={e => setMenuLocation(e.target.value)}
-                className="w-full border border-gray-300 rounded px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-[#00704A]" 
+                className="w-full border border-gray-300 rounded px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-[#0f7f6d]" 
               >
                 <option value="">— Select Location —</option>
                 <option value="HEADER">Header Navigation</option>
@@ -482,7 +466,7 @@ export default function MenuBuilderClient({ menus, pages, posts, categories }: P
           <button 
             onClick={handleSave} 
             disabled={isPending || !menuName}
-            className="px-4 py-2 bg-[#00704A] text-white text-sm font-medium rounded hover:bg-[#1E3932] disabled:opacity-50"
+            className="px-4 py-2 bg-[#0f7f6d] text-white text-sm font-medium rounded hover:bg-[#454545] disabled:opacity-50"
           >
             {isPending ? "Saving..." : "Save Menu"}
           </button>

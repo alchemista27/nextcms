@@ -36,7 +36,7 @@ export default function VisionMissionForm({ initialData }: { initialData: any })
         <label className="block text-sm font-medium text-gray-700 mb-1">Vision Statement</label>
         <textarea
           rows={3}
-          className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-[#00704A]"
+          className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-[#0f7f6d]"
           value={vision}
           onChange={e => setVision(e.target.value)}
         />
@@ -45,7 +45,7 @@ export default function VisionMissionForm({ initialData }: { initialData: any })
       <div>
         <div className="flex items-center justify-between mb-3">
           <label className="block text-sm font-medium text-gray-700">Mission Items</label>
-          <button type="button" onClick={addMission} className="text-xs px-3 py-1.5 bg-[#D4E9E2] text-[#1E3932] font-semibold rounded-lg hover:bg-[#00704A] hover:text-white transition">
+          <button type="button" onClick={addMission} className="text-xs px-3 py-1.5 bg-[#D4E9E2] text-[#454545] font-semibold rounded-lg hover:bg-[#0f7f6d] hover:text-white transition">
             + Add Mission
           </button>
         </div>
@@ -54,7 +54,7 @@ export default function VisionMissionForm({ initialData }: { initialData: any })
             <div key={i} className="flex gap-2 items-center">
               <span className="text-xs text-gray-400 font-mono w-5 text-right">{i + 1}.</span>
               <input
-                className="flex-1 border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-[#00704A]"
+                className="flex-1 border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-[#0f7f6d]"
                 value={m}
                 onChange={e => updateMission(i, e.target.value)}
                 placeholder={`Mission ${i + 1}`}
@@ -66,7 +66,7 @@ export default function VisionMissionForm({ initialData }: { initialData: any })
       </div>
 
       <div className="flex justify-end">
-        <button type="submit" disabled={saving} className="px-6 py-2.5 bg-[#00704A] text-white text-sm font-semibold rounded-lg hover:bg-[#1E3932] transition disabled:opacity-50">
+        <button type="submit" disabled={saving} className="px-6 py-2.5 bg-[#0f7f6d] text-white text-sm font-semibold rounded-lg hover:bg-[#454545] transition disabled:opacity-50">
           {saving ? "Saving..." : "Save Changes"}
         </button>
       </div>

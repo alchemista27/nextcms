@@ -130,7 +130,7 @@ export default function PostListClient({
             <div className="flex items-center gap-2 text-xs opacity-0 group-hover:opacity-100 transition-opacity">
               {!isTrash ? (
                 <>
-                  <a href={`/admin/posts/${post.id}/edit`} className="text-[#00704A] hover:underline">Edit</a>
+                  <a href={`/admin/posts/${post.id}/edit`} className="text-[#0f7f6d] hover:underline">Edit</a>
                   <span className="text-gray-300">|</span>
                   <button
                     onClick={() => startTransition(async () => { await trashPost(post.id); router.refresh(); })}
@@ -147,7 +147,7 @@ export default function PostListClient({
                   <button
                     onClick={() => startTransition(async () => { await restorePost(post.id); router.refresh(); })}
                     disabled={isPending}
-                    className="text-[#00704A] hover:underline"
+                    className="text-[#0f7f6d] hover:underline"
                   >
                     Restore
                   </button>
@@ -175,7 +175,7 @@ export default function PostListClient({
       header: "Author",
       cell: ({ row }) => (
         <div className="flex items-center gap-2">
-          <div className="w-6 h-6 rounded-full bg-[#00704A] flex items-center justify-center text-white text-xs font-medium flex-shrink-0">
+          <div className="w-6 h-6 rounded-full bg-[#0f7f6d] flex items-center justify-center text-white text-xs font-medium flex-shrink-0">
             {row.original.author.name.charAt(0).toUpperCase()}
           </div>
           <span className="text-gray-600 text-sm">{row.original.author.name}</span>
@@ -253,7 +253,7 @@ export default function PostListClient({
               onClick={() => updateParams({ status: tab.key === "ALL" ? undefined : tab.key, page: "1" })}
               className={`px-3 py-2 text-sm font-medium whitespace-nowrap border-b-2 transition-colors ${
                 isActive
-                  ? "border-[#00704A] text-[#00704A]"
+                  ? "border-[#0f7f6d] text-[#0f7f6d]"
                   : "border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300"
               }`}
             >
@@ -277,7 +277,7 @@ export default function PostListClient({
               <button
                 onClick={() => handleBulkAction("publish")}
                 disabled={isPending || currentStatus === "TRASH"}
-                className="px-3 py-1.5 text-xs bg-[#00704A] text-white rounded hover:bg-[#1E3932] disabled:opacity-50 transition-colors"
+                className="px-3 py-1.5 text-xs bg-[#0f7f6d] text-white rounded hover:bg-[#454545] disabled:opacity-50 transition-colors"
               >
                 Publish
               </button>
@@ -309,7 +309,7 @@ export default function PostListClient({
               placeholder="Search posts..."
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-              className="pl-8 pr-3 py-1.5 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-1 focus:ring-[#00704A] focus:border-[#00704A] w-56"
+              className="pl-8 pr-3 py-1.5 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-1 focus:ring-[#0f7f6d] focus:border-[#0f7f6d] w-56"
             />
           </div>
           <button type="submit" className="px-3 py-1.5 bg-gray-100 hover:bg-gray-200 text-gray-700 rounded text-sm transition-colors">
@@ -345,7 +345,7 @@ export default function PostListClient({
                   key={p}
                   onClick={() => updateParams({ page: String(p) })}
                   className={`px-2.5 py-1 text-sm rounded ${
-                    p === currentPage ? "bg-[#00704A] text-white" : "text-gray-600 hover:bg-gray-100"
+                    p === currentPage ? "bg-[#0f7f6d] text-white" : "text-gray-600 hover:bg-gray-100"
                   }`}
                 >
                   {p}

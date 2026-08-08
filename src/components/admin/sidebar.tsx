@@ -17,6 +17,8 @@ import SchoolIcon from "@mui/icons-material/SchoolOutlined";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import TuneIcon from "@mui/icons-material/TuneOutlined";
+import CollectionsIcon from "@mui/icons-material/CollectionsOutlined";
+import ChatIcon from "@mui/icons-material/ChatOutlined";
 import { clsx } from "clsx";
 
 // Theme-specific menu definitions
@@ -47,23 +49,18 @@ const staticMenuItems = [
     icon: ArticleIcon,
     submenu: [
       { name: "All Posts", href: "/admin/posts" },
-      { name: "Add New", href: "/admin/posts/new" },
+      { name: "Add New Post", href: "/admin/posts/new" },
+      { name: "Categories", href: "/admin/posts/categories" },
+      { name: "Tags", href: "/admin/posts/tags" },
     ],
   },
-  {
-    name: "Pages",
-    href: "/admin/pages",
-    icon: DescriptionIcon,
-    submenu: [
-      { name: "All Pages", href: "/admin/pages" },
-      { name: "Add New", href: "/admin/pages/new" },
-    ],
-  },
-  { name: "Categories", href: "/admin/categories", icon: CategoryIcon },
-  { name: "Tags", href: "/admin/tags", icon: StyleIcon },
+  { name: "Team & Staff", href: "/admin/team", icon: GroupIcon },
+  { name: "Gallery", href: "/admin/gallery", icon: CollectionsIcon },
+  { name: "Testimonials", href: "/admin/testimonials", icon: ChatIcon },
   { name: "Media", href: "/admin/media", icon: PermMediaIcon },
   { name: "Menus", href: "/admin/menus", icon: MenuIcon },
   { name: "Users", href: "/admin/users", icon: GroupIcon },
+  { name: "Appearance", href: "/admin/appearance", icon: PaletteIcon },
 ];
 
 const appearanceMenu = {
@@ -126,7 +123,7 @@ export function Sidebar({
       {/* Sidebar container */}
       <aside
         className={clsx(
-          "fixed inset-y-0 left-0 z-50 w-64 bg-[#1E3932] text-white transform transition-transform duration-300 ease-in-out lg:static lg:translate-x-0 flex flex-col h-screen",
+          "fixed inset-y-0 left-0 z-50 w-64 bg-primary text-white transform transition-transform duration-300 ease-in-out lg:static lg:translate-x-0 flex flex-col h-screen",
           isOpen ? "translate-x-0" : "-translate-x-full"
         )}
       >
@@ -134,11 +131,11 @@ export function Sidebar({
         <div className="flex items-center justify-center h-16 border-b border-white/10 shrink-0">
           <div className="flex items-center space-x-2">
             <div className="w-8 h-8 rounded-full bg-white flex items-center justify-center">
-              <span className="text-[#00704A] font-bold text-xl leading-none">
-                N
+              <span className="text-primary font-bold text-xl leading-none">
+                A
               </span>
             </div>
-            <span className="text-xl font-bold tracking-wide">NextCMS</span>
+            <span className="text-xl font-bold tracking-wide">AlfidaCMS</span>
           </div>
         </div>
 
@@ -146,10 +143,10 @@ export function Sidebar({
         <nav className="flex-1 overflow-y-auto py-4 space-y-1 px-3 custom-scrollbar">
           {/* Active theme badge if set */}
           {themeMenu && (
-            <div className="mb-3 px-3 py-1.5 rounded-md bg-[#00704A]/20 border border-[#00704A]/30">
+            <div className="mb-3 px-3 py-1.5 rounded-md bg-tertiary/20 border border-tertiary/30">
               <div className="flex items-center gap-2">
-                <TuneIcon className="w-3.5 h-3.5 text-[#D4E9E2]" />
-                <span className="text-[10px] font-semibold text-[#D4E9E2] uppercase tracking-widest">
+                <TuneIcon className="w-3.5 h-3.5 text-tertiary" />
+                <span className="text-[10px] font-semibold text-tertiary uppercase tracking-widest">
                   Active Theme
                 </span>
               </div>
@@ -185,9 +182,9 @@ export function Sidebar({
                     className={clsx(
                       "w-full flex items-center justify-between px-3 py-2.5 rounded-md transition-colors text-sm font-medium",
                       isActive
-                        ? "bg-[#00704A] text-white"
+                        ? "bg-tertiary text-white"
                         : isThemeItem
-                        ? "text-[#D4E9E2] hover:bg-white/10 hover:text-white"
+                        ? "text-tertiary hover:bg-white/10 hover:text-white"
                         : "text-white/80 hover:bg-white/10 hover:text-white"
                     )}
                   >
@@ -202,17 +199,17 @@ export function Sidebar({
                     )}
                   </button>
                 ) : (
-                  <Link
-                    href={item.href}
-                    className={clsx(
-                      "w-full flex items-center space-x-3 px-3 py-2.5 rounded-md transition-colors text-sm font-medium",
-                      isActive
-                        ? "bg-[#00704A] text-white"
-                        : "text-white/80 hover:bg-white/10 hover:text-white"
-                    )}
-                  >
-                    <Icon className="w-5 h-5" />
-                    <span>{item.name}</span>
+                    <Link
+                      href={item.href}
+                      className={clsx(
+                        "flex items-center gap-3 px-3 py-2 rounded-md transition-colors",
+                        isActive
+                          ? "bg-tertiary/10 text-tertiary font-medium border-l-4 border-tertiary"
+                          : "text-gray-300 hover:bg-primary/20 hover:text-white"
+                      )}
+                    >
+                      <Icon className="w-5 h-5" />
+                      <span>{item.name}</span>
                   </Link>
                 )}
 
@@ -246,12 +243,12 @@ export function Sidebar({
         {/* User section at bottom */}
         <div className="border-t border-white/10 p-4 shrink-0">
           <div className="flex items-center space-x-3">
-            <div className="w-9 h-9 rounded-full bg-[#00704A] flex items-center justify-center text-sm font-bold border border-white/20">
+            <div className="w-9 h-9 rounded-full bg-[#0f7f6d] flex items-center justify-center text-sm font-bold border border-white/20">
               A
             </div>
             <div className="flex-1 min-w-0">
               <p className="text-sm font-medium text-white truncate">Admin</p>
-              <p className="text-xs text-white/60 truncate bg-[#00704A] px-1.5 py-0.5 rounded inline-block mt-0.5">
+              <p className="text-xs text-white/60 truncate bg-[#0f7f6d] px-1.5 py-0.5 rounded inline-block mt-0.5">
                 Administrator
               </p>
             </div>

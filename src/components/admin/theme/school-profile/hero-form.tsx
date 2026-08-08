@@ -33,41 +33,41 @@ export default function HeroSectionForm({ initialData }: { initialData: any }) {
       <form onSubmit={handleSubmit} className="space-y-5 bg-white border border-gray-200 rounded-xl p-6">
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-1">Badge Text</label>
-          <input className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-[#00704A]" value={form.badge} onChange={e => setForm(p => ({...p, badge: e.target.value}))} placeholder="Welcome to SMaRT School" />
+          <input className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-[#0f7f6d]" value={form.badge} onChange={e => setForm(p => ({...p, badge: e.target.value}))} placeholder="Welcome to SMaRT School" />
           <p className="text-xs text-gray-400 mt-1">Small badge label above the main title</p>
         </div>
 
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-1">Headline Line 1</label>
-          <input className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-[#00704A]" value={form.title1} onChange={e => setForm(p => ({...p, title1: e.target.value}))} placeholder="Empowering Students" />
+          <input className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-[#0f7f6d]" value={form.title1} onChange={e => setForm(p => ({...p, title1: e.target.value}))} placeholder="Empowering Students" />
         </div>
 
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-1">Headline Line 2</label>
-          <input className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-[#00704A]" value={form.title2} onChange={e => setForm(p => ({...p, title2: e.target.value}))} placeholder="To Achieve Excellence" />
+          <input className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-[#0f7f6d]" value={form.title2} onChange={e => setForm(p => ({...p, title2: e.target.value}))} placeholder="To Achieve Excellence" />
         </div>
 
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-1">Subtitle / Description</label>
-          <textarea rows={3} className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-[#00704A]" value={form.subtitle} onChange={e => setForm(p => ({...p, subtitle: e.target.value}))} />
+          <textarea rows={3} className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-[#0f7f6d]" value={form.subtitle} onChange={e => setForm(p => ({...p, subtitle: e.target.value}))} />
         </div>
 
         <div className="grid grid-cols-2 gap-4">
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">Primary Button Text</label>
-            <input className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-[#00704A]" value={form.primaryButtonText} onChange={e => setForm(p => ({...p, primaryButtonText: e.target.value}))} />
+            <input className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-[#0f7f6d]" value={form.primaryButtonText} onChange={e => setForm(p => ({...p, primaryButtonText: e.target.value}))} />
           </div>
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">Primary Button URL</label>
-            <input className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-[#00704A]" value={form.primaryButtonUrl} onChange={e => setForm(p => ({...p, primaryButtonUrl: e.target.value}))} />
+            <input className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-[#0f7f6d]" value={form.primaryButtonUrl} onChange={e => setForm(p => ({...p, primaryButtonUrl: e.target.value}))} />
           </div>
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">Secondary Button Text</label>
-            <input className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-[#00704A]" value={form.secondaryButtonText} onChange={e => setForm(p => ({...p, secondaryButtonText: e.target.value}))} />
+            <input className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-[#0f7f6d]" value={form.secondaryButtonText} onChange={e => setForm(p => ({...p, secondaryButtonText: e.target.value}))} />
           </div>
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">Secondary Button URL</label>
-            <input className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-[#00704A]" value={form.secondaryButtonUrl} onChange={e => setForm(p => ({...p, secondaryButtonUrl: e.target.value}))} />
+            <input className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-[#0f7f6d]" value={form.secondaryButtonUrl} onChange={e => setForm(p => ({...p, secondaryButtonUrl: e.target.value}))} />
           </div>
         </div>
 
@@ -93,7 +93,7 @@ export default function HeroSectionForm({ initialData }: { initialData: any }) {
         </div>
 
         <div className="flex justify-end">
-          <button type="submit" disabled={saving} className="px-6 py-2.5 bg-[#00704A] text-white text-sm font-semibold rounded-lg hover:bg-[#1E3932] transition disabled:opacity-50">
+          <button type="submit" disabled={saving} className="px-6 py-2.5 bg-[#0f7f6d] text-white text-sm font-semibold rounded-lg hover:bg-[#454545] transition disabled:opacity-50">
             {saving ? "Saving..." : "Save Changes"}
           </button>
         </div>

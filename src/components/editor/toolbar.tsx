@@ -113,7 +113,7 @@ export function Toolbar({ editor }: ToolbarProps) {
               editor.chain().focus().toggleHeading({ level: parseInt(e.target.value) as any }).run();
             }
           }}
-          className="bg-transparent border border-gray-300 rounded text-sm p-1.5 focus:outline-none focus:ring-1 focus:ring-[#00704A] focus:border-[#00704A]"
+          className="bg-transparent border border-gray-300 rounded text-sm p-1.5 focus:outline-none focus:ring-1 focus:ring-[#0f7f6d] focus:border-[#0f7f6d]"
           value={
             editor.isActive("heading", { level: 1 })
               ? "1"

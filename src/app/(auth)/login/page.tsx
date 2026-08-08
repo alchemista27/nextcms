@@ -1,6 +1,6 @@
 "use client";
 
-import { signIn } from "next-auth/react";
+import { createClient } from "@/lib/supabase/client";
 import { useState, Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
@@ -23,14 +23,14 @@ function LoginForm() {
     setError("");
 
     try {
-      const res = await signIn("credentials", {
-        redirect: false,
+      const supabase = createClient();
+      const { error } = await supabase.auth.signInWithPassword({
         email,
         password,
       });
 
-      if (res?.error) {
-        setError("Invalid email or password");
+      if (error) {
+        setError(error.message);
       } else {
         router.push(callbackUrl);
         router.refresh();
@@ -43,7 +43,11 @@ function LoginForm() {
   };
 
   const handleSSOLogin = (provider: string) => {
-    signIn(provider, { callbackUrl });
+    const supabase = createClient();
+    supabase.auth.signInWithOAuth({
+      provider: provider as any,
+      options: { redirectTo: `${window.location.origin}${callbackUrl}` },
+    });
   };
 
   return (
@@ -72,7 +76,7 @@ function LoginForm() {
               required
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-lg focus:ring-[#00704A] focus:border-[#00704A] sm:text-sm outline-none transition-colors"
+              className="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-lg focus:ring-[#0f7f6d] focus:border-[#0f7f6d] sm:text-sm outline-none transition-colors"
               placeholder="admin@nextcms.local"
             />
           </div>
@@ -91,7 +95,7 @@ function LoginForm() {
               required
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className="block w-full pl-10 pr-10 py-2 border border-gray-300 rounded-lg focus:ring-[#00704A] focus:border-[#00704A] sm:text-sm outline-none transition-colors"
+              className="block w-full pl-10 pr-10 py-2 border border-gray-300 rounded-lg focus:ring-[#0f7f6d] focus:border-[#0f7f6d] sm:text-sm outline-none transition-colors"
               placeholder="••••••••"
             />
             <button
@@ -114,14 +118,14 @@ function LoginForm() {
               id="remember-me"
               name="remember-me"
               type="checkbox"
-              className="h-4 w-4 text-[#00704A] focus:ring-[#00704A] border-gray-300 rounded"
+              className="h-4 w-4 text-[#0f7f6d] focus:ring-[#0f7f6d] border-gray-300 rounded"
             />
             <label htmlFor="remember-me" className="ml-2 block text-sm text-gray-900">
               Remember me
             </label>
           </div>
           <div className="text-sm">
-            <Link href="#" className="font-medium text-[#00704A] hover:text-[#1E3932]">
+            <Link href="#" className="font-medium text-[#0f7f6d] hover:text-[#454545]">
               Forgot password?
             </Link>
           </div>
@@ -130,7 +134,7 @@ function LoginForm() {
         <button
           type="submit"
           disabled={isLoading}
-          className="w-full flex justify-center py-2.5 px-4 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-[#00704A] hover:bg-[#1E3932] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#00704A] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+          className="w-full flex justify-center py-2.5 px-4 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-[#0f7f6d] hover:bg-[#454545] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#0f7f6d] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
         >
           {isLoading ? "Signing in..." : "Sign in"}
         </button>
@@ -171,7 +175,7 @@ function LoginForm() {
 
       <p className="mt-8 text-center text-sm text-gray-600">
         Don&apos;t have an account?{" "}
-        <Link href="/register" className="font-medium text-[#00704A] hover:text-[#1E3932]">
+        <Link href="/register" className="font-medium text-[#0f7f6d] hover:text-[#454545]">
           Register
         </Link>
       </p>

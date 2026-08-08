@@ -11,5 +11,5 @@ export const generalSettingsSchema = z.object({
   time_format: z.string().optional(),
   posts_per_page: z.string().regex(/^\d+$/, "Must be a number").optional(),
   registration_open: z.string().optional(), // "true" or "false"
-  default_role: z.enum(["SUBSCRIBER", "AUTHOR", "EDITOR"]).optional(),
+  default_role: z.enum(["SUBSCRIBER", "CONTRIBUTOR", "ADMIN"]).optional(),
 });

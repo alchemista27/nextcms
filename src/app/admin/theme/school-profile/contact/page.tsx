@@ -7,7 +7,7 @@ export default async function ContactSectionPage() {
   return (
     <div className="max-w-2xl mx-auto">
       <div className="mb-6">
-        <h1 className="text-2xl font-bold text-[#1E3932]">Contact Information</h1>
+        <h1 className="text-2xl font-bold text-[#454545]">Contact Information</h1>
         <p className="text-gray-500 text-sm mt-1">Address, phone, email, social links, and footer text.</p>
       </div>
       <ContactInfoForm initialData={data?.contact || {}} />

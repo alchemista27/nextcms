@@ -1,5 +1,4 @@
 import { getMenus } from "@/actions/menu";
-import { getPages } from "@/actions/page";
 import { getPosts } from "@/actions/post";
 import { getCategories } from "@/actions/category";
 import MenuBuilderClient from "./menu-builder-client";
@@ -10,9 +9,8 @@ export const metadata: Metadata = {
 };
 
 export default async function MenusPage() {
-  const [menusRes, pagesRes, postsRes, categoriesRes] = await Promise.all([
+  const [menusRes, postsRes, categoriesRes] = await Promise.all([
     getMenus(),
-    getPages(),
     getPosts({ page: 1, perPage: 100 }),
     getCategories(),
   ]);
@@ -25,7 +23,6 @@ export default async function MenusPage() {
 
       <MenuBuilderClient
         menus={menusRes.success ? menusRes.data || [] : []}
-        pages={pagesRes.success ? pagesRes.data || [] : []}
         posts={postsRes.success ? postsRes.data || [] : []}
         categories={categoriesRes.success ? categoriesRes.data || [] : []}
       />

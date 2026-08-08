@@ -108,7 +108,7 @@ export default function TagManager({ initialTags }: { initialTags: TagData[] }) 
                 type="text"
                 value={form.name}
                 onChange={handleNameChange}
-                className="w-full p-2 border border-gray-300 rounded focus:ring-[#00704A] focus:border-[#00704A]"
+                className="w-full p-2 border border-gray-300 rounded focus:ring-[#0f7f6d] focus:border-[#0f7f6d]"
               />
               <p className="text-xs text-gray-500 mt-1">The name is how it appears on your site.</p>
             </div>
@@ -120,7 +120,7 @@ export default function TagManager({ initialTags }: { initialTags: TagData[] }) 
                 type="text"
                 value={form.slug}
                 onChange={(e) => setForm({ ...form, slug: e.target.value })}
-                className="w-full p-2 border border-gray-300 rounded focus:ring-[#00704A] focus:border-[#00704A]"
+                className="w-full p-2 border border-gray-300 rounded focus:ring-[#0f7f6d] focus:border-[#0f7f6d]"
               />
               <p className="text-xs text-gray-500 mt-1">
                 The &quot;slug&quot; is the URL-friendly version of the name.
@@ -133,7 +133,7 @@ export default function TagManager({ initialTags }: { initialTags: TagData[] }) 
                 rows={4}
                 value={form.description}
                 onChange={(e) => setForm({ ...form, description: e.target.value })}
-                className="w-full p-2 border border-gray-300 rounded focus:ring-[#00704A] focus:border-[#00704A]"
+                className="w-full p-2 border border-gray-300 rounded focus:ring-[#0f7f6d] focus:border-[#0f7f6d]"
               />
               <p className="text-xs text-gray-500 mt-1">
                 The description is not prominent by default; however, some themes may show it.
@@ -144,7 +144,7 @@ export default function TagManager({ initialTags }: { initialTags: TagData[] }) 
               <button
                 type="submit"
                 disabled={isPending}
-                className="px-4 py-2 bg-[#00704A] hover:bg-[#1E3932] text-white rounded text-sm font-medium transition-colors disabled:opacity-50"
+                className="px-4 py-2 bg-[#0f7f6d] hover:bg-[#454545] text-white rounded text-sm font-medium transition-colors disabled:opacity-50"
               >
                 {isPending ? "Saving..." : editingId ? "Update Tag" : "Add New Tag"}
               </button>
@@ -169,7 +169,7 @@ export default function TagManager({ initialTags }: { initialTags: TagData[] }) 
             <input
               type="text"
               placeholder="Search tags..."
-              className="p-1.5 border border-gray-300 rounded text-sm w-64 focus:outline-none focus:ring-[#00704A] focus:border-[#00704A]"
+              className="p-1.5 border border-gray-300 rounded text-sm w-64 focus:outline-none focus:ring-[#0f7f6d] focus:border-[#0f7f6d]"
             />
           </div>
           <div className="overflow-x-auto">
@@ -192,7 +192,7 @@ export default function TagManager({ initialTags }: { initialTags: TagData[] }) 
                   tags.map((tag) => (
                     <tr key={tag.id} className="hover:bg-gray-50 group">
                       <td className="p-3"><input type="checkbox" className="rounded border-gray-300" /></td>
-                      <td className="p-3 font-medium text-[#00704A]">
+                      <td className="p-3 font-medium text-[#0f7f6d]">
                         <div className="flex flex-col">
                           <span>{tag.name}</span>
                           <div className="flex space-x-2 text-xs font-normal mt-1 opacity-0 group-hover:opacity-100 transition-opacity">

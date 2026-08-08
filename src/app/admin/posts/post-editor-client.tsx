@@ -235,7 +235,7 @@ export default function PostEditorClient({ post, authorId, allCategories, allTag
                   placeholder="Write a short description…"
                   value={excerpt}
                   onChange={(e) => setExcerpt(e.target.value)}
-                  className="w-full border border-gray-300 rounded px-2 py-1.5 text-sm focus:outline-none focus:ring-1 focus:ring-[#00704A] resize-none"
+                  className="w-full border border-gray-300 rounded px-2 py-1.5 text-sm focus:outline-none focus:ring-1 focus:ring-[#0f7f6d] resize-none"
                 />
                 <p className="text-xs text-gray-400 mt-1">Leave blank to auto-generate from content.</p>
               </div>
@@ -268,7 +268,7 @@ export default function PostEditorClient({ post, authorId, allCategories, allTag
                 <select
                   value={status}
                   onChange={(e) => setStatus(e.target.value)}
-                  className="w-full border border-gray-300 rounded px-2 py-1.5 text-sm focus:outline-none focus:ring-1 focus:ring-[#00704A]"
+                  className="w-full border border-gray-300 rounded px-2 py-1.5 text-sm focus:outline-none focus:ring-1 focus:ring-[#0f7f6d]"
                 >
                   <option value="DRAFT">Draft</option>
                   <option value="PENDING">Pending Review</option>
@@ -281,7 +281,7 @@ export default function PostEditorClient({ post, authorId, allCategories, allTag
               </div>
               {isEditing && revisionCount > 0 && (
                 <div>
-                  <a href={`/admin/revisions/post/${post.id}`} className="text-xs text-[#00704A] hover:underline flex items-center gap-1 mt-1">
+                  <a href={`/admin/revisions/post/${post.id}`} className="text-xs text-[#0f7f6d] hover:underline flex items-center gap-1 mt-1">
                     <HistoryIcon fontSize="small" /> {revisionCount} Revisions
                   </a>
                 </div>
@@ -299,7 +299,7 @@ export default function PostEditorClient({ post, authorId, allCategories, allTag
                 <button
                   onClick={() => handleSave("PUBLISHED")}
                   disabled={isSaving}
-                  className="flex-1 flex items-center justify-center gap-1.5 px-3 py-2 bg-[#00704A] hover:bg-[#1E3932] text-white rounded text-sm font-medium transition-colors disabled:opacity-50"
+                  className="flex-1 flex items-center justify-center gap-1.5 px-3 py-2 bg-[#0f7f6d] hover:bg-[#454545] text-white rounded text-sm font-medium transition-colors disabled:opacity-50"
                 >
                   <PublishIcon fontSize="small" />
                   {status === "PUBLISHED" ? "Update" : "Publish"}
@@ -326,7 +326,7 @@ export default function PostEditorClient({ post, authorId, allCategories, allTag
                           setSelectedCategoryIds((prev) => prev.filter((id) => id !== cat.id));
                         }
                       }}
-                      className="rounded border-gray-300 text-[#00704A] focus:ring-[#00704A]"
+                      className="rounded border-gray-300 text-[#0f7f6d] focus:ring-[#0f7f6d]"
                     />
                     <span className="text-sm text-gray-700">
                       {"— ".repeat(cat.depth || 0)}{cat.name}
@@ -335,7 +335,7 @@ export default function PostEditorClient({ post, authorId, allCategories, allTag
                 ))
               )}
             </div>
-            <a href="/admin/categories" target="_blank" className="text-xs text-[#00704A] hover:underline mt-2 block">
+            <a href="/admin/categories" target="_blank" className="text-xs text-[#0f7f6d] hover:underline mt-2 block">
               + Add New Category
             </a>
           </SidebarCard>

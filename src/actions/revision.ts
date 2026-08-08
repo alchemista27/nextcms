@@ -9,9 +9,22 @@ export async function getRevisions(entityType: string, entityId: string) {
     const revisions = await prisma.revision.findMany({
       where: { entityType, entityId },
       orderBy: { createdAt: "desc" },
-      include: { author: { select: { name: true, avatar: true } } },
+      include: { author: { select: { id: true, avatar: true, sharedUser: { select: { full_name: true } } } } },
     });
-    return { success: true, data: revisions };
+    
+    const mappedRevisions = revisions.map(r => {
+      const { author, ...rest } = r;
+      return {
+        ...rest,
+        author: {
+          id: author.id,
+          avatar: author.avatar,
+          name: author.sharedUser?.full_name || "Unknown"
+        }
+      };
+    });
+    
+    return { success: true, data: mappedRevisions };
   } catch (error) {
     console.error("Failed to fetch revisions:", error);
     return { success: false, error: "Failed to fetch revisions" };
@@ -22,10 +35,21 @@ export async function getRevisionById(id: string) {
   try {
     const revision = await prisma.revision.findUnique({
       where: { id },
-      include: { author: { select: { name: true, avatar: true } } },
+      include: { author: { select: { id: true, avatar: true, sharedUser: { select: { full_name: true } } } } },
     });
     if (!revision) return { success: false, error: "Not found" };
-    return { success: true, data: revision };
+    
+    const { author, ...rest } = revision;
+    const mappedRevision = {
+      ...rest,
+      author: {
+        id: author.id,
+        avatar: author.avatar,
+        name: author.sharedUser?.full_name || "Unknown"
+      }
+    };
+    
+    return { success: true, data: mappedRevision };
   } catch (error) {
     console.error("Failed to fetch revision:", error);
     return { success: false, error: "Failed to fetch revision" };
@@ -44,7 +68,7 @@ export async function getRevisionCount(entityType: string, entityId: string) {
 }
 
 export async function restoreRevision(id: string, authorId: string) {
-  await requireRole(["ADMIN", "EDITOR", "AUTHOR"]);
+  await requireRole(["ADMIN", "CONTRIBUTOR"]);
   try {
     const revision = await prisma.revision.findUnique({ where: { id } });
     if (!revision) return { success: false, error: "Revision not found" };
@@ -71,28 +95,6 @@ export async function restoreRevision(id: string, authorId: string) {
       });
 
       revalidatePath(`/admin/posts/${revision.entityId}/edit`);
-    } else if (revision.entityType === "page") {
-      await prisma.page.update({
-        where: { id: revision.entityId },
-        data: {
-          title: revision.title,
-          content: revision.content,
-        },
-      });
-      
-      // Auto-create snapshot of the restored version
-      await prisma.revision.create({
-        data: {
-          entityType: "page",
-          entityId: revision.entityId,
-          title: revision.title,
-          content: revision.content,
-          authorId,
-          metadata: { note: `Restored from revision ${id}` },
-        },
-      });
-
-      revalidatePath(`/admin/pages/${revision.entityId}/edit`);
     }
 
     // Auto-cleanup: keep only latest 25

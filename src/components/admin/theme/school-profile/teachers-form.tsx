@@ -51,11 +51,11 @@ export default function TeachersForm({ initialData }: { initialData: any[] }) {
             <div className="grid grid-cols-2 gap-3">
               <div>
                 <label className="block text-xs font-medium text-gray-600 mb-1">Name</label>
-                <input className="w-full border border-gray-300 rounded-lg px-3 py-1.5 text-sm focus:outline-none focus:border-[#00704A]" value={t.name} onChange={e => update(i, "name", e.target.value)} placeholder="Full name" />
+                <input className="w-full border border-gray-300 rounded-lg px-3 py-1.5 text-sm focus:outline-none focus:border-[#0f7f6d]" value={t.name} onChange={e => update(i, "name", e.target.value)} placeholder="Full name" />
               </div>
               <div>
                 <label className="block text-xs font-medium text-gray-600 mb-1">Role / Department</label>
-                <input className="w-full border border-gray-300 rounded-lg px-3 py-1.5 text-sm focus:outline-none focus:border-[#00704A]" value={t.role} onChange={e => update(i, "role", e.target.value)} placeholder="e.g. Head of Science" />
+                <input className="w-full border border-gray-300 rounded-lg px-3 py-1.5 text-sm focus:outline-none focus:border-[#0f7f6d]" value={t.role} onChange={e => update(i, "role", e.target.value)} placeholder="e.g. Head of Science" />
               </div>
             </div>
             <div>
@@ -76,11 +76,11 @@ export default function TeachersForm({ initialData }: { initialData: any[] }) {
             </div>
           </div>
         ))}
-        <button type="button" onClick={add} className="w-full py-2 border-2 border-dashed border-gray-300 text-gray-500 rounded-lg text-sm hover:border-[#00704A] hover:text-[#00704A] transition">
+        <button type="button" onClick={add} className="w-full py-2 border-2 border-dashed border-gray-300 text-gray-500 rounded-lg text-sm hover:border-[#0f7f6d] hover:text-[#0f7f6d] transition">
           + Add Teacher
         </button>
         <div className="flex justify-end pt-2">
-          <button type="submit" disabled={saving} className="px-6 py-2.5 bg-[#00704A] text-white text-sm font-semibold rounded-lg hover:bg-[#1E3932] transition disabled:opacity-50">
+          <button type="submit" disabled={saving} className="px-6 py-2.5 bg-[#0f7f6d] text-white text-sm font-semibold rounded-lg hover:bg-[#454545] transition disabled:opacity-50">
             {saving ? "Saving..." : "Save Changes"}
           </button>
         </div>

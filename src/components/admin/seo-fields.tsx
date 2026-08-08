@@ -58,7 +58,7 @@ export function SeoFields({
               placeholder={postTitle || "Post title"}
               value={metaTitle}
               onChange={(e) => onMetaTitleChange(e.target.value)}
-              className="w-full border border-gray-300 rounded px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-[#00704A]"
+              className="w-full border border-gray-300 rounded px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-[#0f7f6d]"
             />
             <p className="text-xs text-gray-400 mt-1">
               {metaTitle.length}/60 chars
@@ -73,7 +73,7 @@ export function SeoFields({
               placeholder="Describe this for search engines…"
               value={metaDescription}
               onChange={(e) => onMetaDescriptionChange(e.target.value)}
-              className="w-full border border-gray-300 rounded px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-[#00704A] resize-none"
+              className="w-full border border-gray-300 rounded px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-[#0f7f6d] resize-none"
             />
             <p
               className={`text-xs mt-1 ${

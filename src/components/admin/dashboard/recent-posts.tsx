@@ -20,7 +20,7 @@ export default function RecentPosts({ posts }: RecentPostsProps) {
     <div className="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
       <div className="p-5 border-b border-gray-200 flex items-center justify-between">
         <h3 className="font-semibold text-gray-900">Recent Posts</h3>
-        <Link href="/admin/posts" className="text-sm font-medium text-[#00704A] hover:underline flex items-center gap-1">
+        <Link href="/admin/posts" className="text-sm font-medium text-[#0f7f6d] hover:underline flex items-center gap-1">
           View All <ArrowForwardIosIcon style={{ fontSize: 10 }} />
         </Link>
       </div>
@@ -45,7 +45,7 @@ export default function RecentPosts({ posts }: RecentPostsProps) {
               posts.map((post) => (
                 <tr key={post.id} className="hover:bg-gray-50 group">
                   <td className="px-5 py-3">
-                    <Link href={`/admin/posts/${post.id}/edit`} className="font-medium text-gray-900 group-hover:text-[#00704A] transition-colors line-clamp-1">
+                    <Link href={`/admin/posts/${post.id}/edit`} className="font-medium text-gray-900 group-hover:text-[#0f7f6d] transition-colors line-clamp-1">
                       {post.title}
                     </Link>
                   </td>

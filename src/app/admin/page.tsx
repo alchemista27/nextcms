@@ -30,7 +30,7 @@ export default async function DashboardPage() {
     <div className="space-y-6">
       <div>
         <h1 className="text-2xl font-semibold text-gray-900">
-          Welcome back, {session?.name || "Admin"}!
+          Welcome back, {(session as any)?.name || "Admin"}!
         </h1>
         <p className="text-sm text-gray-500 mt-1">Here is what is happening with your site today.</p>
       </div>

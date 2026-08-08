@@ -1,12 +1,12 @@
 "use client";
 
-import { useState, useTransition, useCallback } from "react";
+import { useState, useTransition, useCallback, useEffect } from "react";
 import { useRouter, usePathname, useSearchParams } from "next/navigation";
 import { bulkActionUsers } from "@/actions/user";
 import { formatDate } from "@/lib/utils";
 import Link from "next/link";
 import SearchIcon from "@mui/icons-material/Search";
-import { useSession } from "next-auth/react";
+import { createClient } from "@/lib/supabase/client";
 
 interface UserListClientProps {
   initialData: any[];
@@ -28,7 +28,14 @@ export default function UserListClient({
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
-  const { data: session } = useSession();
+  const [currentUserId, setCurrentUserId] = useState<string | null>(null);
+  
+  useEffect(() => {
+    const supabase = createClient();
+    supabase.auth.getUser().then(({ data }) => {
+      if (data.user) setCurrentUserId(data.user.id);
+    });
+  }, []);
   
   const [isPending, startTransition] = useTransition();
   const [search, setSearch] = useState(currentSearch);
@@ -56,7 +63,7 @@ export default function UserListClient({
   const handleSelectAll = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.checked) {
       // Don't select the current user
-      const selectable = initialData.filter(u => u.id !== session?.user?.id).map((u) => u.id);
+      const selectable = initialData.filter(u => u.id !== currentUserId).map((u) => u.id);
       setSelectedIds(selectable);
     } else {
       setSelectedIds([]);
@@ -87,16 +94,14 @@ export default function UserListClient({
   const roles = [
     { value: "ALL", label: "All" },
     { value: "ADMIN", label: "Administrator" },
-    { value: "EDITOR", label: "Editor" },
-    { value: "AUTHOR", label: "Author" },
+    { value: "CONTRIBUTOR", label: "Contributor" },
     { value: "SUBSCRIBER", label: "Subscriber" },
   ];
 
   const getRoleColor = (role: string) => {
     switch (role) {
       case "ADMIN": return "bg-red-100 text-red-800";
-      case "EDITOR": return "bg-blue-100 text-blue-800";
-      case "AUTHOR": return "bg-green-100 text-green-800";
+      case "CONTRIBUTOR": return "bg-blue-100 text-blue-800";
       default: return "bg-gray-100 text-gray-800";
     }
   };
@@ -110,7 +115,7 @@ export default function UserListClient({
             <button
               key={r.value}
               onClick={() => updateParams({ role: r.value === "ALL" ? undefined : r.value, page: "1" })}
-              className={`transition-colors ${currentRole === r.value ? "text-[#00704A] font-semibold" : "text-gray-500 hover:text-gray-900"}`}
+              className={`transition-colors ${currentRole === r.value ? "text-[#0f7f6d] font-semibold" : "text-gray-500 hover:text-gray-900"}`}
             >
               {r.label}
             </button>
@@ -123,7 +128,7 @@ export default function UserListClient({
               <select
                 value={bulkAction}
                 onChange={(e) => setBulkAction(e.target.value)}
-                className="border border-gray-300 rounded-md text-sm px-2 py-1.5 focus:outline-none focus:ring-1 focus:ring-[#00704A]"
+                className="border border-gray-300 rounded-md text-sm px-2 py-1.5 focus:outline-none focus:ring-1 focus:ring-[#0f7f6d]"
               >
                 <option value="">Bulk Actions</option>
                 <option value="changeRole">Change Role to...</option>
@@ -134,12 +139,11 @@ export default function UserListClient({
                 <select
                   value={bulkRole}
                   onChange={(e) => setBulkRole(e.target.value)}
-                  className="border border-gray-300 rounded-md text-sm px-2 py-1.5 focus:outline-none focus:ring-1 focus:ring-[#00704A]"
+                  className="border border-gray-300 rounded-md text-sm px-2 py-1.5 focus:outline-none focus:ring-1 focus:ring-[#0f7f6d]"
                 >
                   <option value="">— Select Role —</option>
                   <option value="ADMIN">Administrator</option>
-                  <option value="EDITOR">Editor</option>
-                  <option value="AUTHOR">Author</option>
+                  <option value="CONTRIBUTOR">Contributor</option>
                   <option value="SUBSCRIBER">Subscriber</option>
                 </select>
               )}
@@ -162,7 +166,7 @@ export default function UserListClient({
                 placeholder="Search users..."
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
-                className="pl-8 pr-3 py-1.5 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-1 focus:ring-[#00704A] w-64"
+                className="pl-8 pr-3 py-1.5 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-1 focus:ring-[#0f7f6d] w-64"
               />
             </div>
             <button type="submit" className="px-3 py-1.5 bg-gray-100 hover:bg-gray-200 text-gray-700 rounded text-sm transition-colors">
@@ -181,9 +185,9 @@ export default function UserListClient({
                 <th className="w-12 px-4 py-3 text-center">
                   <input
                     type="checkbox"
-                    checked={selectedIds.length === initialData.filter(u => u.id !== session?.user?.id).length && initialData.length > 0}
+                    checked={selectedIds.length === initialData.filter(u => u.id !== currentUserId).length && initialData.length > 0}
                     onChange={handleSelectAll}
-                    className="rounded border-gray-300 text-[#00704A] focus:ring-[#00704A]"
+                    className="rounded border-gray-300 text-[#0f7f6d] focus:ring-[#0f7f6d]"
                   />
                 </th>
                 <th className="px-4 py-3">Name</th>
@@ -208,13 +212,13 @@ export default function UserListClient({
                         type="checkbox"
                         checked={selectedIds.includes(user.id)}
                         onChange={() => handleSelectOne(user.id)}
-                        disabled={user.id === session?.user?.id}
-                        className="rounded border-gray-300 text-[#00704A] focus:ring-[#00704A] disabled:opacity-50"
+                        disabled={user.id === currentUserId}
+                        className="rounded border-gray-300 text-[#0f7f6d] focus:ring-[#0f7f6d] disabled:opacity-50"
                       />
                     </td>
                     <td className="px-4 py-3">
                       <div className="flex items-center gap-3">
-                        <div className="w-8 h-8 rounded-full bg-[#00704A] text-white flex items-center justify-center font-bold text-xs shrink-0 overflow-hidden">
+                        <div className="w-8 h-8 rounded-full bg-[#0f7f6d] text-white flex items-center justify-center font-bold text-xs shrink-0 overflow-hidden">
                           {user.avatar ? (
                             // eslint-disable-next-line @next/next/no-img-element
                             <img src={user.avatar} alt={user.name} className="w-full h-full object-cover" />
@@ -223,11 +227,11 @@ export default function UserListClient({
                           )}
                         </div>
                         <div>
-                          <Link href={`/admin/users/${user.id}/edit`} className="font-semibold text-[#00704A] hover:underline">
-                            {user.name} {user.id === session?.user?.id && <span className="text-gray-400 font-normal ml-1">(You)</span>}
+                          <Link href={`/admin/users/${user.id}/edit`} className="font-semibold text-[#0f7f6d] hover:underline">
+                            {user.name} {user.id === currentUserId && <span className="text-gray-400 font-normal ml-1">(You)</span>}
                           </Link>
                           <div className="flex gap-2 text-xs text-gray-500 mt-0.5 opacity-0 group-hover:opacity-100 transition-opacity">
-                            <Link href={`/admin/users/${user.id}/edit`} className="text-[#00704A] hover:underline">Edit</Link>
+                            <Link href={`/admin/users/${user.id}/edit`} className="text-[#0f7f6d] hover:underline">Edit</Link>
                           </div>
                         </div>
                       </div>
@@ -270,7 +274,7 @@ export default function UserListClient({
                   key={p}
                   onClick={() => updateParams({ page: String(p) })}
                   className={`px-3 py-1 text-sm rounded ${
-                    p === currentPage ? "bg-[#00704A] text-white" : "text-gray-600 hover:bg-gray-200"
+                    p === currentPage ? "bg-[#0f7f6d] text-white" : "text-gray-600 hover:bg-gray-200"
                   }`}
                 >
                   {p}

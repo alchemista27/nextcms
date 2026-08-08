@@ -39,7 +39,7 @@ export default function StatsSectionForm({ initialData }: { initialData: any }) 
             <input
               type="number"
               min={0}
-              className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-[#00704A]"
+              className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-[#0f7f6d]"
               value={(form as any)[f.key]}
               onChange={e => setForm(p => ({ ...p, [f.key]: parseInt(e.target.value) || 0 }))}
             />
@@ -48,7 +48,7 @@ export default function StatsSectionForm({ initialData }: { initialData: any }) 
       </div>
       <p className="text-xs text-gray-400">These numbers animate counting up when the section scrolls into view.</p>
       <div className="flex justify-end">
-        <button type="submit" disabled={saving} className="px-6 py-2.5 bg-[#00704A] text-white text-sm font-semibold rounded-lg hover:bg-[#1E3932] transition disabled:opacity-50">
+        <button type="submit" disabled={saving} className="px-6 py-2.5 bg-[#0f7f6d] text-white text-sm font-semibold rounded-lg hover:bg-[#454545] transition disabled:opacity-50">
           {saving ? "Saving..." : "Save Changes"}
         </button>
       </div>

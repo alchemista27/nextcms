@@ -77,7 +77,7 @@ export function TagInput({ value, onChange, availableTags = [], placeholder = "A
   return (
     <div className="relative" ref={containerRef}>
       <div 
-        className="flex flex-wrap items-center gap-1.5 p-1.5 border border-gray-300 rounded focus-within:ring-1 focus-within:ring-[#00704A] focus-within:border-[#00704A] bg-white min-h-[42px]"
+        className="flex flex-wrap items-center gap-1.5 p-1.5 border border-gray-300 rounded focus-within:ring-1 focus-within:ring-[#0f7f6d] focus-within:border-[#0f7f6d] bg-white min-h-[42px]"
         onClick={() => inputRef.current?.focus()}
       >
         {value.map((tag, index) => (
@@ -126,7 +126,7 @@ export function TagInput({ value, onChange, availableTags = [], placeholder = "A
           {inputValue && !filteredTags.some(t => t.name.toLowerCase() === inputValue.toLowerCase()) && (
             <button
               type="button"
-              className="w-full text-left px-4 py-2 text-sm text-[#00704A] font-medium hover:bg-gray-50 focus:outline-none"
+              className="w-full text-left px-4 py-2 text-sm text-[#0f7f6d] font-medium hover:bg-gray-50 focus:outline-none"
               onClick={() => addTag(inputValue.trim())}
             >
               Add new tag: &quot;{inputValue.trim()}&quot;

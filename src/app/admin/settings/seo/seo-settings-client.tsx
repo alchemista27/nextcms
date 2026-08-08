@@ -63,7 +63,7 @@ export default function SeoSettingsClient({ initialSettings }: SeoSettingsClient
                   name="seo_title_template"
                   value={settings.seo_title_template}
                   onChange={handleChange}
-                  className="w-full border border-gray-300 rounded px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-[#00704A]"
+                  className="w-full border border-gray-300 rounded px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-[#0f7f6d]"
                   placeholder="%title% - %sitename%"
                 />
                 <p className="text-xs text-gray-500 mt-1">Available tags: %title%, %sitename%</p>
@@ -78,7 +78,7 @@ export default function SeoSettingsClient({ initialSettings }: SeoSettingsClient
                   value={settings.seo_default_description}
                   onChange={handleChange}
                   rows={3}
-                  className="w-full border border-gray-300 rounded px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-[#00704A] resize-none"
+                  className="w-full border border-gray-300 rounded px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-[#0f7f6d] resize-none"
                   placeholder="Used when a page/post doesn't have a specific description..."
                 />
               </div>
@@ -128,7 +128,7 @@ export default function SeoSettingsClient({ initialSettings }: SeoSettingsClient
                   name="seo_facebook_url"
                   value={settings.seo_facebook_url}
                   onChange={handleChange}
-                  className="w-full border border-gray-300 rounded px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-[#00704A]"
+                  className="w-full border border-gray-300 rounded px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-[#0f7f6d]"
                   placeholder="https://facebook.com/yourpage"
                 />
               </div>
@@ -139,7 +139,7 @@ export default function SeoSettingsClient({ initialSettings }: SeoSettingsClient
                   name="seo_twitter_url"
                   value={settings.seo_twitter_url}
                   onChange={handleChange}
-                  className="w-full border border-gray-300 rounded px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-[#00704A]"
+                  className="w-full border border-gray-300 rounded px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-[#0f7f6d]"
                   placeholder="https://twitter.com/yourhandle"
                 />
               </div>
@@ -150,7 +150,7 @@ export default function SeoSettingsClient({ initialSettings }: SeoSettingsClient
                   name="seo_instagram_url"
                   value={settings.seo_instagram_url}
                   onChange={handleChange}
-                  className="w-full border border-gray-300 rounded px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-[#00704A]"
+                  className="w-full border border-gray-300 rounded px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-[#0f7f6d]"
                   placeholder="https://instagram.com/yourhandle"
                 />
               </div>
@@ -170,7 +170,7 @@ export default function SeoSettingsClient({ initialSettings }: SeoSettingsClient
                   name="seo_ga_id"
                   value={settings.seo_ga_id}
                   onChange={handleChange}
-                  className="w-full border border-gray-300 rounded px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-[#00704A]"
+                  className="w-full border border-gray-300 rounded px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-[#0f7f6d]"
                   placeholder="G-XXXXXXXXXX"
                 />
               </div>
@@ -189,7 +189,7 @@ export default function SeoSettingsClient({ initialSettings }: SeoSettingsClient
           <button
             type="submit"
             disabled={isSaving}
-            className="flex items-center gap-2 bg-[#00704A] text-white px-4 py-2 rounded text-sm font-medium hover:bg-[#1E3932] transition-colors disabled:opacity-50"
+            className="flex items-center gap-2 bg-[#0f7f6d] text-white px-4 py-2 rounded text-sm font-medium hover:bg-[#454545] transition-colors disabled:opacity-50"
           >
             <SaveIcon fontSize="small" />
             {isSaving ? "Saving..." : "Save Changes"}

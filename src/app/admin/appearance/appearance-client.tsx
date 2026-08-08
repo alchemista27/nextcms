@@ -17,8 +17,8 @@ export default function AppearanceClient({ initialSettings }: AppearanceClientPr
   const [formData, setFormData] = useState({
     appearance_logo: initialSettings.appearance_logo || "",
     appearance_favicon: initialSettings.appearance_favicon || "",
-    appearance_primary_color: initialSettings.appearance_primary_color || "#00704A",
-    appearance_secondary_color: initialSettings.appearance_secondary_color || "#1E3932",
+    appearance_primary_color: initialSettings.appearance_primary_color || "#0f7f6d",
+    appearance_secondary_color: initialSettings.appearance_secondary_color || "#454545",
     appearance_font_family: initialSettings.appearance_font_family || "Inter",
     appearance_header_style: initialSettings.appearance_header_style || "CENTERED",
     appearance_sidebar_position: initialSettings.appearance_sidebar_position || "RIGHT",
@@ -64,7 +64,7 @@ export default function AppearanceClient({ initialSettings }: AppearanceClientPr
           <button 
             onClick={handleSave} 
             disabled={isPending}
-            className="px-4 py-2 bg-[#00704A] text-white text-sm font-medium rounded hover:bg-[#1E3932] disabled:opacity-50"
+            className="px-4 py-2 bg-[#0f7f6d] text-white text-sm font-medium rounded hover:bg-[#454545] disabled:opacity-50"
           >
             {isPending ? "Saving..." : "Save Changes"}
           </button>
@@ -90,7 +90,7 @@ export default function AppearanceClient({ initialSettings }: AppearanceClientPr
                       </button>
                     </div>
                   ) : (
-                    <button onClick={() => setActiveMediaTarget("logo")} className="text-[#00704A] hover:underline text-sm font-medium flex flex-col items-center gap-1">
+                    <button onClick={() => setActiveMediaTarget("logo")} className="text-[#0f7f6d] hover:underline text-sm font-medium flex flex-col items-center gap-1">
                       <ImageOutlinedIcon /> Select Logo
                     </button>
                   )}
@@ -110,7 +110,7 @@ export default function AppearanceClient({ initialSettings }: AppearanceClientPr
                       </button>
                     </div>
                   ) : (
-                    <button onClick={() => setActiveMediaTarget("favicon")} className="text-[#00704A] hover:underline text-sm font-medium flex flex-col items-center gap-1">
+                    <button onClick={() => setActiveMediaTarget("favicon")} className="text-[#0f7f6d] hover:underline text-sm font-medium flex flex-col items-center gap-1">
                       <ImageOutlinedIcon /> Select Favicon
                     </button>
                   )}
@@ -142,7 +142,7 @@ export default function AppearanceClient({ initialSettings }: AppearanceClientPr
                     name="appearance_primary_color" 
                     value={formData.appearance_primary_color}
                     onChange={handleChange}
-                    className="flex-1 border border-gray-300 rounded px-3 text-sm focus:outline-none focus:border-[#00704A]"
+                    className="flex-1 border border-gray-300 rounded px-3 text-sm focus:outline-none focus:border-[#0f7f6d]"
                   />
                 </div>
               </div>
@@ -162,7 +162,7 @@ export default function AppearanceClient({ initialSettings }: AppearanceClientPr
                     name="appearance_secondary_color" 
                     value={formData.appearance_secondary_color}
                     onChange={handleChange}
-                    className="flex-1 border border-gray-300 rounded px-3 text-sm focus:outline-none focus:border-[#00704A]"
+                    className="flex-1 border border-gray-300 rounded px-3 text-sm focus:outline-none focus:border-[#0f7f6d]"
                   />
                 </div>
               </div>
@@ -173,7 +173,7 @@ export default function AppearanceClient({ initialSettings }: AppearanceClientPr
                   name="appearance_font_family"
                   value={formData.appearance_font_family}
                   onChange={handleChange}
-                  className="w-full border border-gray-300 rounded px-3 py-2 text-sm focus:outline-none focus:border-[#00704A]"
+                  className="w-full border border-gray-300 rounded px-3 py-2 text-sm focus:outline-none focus:border-[#0f7f6d]"
                 >
                   <option value="Inter">Inter (Sans-serif)</option>
                   <option value="Roboto">Roboto (Sans-serif)</option>
@@ -204,7 +204,7 @@ export default function AppearanceClient({ initialSettings }: AppearanceClientPr
                         value={style} 
                         checked={formData.appearance_header_style === style}
                         onChange={handleChange}
-                        className="text-[#00704A] focus:ring-[#00704A]"
+                        className="text-[#0f7f6d] focus:ring-[#0f7f6d]"
                       />
                       {style.replace("_", " ")}
                     </label>
@@ -223,7 +223,7 @@ export default function AppearanceClient({ initialSettings }: AppearanceClientPr
                         value={pos} 
                         checked={formData.appearance_sidebar_position === pos}
                         onChange={handleChange}
-                        className="text-[#00704A] focus:ring-[#00704A]"
+                        className="text-[#0f7f6d] focus:ring-[#0f7f6d]"
                       />
                       {pos}
                     </label>
@@ -246,7 +246,7 @@ export default function AppearanceClient({ initialSettings }: AppearanceClientPr
                 value={formData.appearance_footer_text}
                 onChange={handleChange}
                 rows={2}
-                className="w-full border border-gray-300 rounded px-3 py-2 text-sm focus:outline-none focus:border-[#00704A]"
+                className="w-full border border-gray-300 rounded px-3 py-2 text-sm focus:outline-none focus:border-[#0f7f6d]"
               />
             </div>
           </section>
@@ -265,7 +265,7 @@ export default function AppearanceClient({ initialSettings }: AppearanceClientPr
                   onChange={handleChange}
                   rows={4}
                   placeholder="/* Enter custom CSS here */"
-                  className="w-full font-mono border border-gray-300 rounded px-3 py-2 text-sm focus:outline-none focus:border-[#00704A] bg-gray-50"
+                  className="w-full font-mono border border-gray-300 rounded px-3 py-2 text-sm focus:outline-none focus:border-[#0f7f6d] bg-gray-50"
                 />
               </div>
               
@@ -277,7 +277,7 @@ export default function AppearanceClient({ initialSettings }: AppearanceClientPr
                   onChange={handleChange}
                   rows={4}
                   placeholder="<!-- HTML tags allowed -->"
-                  className="w-full font-mono border border-gray-300 rounded px-3 py-2 text-sm focus:outline-none focus:border-[#00704A] bg-gray-50"
+                  className="w-full font-mono border border-gray-300 rounded px-3 py-2 text-sm focus:outline-none focus:border-[#0f7f6d] bg-gray-50"
                 />
               </div>
 
@@ -289,7 +289,7 @@ export default function AppearanceClient({ initialSettings }: AppearanceClientPr
                   onChange={handleChange}
                   rows={4}
                   placeholder="<!-- HTML tags allowed -->"
-                  className="w-full font-mono border border-gray-300 rounded px-3 py-2 text-sm focus:outline-none focus:border-[#00704A] bg-gray-50"
+                  className="w-full font-mono border border-gray-300 rounded px-3 py-2 text-sm focus:outline-none focus:border-[#0f7f6d] bg-gray-50"
                 />
               </div>
             </div>
@@ -301,7 +301,7 @@ export default function AppearanceClient({ initialSettings }: AppearanceClientPr
           <button 
             onClick={handleSave} 
             disabled={isPending}
-            className="px-6 py-2 bg-[#00704A] text-white text-sm font-medium rounded hover:bg-[#1E3932] disabled:opacity-50"
+            className="px-6 py-2 bg-[#0f7f6d] text-white text-sm font-medium rounded hover:bg-[#454545] disabled:opacity-50"
           >
             {isPending ? "Saving..." : "Save Changes"}
           </button>

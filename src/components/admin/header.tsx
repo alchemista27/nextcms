@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { signOut } from "next-auth/react";
+import { createClient } from "@/lib/supabase/client";
 import MenuIcon from "@mui/icons-material/Menu";
 import SearchIcon from "@mui/icons-material/Search";
 import NotificationsIcon from "@mui/icons-material/NotificationsNone";
@@ -48,7 +48,7 @@ export function Header({ onMenuClick }: { onMenuClick: () => void }) {
         <Link
           href="/"
           target="_blank"
-          className="hidden sm:flex items-center text-sm font-medium text-gray-600 hover:text-[#00704A] transition-colors"
+          className="hidden sm:flex items-center text-sm font-medium text-gray-600 hover:text-[#0f7f6d] transition-colors"
         >
           <span className="mr-1">Visit Site</span>
           <OpenInNewIcon fontSize="small" />
@@ -61,7 +61,7 @@ export function Header({ onMenuClick }: { onMenuClick: () => void }) {
           <input
             type="text"
             placeholder="Search..."
-            className="block w-full pl-9 pr-3 py-1.5 border border-gray-300 rounded-md text-sm placeholder-gray-400 focus:outline-none focus:ring-1 focus:ring-[#00704A] focus:border-[#00704A]"
+            className="block w-full pl-9 pr-3 py-1.5 border border-gray-300 rounded-md text-sm placeholder-gray-400 focus:outline-none focus:ring-1 focus:ring-[#0f7f6d] focus:border-[#0f7f6d]"
           />
         </div>
 
@@ -102,7 +102,11 @@ export function Header({ onMenuClick }: { onMenuClick: () => void }) {
                   Settings
                 </Link>
                 <button
-                  onClick={() => signOut({ callbackUrl: "/login" })}
+                  onClick={async () => {
+                    const supabase = createClient();
+                    await supabase.auth.signOut();
+                    window.location.href = "/login";
+                  }}
                   className="block w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-red-50"
                 >
                   Sign out

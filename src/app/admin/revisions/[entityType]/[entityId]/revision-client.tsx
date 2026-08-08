@@ -89,7 +89,7 @@ export default function RevisionClient({ revisions, entityType, entityId, author
                   key={rev.id}
                   onClick={() => setSelectedRevisionIndex(idx)}
                   className={`p-4 cursor-pointer transition-colors ${
-                    isActive ? "bg-[#f0f9f4] border-l-4 border-l-[#00704A]" : "hover:bg-gray-50 border-l-4 border-l-transparent"
+                    isActive ? "bg-[#f0f9f4] border-l-4 border-l-[#0f7f6d]" : "hover:bg-gray-50 border-l-4 border-l-transparent"
                   }`}
                 >
                   <div className="flex items-start justify-between">
@@ -99,7 +99,7 @@ export default function RevisionClient({ revisions, entityType, entityId, author
                           // eslint-disable-next-line @next/next/no-img-element
                           <img src={rev.author.avatar} alt={rev.author.name} className="w-full h-full object-cover" />
                         ) : (
-                          <div className="w-full h-full flex items-center justify-center bg-[#00704A] text-white text-[10px] font-medium">
+                          <div className="w-full h-full flex items-center justify-center bg-[#0f7f6d] text-white text-[10px] font-medium">
                             {rev.author?.name ? rev.author.name.charAt(0).toUpperCase() : "?"}
                           </div>
                         )}
@@ -107,7 +107,7 @@ export default function RevisionClient({ revisions, entityType, entityId, author
                       <span className="text-sm font-medium text-gray-700">{rev.author?.name || "Unknown"}</span>
                     </div>
                     {idx === 0 && (
-                      <span className="text-[10px] uppercase font-bold text-[#00704A] bg-green-100 px-2 py-0.5 rounded">
+                      <span className="text-[10px] uppercase font-bold text-[#0f7f6d] bg-green-100 px-2 py-0.5 rounded">
                         Current
                       </span>
                     )}
@@ -142,7 +142,7 @@ export default function RevisionClient({ revisions, entityType, entityId, author
           <button
             onClick={handleRestore}
             disabled={isRestoring || selectedRevisionIndex === 0}
-            className="flex items-center gap-2 bg-[#00704A] text-white px-4 py-2 rounded text-sm font-medium hover:bg-[#1E3932] transition-colors disabled:opacity-50"
+            className="flex items-center gap-2 bg-[#0f7f6d] text-white px-4 py-2 rounded text-sm font-medium hover:bg-[#454545] transition-colors disabled:opacity-50"
           >
             <HistoryIcon fontSize="small" />
             {isRestoring ? "Restoring..." : "Restore This Revision"}

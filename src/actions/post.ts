@@ -30,7 +30,9 @@ export async function getPosts({ status, search, page = 1, perPage = 20 }: GetPo
         skip,
         take: perPage,
         include: {
-          author: { select: { id: true, name: true, avatar: true } },
+          author: { 
+            select: { id: true, avatar: true, sharedUser: { select: { full_name: true } } } 
+          },
           categories: { select: { id: true, name: true } },
           tags: { select: { id: true, name: true } },
         },
@@ -55,10 +57,22 @@ export async function getPosts({ status, search, page = 1, perPage = 20 }: GetPo
       counts[row.status] = row._count._all;
       counts.ALL += row._count._all;
     }
+    // Map the author name from sharedUser
+    const mappedPosts = posts.map(p => {
+      const { author, ...rest } = p;
+      return {
+        ...rest,
+        author: {
+          id: author.id,
+          avatar: author.avatar,
+          name: author.sharedUser?.full_name || "Unknown"
+        }
+      };
+    });
 
     return {
       success: true,
-      data: posts,
+      data: mappedPosts,
       total,
       totalPages: Math.ceil(total / perPage),
       counts,
@@ -74,14 +88,24 @@ export async function getPostById(id: string) {
     const post = await prisma.post.findUnique({
       where: { id },
       include: {
-        author: { select: { id: true, name: true, avatar: true } },
+        author: { select: { id: true, avatar: true, sharedUser: { select: { full_name: true } } } },
         categories: { select: { id: true, name: true, slug: true } },
         tags: { select: { id: true, name: true, slug: true } },
       },
     });
 
     if (!post) return { success: false, error: "Post not found" };
-    return { success: true, data: post };
+    const { author, ...rest } = post;
+    const mappedPost = {
+      ...rest,
+      author: {
+        id: author.id,
+        avatar: author.avatar,
+        name: author.sharedUser?.full_name || "Unknown"
+      }
+    };
+
+    return { success: true, data: mappedPost };
   } catch (error) {
     console.error("Error fetching post:", error);
     return { success: false, error: "Failed to fetch post" };

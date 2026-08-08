@@ -24,7 +24,7 @@ export async function getAppearanceSettings() {
 
 export async function updateAppearanceSettings(data: AppearanceInput) {
   try {
-    await requireRole(["ADMIN", "EDITOR"]);
+    await requireRole(["ADMIN", "CONTRIBUTOR"]);
     
     const validatedData = appearanceSchema.parse(data);
     

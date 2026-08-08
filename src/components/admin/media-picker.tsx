@@ -177,7 +177,7 @@ export function MediaPicker({ open, onClose, onSelect }: MediaPickerProps) {
             onClick={() => { setActiveTab("library"); }}
             className={`px-5 py-3 text-sm font-medium border-b-2 transition-colors ${
               activeTab === "library"
-                ? "border-[#00704A] text-[#00704A]"
+                ? "border-[#0f7f6d] text-[#0f7f6d]"
                 : "border-transparent text-gray-500 hover:text-gray-800"
             }`}
           >
@@ -187,7 +187,7 @@ export function MediaPicker({ open, onClose, onSelect }: MediaPickerProps) {
             onClick={() => { setActiveTab("upload"); setUploadProgress(""); }}
             className={`px-5 py-3 text-sm font-medium border-b-2 transition-colors ${
               activeTab === "upload"
-                ? "border-[#00704A] text-[#00704A]"
+                ? "border-[#0f7f6d] text-[#0f7f6d]"
                 : "border-transparent text-gray-500 hover:text-gray-800"
             }`}
           >
@@ -207,12 +207,12 @@ export function MediaPicker({ open, onClose, onSelect }: MediaPickerProps) {
                 onDrop={handleDrop}
                 className={`w-full max-w-lg rounded-2xl border-2 border-dashed p-12 flex flex-col items-center text-center transition-colors ${
                   isDragging
-                    ? "border-[#00704A] bg-green-50"
+                    ? "border-[#0f7f6d] bg-green-50"
                     : "border-gray-300 bg-gray-50 hover:border-gray-400 hover:bg-gray-100"
                 }`}
               >
                 <CloudUploadIcon
-                  className={`mb-4 transition-colors ${isDragging ? "text-[#00704A]" : "text-gray-400"}`}
+                  className={`mb-4 transition-colors ${isDragging ? "text-[#0f7f6d]" : "text-gray-400"}`}
                   style={{ fontSize: 56 }}
                 />
                 <h3 className="text-lg font-semibold text-gray-800 mb-1">
@@ -232,14 +232,14 @@ export function MediaPicker({ open, onClose, onSelect }: MediaPickerProps) {
                 <button
                   onClick={() => fileInputRef.current?.click()}
                   disabled={isUploading}
-                  className="px-6 py-2.5 bg-[#00704A] hover:bg-[#1E3932] text-white font-medium rounded-lg shadow-sm transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="px-6 py-2.5 bg-[#0f7f6d] hover:bg-[#454545] text-white font-medium rounded-lg shadow-sm transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   {isUploading ? "Uploading…" : "Browse Files"}
                 </button>
 
                 {uploadProgress && (
                   <p className={`mt-4 text-sm font-medium ${
-                    uploadProgress.startsWith("Error") ? "text-red-600" : "text-[#00704A]"
+                    uploadProgress.startsWith("Error") ? "text-red-600" : "text-[#0f7f6d]"
                   }`}>
                     {uploadProgress}
                   </p>
@@ -264,7 +264,7 @@ export function MediaPicker({ open, onClose, onSelect }: MediaPickerProps) {
                       placeholder="Search media…"
                       value={searchInput}
                       onChange={(e) => setSearchInput(e.target.value)}
-                      className="pl-8 pr-3 py-1.5 text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-[#00704A] w-64"
+                      className="pl-8 pr-3 py-1.5 text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-[#0f7f6d] w-64"
                     />
                   </div>
                   <button
@@ -291,7 +291,7 @@ export function MediaPicker({ open, onClose, onSelect }: MediaPickerProps) {
                 {isLoading ? (
                   <div className="flex items-center justify-center h-full text-gray-400">
                     <div className="flex flex-col items-center gap-3">
-                      <div className="w-8 h-8 border-2 border-[#00704A] border-t-transparent rounded-full animate-spin" />
+                      <div className="w-8 h-8 border-2 border-[#0f7f6d] border-t-transparent rounded-full animate-spin" />
                       <span className="text-sm">Loading media…</span>
                     </div>
                   </div>
@@ -303,7 +303,7 @@ export function MediaPicker({ open, onClose, onSelect }: MediaPickerProps) {
                     </p>
                     <button
                       onClick={() => setActiveTab("upload")}
-                      className="text-sm text-[#00704A] hover:underline font-medium"
+                      className="text-sm text-[#0f7f6d] hover:underline font-medium"
                     >
                       Upload your first file →
                     </button>
@@ -318,7 +318,7 @@ export function MediaPicker({ open, onClose, onSelect }: MediaPickerProps) {
                           onClick={() => setSelected(isSelected ? null : item)}
                           className={`group relative aspect-square rounded-lg overflow-hidden border-2 transition-all focus:outline-none ${
                             isSelected
-                              ? "border-[#00704A] ring-2 ring-[#00704A] ring-offset-1"
+                              ? "border-[#0f7f6d] ring-2 ring-[#0f7f6d] ring-offset-1"
                               : "border-transparent hover:border-gray-300 bg-gray-100"
                           }`}
                           title={item.originalName}
@@ -342,7 +342,7 @@ export function MediaPicker({ open, onClose, onSelect }: MediaPickerProps) {
                           {/* Selected checkmark */}
                           {isSelected && (
                             <div className="absolute top-1 right-1">
-                              <CheckCircleIcon className="text-[#00704A] bg-white rounded-full" fontSize="small" />
+                              <CheckCircleIcon className="text-[#0f7f6d] bg-white rounded-full" fontSize="small" />
                             </div>
                           )}
 
@@ -380,7 +380,7 @@ export function MediaPicker({ open, onClose, onSelect }: MediaPickerProps) {
               <button
                 onClick={handleConfirm}
                 disabled={!selected}
-                className="px-5 py-2 text-sm font-medium bg-[#00704A] hover:bg-[#1E3932] text-white rounded-md transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
+                className="px-5 py-2 text-sm font-medium bg-[#0f7f6d] hover:bg-[#454545] text-white rounded-md transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
               >
                 Insert Media
               </button>

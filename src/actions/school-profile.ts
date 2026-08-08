@@ -20,7 +20,7 @@ export async function updateSchoolProfileSection(
   data: Record<string, any>
 ) {
   try {
-    await requireRole(["ADMIN", "EDITOR"]);
+    await requireRole(["ADMIN", "CONTRIBUTOR"]);
 
     const current = await prisma.appearance.findUnique({
       where: { key: "theme_school_profile" },

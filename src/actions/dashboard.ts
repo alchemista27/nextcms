@@ -4,12 +4,11 @@ import prisma from "@/lib/prisma";
 import { requireRole } from "@/lib/auth-guard";
 
 export async function getDashboardStats() {
-  await requireRole(["ADMIN", "EDITOR"]);
+  await requireRole(["ADMIN", "CONTRIBUTOR"]);
 
   try {
-    const [posts, pages, media, users] = await Promise.all([
+    const [posts, media, users] = await Promise.all([
       prisma.post.count(),
-      prisma.page.count(),
       prisma.media.count(),
       prisma.user.count(),
     ]);
@@ -18,7 +17,6 @@ export async function getDashboardStats() {
       success: true,
       data: {
         posts,
-        pages,
         media,
         users,
       },
@@ -30,16 +28,26 @@ export async function getDashboardStats() {
 }
 
 export async function getRecentPosts() {
-  await requireRole(["ADMIN", "EDITOR", "AUTHOR"]);
+  await requireRole(["ADMIN", "CONTRIBUTOR"]);
 
   try {
     const posts = await prisma.post.findMany({
       take: 5,
       orderBy: { createdAt: "desc" },
-      include: { author: { select: { name: true } } }
+      include: { author: { select: { id: true, sharedUser: { select: { full_name: true } } } } }
+    });
+    const mappedPosts = posts.map(p => {
+      const { author, ...rest } = p;
+      return {
+        ...rest,
+        author: {
+          id: author?.id || "",
+          name: author?.sharedUser?.full_name || "Unknown"
+        }
+      };
     });
 
-    return { success: true, data: posts };
+    return { success: true, data: mappedPosts };
   } catch (error) {
     console.error("Failed to fetch recent posts:", error);
     return { success: false, error: "Failed to fetch recent posts" };
@@ -47,7 +55,7 @@ export async function getRecentPosts() {
 }
 
 export async function getChartData() {
-  await requireRole(["ADMIN", "EDITOR"]);
+  await requireRole(["ADMIN", "CONTRIBUTOR"]);
 
   try {
     // Get posts from the last 6 months
@@ -101,7 +109,7 @@ export async function getChartData() {
 }
 
 export async function getActivityLog() {
-  await requireRole(["ADMIN", "EDITOR"]);
+  await requireRole(["ADMIN", "CONTRIBUTOR"]);
 
   try {
     const recentPosts = await prisma.post.findMany({
@@ -110,15 +118,8 @@ export async function getActivityLog() {
       select: { id: true, title: true, updatedAt: true }
     });
 
-    const recentPages = await prisma.page.findMany({
-      take: 5,
-      orderBy: { updatedAt: "desc" },
-      select: { id: true, title: true, updatedAt: true }
-    });
-
     const combined = [
-      ...recentPosts.map(p => ({ ...p, entityType: "Post" })),
-      ...recentPages.map(p => ({ ...p, entityType: "Page" }))
+      ...recentPosts.map(p => ({ ...p, entityType: "Post" }))
     ]
       .sort((a, b) => b.updatedAt.getTime() - a.updatedAt.getTime())
       .slice(0, 10);

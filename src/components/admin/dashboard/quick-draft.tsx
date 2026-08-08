@@ -50,7 +50,7 @@ export default function QuickDraft({ authorId }: { authorId: string }) {
       
       <form onSubmit={handleSubmit} className="space-y-4">
         {error && <div className="text-red-600 text-sm">{error}</div>}
-        {success && <div className="text-[#00704A] text-sm bg-green-50 p-2 rounded">Draft saved successfully!</div>}
+        {success && <div className="text-[#0f7f6d] text-sm bg-green-50 p-2 rounded">Draft saved successfully!</div>}
         
         <div>
           <label className="sr-only">Title</label>
@@ -61,7 +61,7 @@ export default function QuickDraft({ authorId }: { authorId: string }) {
             onChange={(e) => setTitle(e.target.value)}
             disabled={isPending}
             required
-            className="w-full text-sm border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-1 focus:ring-[#00704A]"
+            className="w-full text-sm border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-1 focus:ring-[#0f7f6d]"
           />
         </div>
         
@@ -73,7 +73,7 @@ export default function QuickDraft({ authorId }: { authorId: string }) {
             onChange={(e) => setContent(e.target.value)}
             disabled={isPending}
             rows={4}
-            className="w-full text-sm border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-1 focus:ring-[#00704A] resize-none"
+            className="w-full text-sm border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-1 focus:ring-[#0f7f6d] resize-none"
           />
         </div>
         
@@ -81,7 +81,7 @@ export default function QuickDraft({ authorId }: { authorId: string }) {
           <button
             type="submit"
             disabled={isPending || !title.trim()}
-            className="px-4 py-2 bg-[#00704A] hover:bg-[#1E3932] text-white text-sm font-medium rounded-md transition-colors disabled:opacity-50"
+            className="px-4 py-2 bg-[#0f7f6d] hover:bg-[#454545] text-white text-sm font-medium rounded-md transition-colors disabled:opacity-50"
           >
             {isPending ? "Saving..." : "Save Draft"}
           </button>

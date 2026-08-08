@@ -20,7 +20,7 @@ interface Media {
   alt: string | null;
   caption: string | null;
   createdAt: Date;
-  uploadedBy: { id: string; name: string };
+  uploadedBy: { id: string; name: string } | null;
 }
 
 interface MediaListClientProps {
@@ -138,7 +138,7 @@ export default function MediaListClient({
           <button
             onClick={() => fileInputRef.current?.click()}
             disabled={isUploading}
-            className="inline-flex items-center gap-2 px-4 py-2 bg-[#00704A] hover:bg-[#1E3932] text-white text-sm font-medium rounded-md transition-colors disabled:opacity-50"
+            className="inline-flex items-center gap-2 px-4 py-2 bg-[#0f7f6d] hover:bg-[#454545] text-white text-sm font-medium rounded-md transition-colors disabled:opacity-50"
           >
             <CloudUploadIcon fontSize="small" />
             {isUploading ? "Uploading..." : "Upload New Media"}
@@ -153,7 +153,7 @@ export default function MediaListClient({
               placeholder="Search media..."
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-              className="pl-8 pr-3 py-1.5 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-1 focus:ring-[#00704A] focus:border-[#00704A] w-56"
+              className="pl-8 pr-3 py-1.5 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-1 focus:ring-[#0f7f6d] focus:border-[#0f7f6d] w-56"
             />
           </div>
           <button type="submit" className="px-3 py-1.5 bg-gray-100 hover:bg-gray-200 text-gray-700 rounded text-sm transition-colors">
@@ -170,8 +170,8 @@ export default function MediaListClient({
               <button
                 key={item.id}
                 onClick={() => setSelectedMedia(item)}
-                className={`group relative aspect-square border rounded overflow-hidden focus:outline-none focus:ring-2 focus:ring-[#00704A] focus:ring-offset-2 ${
-                  selectedMedia?.id === item.id ? "border-[#00704A] ring-2 ring-[#00704A] ring-offset-2" : "border-gray-200 bg-gray-50"
+                className={`group relative aspect-square border rounded overflow-hidden focus:outline-none focus:ring-2 focus:ring-[#0f7f6d] focus:ring-offset-2 ${
+                  selectedMedia?.id === item.id ? "border-[#0f7f6d] ring-2 ring-[#0f7f6d] ring-offset-2" : "border-gray-200 bg-gray-50"
                 }`}
               >
                 {item.mimeType.startsWith("image/") ? (
@@ -219,7 +219,7 @@ export default function MediaListClient({
                     key={p}
                     onClick={() => updateParams({ page: String(p) })}
                     className={`px-2.5 py-1 text-sm rounded ${
-                      p === currentPage ? "bg-[#00704A] text-white" : "text-gray-600 hover:bg-gray-100"
+                      p === currentPage ? "bg-[#0f7f6d] text-white" : "text-gray-600 hover:bg-gray-100"
                     }`}
                   >
                     {p}
@@ -259,7 +259,7 @@ export default function MediaListClient({
                 <p className="font-medium text-gray-900 truncate" title={selectedMedia.originalName}>{selectedMedia.originalName}</p>
                 <p>{formatDate(selectedMedia.createdAt)}</p>
                 <p>{formatBytes(selectedMedia.size)}</p>
-                <p>Uploaded by: {selectedMedia.uploadedBy.name}</p>
+                <p>Uploaded by: {selectedMedia.uploadedBy?.name || "Unknown"}</p>
               </div>
               <div className="pt-2 space-y-3 border-t border-gray-100">
                 <div>
@@ -289,7 +289,7 @@ export default function MediaListClient({
                     type="text"
                     value={selectedMedia.alt || ""}
                     onChange={(e) => handleUpdate(selectedMedia.id, { alt: e.target.value })}
-                    className="w-full border border-gray-300 rounded px-2 py-1 text-xs focus:outline-none focus:ring-1 focus:ring-[#00704A]"
+                    className="w-full border border-gray-300 rounded px-2 py-1 text-xs focus:outline-none focus:ring-1 focus:ring-[#0f7f6d]"
                   />
                 </div>
                 <div>
@@ -298,7 +298,7 @@ export default function MediaListClient({
                     rows={2}
                     value={selectedMedia.caption || ""}
                     onChange={(e) => handleUpdate(selectedMedia.id, { caption: e.target.value })}
-                    className="w-full border border-gray-300 rounded px-2 py-1 text-xs focus:outline-none focus:ring-1 focus:ring-[#00704A] resize-none"
+                    className="w-full border border-gray-300 rounded px-2 py-1 text-xs focus:outline-none focus:ring-1 focus:ring-[#0f7f6d] resize-none"
                   />
                 </div>
               </div>

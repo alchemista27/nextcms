@@ -30,7 +30,7 @@ export default async function UsersPage({ searchParams }: UsersPageProps) {
         <h1 className="text-2xl font-semibold text-gray-900">Users</h1>
         <Link
           href="/admin/users/new"
-          className="inline-flex items-center gap-2 px-4 py-2 bg-[#00704A] hover:bg-[#1E3932] text-white text-sm font-medium rounded-md transition-colors"
+          className="inline-flex items-center gap-2 px-4 py-2 bg-[#0f7f6d] hover:bg-[#454545] text-white text-sm font-medium rounded-md transition-colors"
         >
           <AddIcon fontSize="small" />
           Add New User

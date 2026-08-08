@@ -1,109 +1,89 @@
-# 🚀 NextCMS
+# 🚀 SIM Alfida (Sistem Informasi Manajemen Yayasan Alfida)
 
-**NextCMS** adalah Content Management System (CMS) modern yang dibangun menggunakan framework **Next.js 14 (App Router)**. Proyek ini mengimplementasikan fungsionalitas pengelolaan konten yang lengkap, seperti pengelolaan halaman (Pages), pos (Posts), kategori, tag, media, menu, revisi, hingga multi-user dengan hak akses dinamis (RBAC), yang semuanya dibalut dalam tema desain yang premium menggunakan **shadcn/UI** dan **Tailwind CSS** dengan warna hijau khas yang elegan (#00704A dan #1E3932).
-
----
-
-## 📸 Screenshots
-
-### Login & Register
-| Login Page | Register Page |
-|:---:|:---:|
-| ![Login Page](./screenshots/04.PNG) | ![Register Page](./screenshots/05.PNG) |
-
-### Admin Dashboard & Navigation
-| Dashboard | Posts List |
-|:---:|:---:|
-| ![Dashboard](./screenshots/01.PNG) | ![Posts List](./screenshots/02.PNG) |
-
-### Post Editor
-![Post Editor](./screenshots/03.PNG)
-
-### Media Management
-| Media Library | Media Picker — Library Tab | Media Picker — Upload Tab |
-|:---:|:---:|:---:|
-| ![Media Library](./screenshots/06.PNG) | ![Media Picker Library](./screenshots/07.PNG) | ![Media Picker Upload](./screenshots/08.PNG) |
+**SIM Alfida** adalah Content Management System (CMS) modern yang dibangun secara khusus untuk mengelola portal informasi Yayasan Pendidikan Alfida. Dibangun dengan framework **Next.js 14 (App Router)**, **Supabase**, dan **Cloudinary**, sistem ini menyediakan antarmuka manajemen konten yang cepat, aman, dan dirancang secara khusus untuk memenuhi kebutuhan yayasan.
 
 ---
 
-## 🛠️ Tech Stack & Fitur Utama
+## ✨ Fitur Utama
 
-- **Core Framework**: Next.js 14+ (App Router), React 18+, TypeScript.
-- **Styling & UI**: Tailwind CSS, shadcn/UI, Material UI Icons (`@mui/icons-material`).
-- **Database & ORM**: PostgreSQL dengan Prisma ORM.
-- **Autentikasi**: NextAuth.js (Session-based via JWT).
-- **Editor**: Rich Text Editor berbasis Tiptap (headless, extensible).
-- **Media Upload**: Local storage (`public/uploads`) dengan generator thumbnail (Sharp).
-- **Validasi**: Schema validation menggunakan Zod.
+- **Desain Khusus Alfida**: UI/UX yang diimplementasikan secara spesifik mengikuti panduan desain resmi Yayasan Alfida (`docs/DESIGN.md`), menggunakan skema warna yang elegan (Primary: `#454545`, Secondary: `#06bfa2`, Tertiary: `#0f7f6d`).
+- **Manajemen Konten Terstruktur**: Pengelolaan data yang dirancang khusus untuk entitas yayasan, seperti Artikel/Berita (Posts), Galeri Kegiatan, Profil Tim/Guru, dan Testimoni.
+- **Media Storage Cloud**: Integrasi mulus dengan **Cloudinary** untuk penyimpanan aset gambar yang cepat, teroptimasi, dan handal.
+- **Database Scalable**: Didukung oleh arsitektur **Supabase PostgreSQL** untuk manajemen data dan otentikasi.
+- **Role-Based Access Control (RBAC)**: Pembagian peran pengguna (Admin, Editor, Author, dll) yang aman.
 
-### Fitur Lengkap
-1. **Dashboard Statistik**: Panel metrik utama situs, ringkasan aktivitas, draf cepat, dan chart statistik pos per bulan (Recharts).
-2. **Kelola Post & Page**: CRUD artikel dan halaman statis dengan auto-save draf, custom permalink/slug, dan pengaturan template.
-3. **Rich Text Editor**: Editor WYSIWYG lengkap dengan format text, tabel, penyisipan media, blockquote, code block, dan Youtube embed.
-4. **Kelola Taksonomi**: Pengelompokan konten lewat Kategori hierarkis (parent-child) dan Tag.
-5. **Media Library**: Manajemen unggahan file (images, video, document) dengan drag & drop upload, penyesuaian metadata, dan reusable Media Picker.
-6. **Menu Builder**: Penyusunan navigasi dinamis dengan dukungan sub-menu menggunakan interaksi drag & drop (@dnd-kit).
-7. **User & RBAC**: Manajemen pengguna dengan role: Admin, Editor, Author, dan Subscriber.
-8. **Pengaturan Tampilan (Appearance)**: Kustomisasi logo, favicon, warna utama, jenis font, custom CSS, dan script header/footer.
-9. **Pengaturan Umum & Permalink**: Konfigurasi identitas situs, zona waktu, format tanggal/waktu, serta penyesuaian struktur URL (permalink).
-10. **History Revision**: Pelacakan riwayat perubahan artikel, perbandingan versi (diff viewer), dan kemampuan memulihkan revisi lama (maksimal 25 revisi).
-11. **Optimasi SEO**: Pengaturan meta title template, meta description global/per konten, custom OG:image, auto-generate `sitemap.xml`, dan robots.txt.
+## 🛠️ Tech Stack
+
+- **Framework**: Next.js 14 (App Router), React, TypeScript
+- **Database & Backend**: Supabase (PostgreSQL)
+- **ORM**: Prisma
+- **Storage**: Cloudinary
+- **Styling**: Tailwind CSS & shadcn/UI
+- **Forms & Validation**: React Hook Form + Zod
+- **Rich Text Editor**: TipTap
 
 ---
 
 ## 🚀 Memulai (Getting Started)
 
 ### Prasyarat
-- **Node.js** versi terbaru (v18 ke atas disarankan).
-- **PostgreSQL** sudah berjalan di sistem lokal Anda.
-  - Port default: `5432`
-  - Username: `postgres`
-  - Password: `181818`
+- Node.js versi 18.x atau lebih baru
+- Akun Supabase (untuk database)
+- Akun Cloudinary (untuk storage media)
 
-### Langkah-langkah Setup Proyek
+### 1. Kloning Repositori & Instalasi
+```bash
+git clone <repository-url> nextcms
+cd nextcms
+npm install
+```
 
-1. **Clone Proyek** (jika dari repositori Git).
-2. **Pasang Dependensi**:
-   ```bash
-   npm install
-   ```
-3. **Konfigurasi Environment**:
-   Salin file `.env.example` menjadi `.env` dan pastikan konfigurasi database serta rahasia autentikasi sudah sesuai.
-   ```bash
-   cp .env.example .env
-   ```
-4. **Jalankan Migrasi Database**:
-   Lakukan inisialisasi tabel PostgreSQL melalui Prisma.
-   ```bash
-   npx prisma migrate dev --name init
-   ```
-5. **Generate Prisma Client**:
-   ```bash
-   npx prisma generate
-   ```
-6. **Seed Data Awal**:
-   Gunakan script seeder untuk membuat akun Administrator bawaan dan konfigurasi dasar.
-   ```bash
-   npx prisma db seed
-   ```
-   *Akun Admin bawaan:*
-   - **Email**: `admin@nextcms.local`
-   - **Password**: `admin123`
+### 2. Konfigurasi Environment Variables
+Buat file `.env` di root direktori berdasarkan `.env.example`, lalu isi dengan kredensial Anda:
 
-7. **Jalankan Server Development**:
-   ```bash
-   npm run dev
-   ```
-   Buka [http://localhost:3000](http://localhost:3000) di browser Anda untuk melihat halaman utama, atau akses dashboard admin di [http://localhost:3000/admin](http://localhost:3000/admin).
+```env
+# Supabase PostgreSQL connection
+DATABASE_URL="postgresql://postgres.[YOUR-SUPABASE-ID]:[YOUR-PASSWORD]@aws-0-ap-southeast-1.pooler.supabase.com:6543/postgres"
+DIRECT_URL="postgresql://postgres.[YOUR-SUPABASE-ID]:[YOUR-PASSWORD]@aws-0-ap-southeast-1.pooler.supabase.com:5432/postgres"
+
+# NextAuth
+NEXTAUTH_SECRET="your-super-secret-key"
+NEXTAUTH_URL="http://localhost:3000"
+
+# Cloudinary Storage
+CLOUDINARY_CLOUD_NAME="your-cloud-name"
+CLOUDINARY_API_KEY="your-api-key"
+CLOUDINARY_API_SECRET="your-api-secret"
+```
+
+### 3. Setup Database (Supabase)
+Jalankan perintah prisma untuk menyingkronkan skema ke database Supabase:
+```bash
+npx prisma generate
+npx prisma db push
+```
+
+*(Opsional)* Anda dapat menjalankan seed untuk mengisi data awal:
+```bash
+npx prisma db seed
+```
+
+### 4. Jalankan Development Server
+```bash
+npm run dev
+```
+Aplikasi dapat diakses di `http://localhost:3000`. Dasbor admin berada di `http://localhost:3000/admin`.
 
 ---
 
-## 📂 Dokumentasi & Desain Teknis
+## 📚 Dokumentasi
 
-Untuk memahami detail arsitektur, basis data, dan wireframe tampilan aplikasi ini, Anda dapat merujuk ke dokumen-dokumen berikut di dalam direktori `docs/`:
+Dokumentasi detail mengenai arsitektur, fitur, dan skema database terdapat di folder `/docs`:
+- [`PRD.md`](./docs/PRD.md) - Product Requirements Document
+- [`TDD.md`](./docs/TDD.md) - Technical Design Document (Arsitektur & Supabase/Cloudinary)
+- [`DESIGN.md`](./docs/DESIGN.md) - Panduan Sistem Desain Alfida
+- [`db-scheme.md`](./docs/db-scheme.md) - Skema struktur database relasional
+- [`sprint-plan.md`](./docs/sprint-plan.md) - Rencana dan pelacakan sprint
 
-*   📄 **[Product Requirements Document (PRD)](./docs/PRD.md)** — Spesifikasi fungsional dan kebutuhan bisnis NextCMS.
-*   📄 **[Tech Design Document (TDD)](./docs/TDD.md)** — Detail arsitektur folder, rute API, server actions, dan estimasi pengerjaan.
-*   📄 **[Database Schema (db-scheme.md)](./docs/db-scheme.md)** — Desain relasional tabel (ERD) dan skema database lengkap.
-*   📂 **[UI Wireframe](./docs/ui-wireframe/)** — Kumpulan file HTML statis yang mendemonstrasikan rancangan antarmuka CMS.
-*   📄 **[Sprint Development Plan](./docs/sprint-plan.md)** — Panduan pengerjaan modular per sprint.
+---
+© 2026 Yayasan Pendidikan Alfida & NextCMS Development Team.

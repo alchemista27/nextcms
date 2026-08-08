@@ -40,7 +40,7 @@ export default function ContentChart({ data }: ContentChartProps) {
               cursor={{ fill: "#f9fafb" }}
               contentStyle={{ borderRadius: "8px", border: "1px solid #e5e7eb", boxShadow: "0 1px 2px 0 rgba(0, 0, 0, 0.05)" }}
             />
-            <Bar dataKey="posts" name="Posts" fill="#00704A" radius={[4, 4, 0, 0]} maxBarSize={50} />
+            <Bar dataKey="posts" name="Posts" fill="#0f7f6d" radius={[4, 4, 0, 0]} maxBarSize={50} />
           </BarChart>
         </ResponsiveContainer>
       </div>

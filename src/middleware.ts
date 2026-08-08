@@ -1,26 +1,25 @@
-import { withAuth } from "next-auth/middleware";
-import { NextResponse } from "next/server";
-import { Role } from "@prisma/client";
+import { NextResponse, type NextRequest } from "next/server";
+import { updateSession } from "./lib/supabase/middleware";
 
-export default withAuth(
-  function middleware(req) {
-    const token = req.nextauth.token;
-    const path = req.nextUrl.pathname;
+export async function middleware(request: NextRequest) {
+  // refresh the session
+  const response = await updateSession(request);
 
-    // Example of route protection based on roles
-    if (path.startsWith("/admin/users") && token?.role !== Role.ADMIN) {
-      return NextResponse.redirect(new URL("/admin", req.url));
-    }
-    
-    // Add more granular checks here if needed for EDITOR, AUTHOR, etc.
-  },
-  {
-    callbacks: {
-      authorized: ({ token }) => !!token,
-    },
+  // You can add more logic here, but because we need to check roles from Prisma,
+  // we do the granular role checks in the Server Components or API routes directly,
+  // or use Supabase SSR here to check user existence.
+  
+  // For basic protection: if they access /admin and are not logged in, Supabase
+  // updateSession doesn't automatically redirect. We can add a basic redirect here.
+  const { data: { user } } = await (await import('./lib/supabase/server')).createClient().auth.getUser();
+
+  if (request.nextUrl.pathname.startsWith("/admin") && !user) {
+    return NextResponse.redirect(new URL("/login", request.url));
   }
-);
+
+  return response;
+}
 
 export const config = {
-  matcher: ["/admin/:path*"],
+  matcher: ["/admin/:path*", "/login"],
 };

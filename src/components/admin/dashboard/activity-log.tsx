@@ -20,14 +20,14 @@ export default function ActivityLog({ activities }: ActivityLogProps) {
           <div className="space-y-6 relative before:absolute before:inset-0 before:ml-5 before:-translate-x-px md:before:mx-auto md:before:translate-x-0 before:h-full before:w-0.5 before:bg-gradient-to-b before:from-transparent before:via-gray-200 before:to-transparent">
             {activities.map((activity, index) => (
               <div key={`${activity.id}-${index}`} className="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group is-active">
-                <div className="flex items-center justify-center w-6 h-6 rounded-full border border-white bg-[#00704A] text-white shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 shadow absolute left-2 md:left-1/2 md:-translate-x-1/2 z-10">
+                <div className="flex items-center justify-center w-6 h-6 rounded-full border border-white bg-[#0f7f6d] text-white shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 shadow absolute left-2 md:left-1/2 md:-translate-x-1/2 z-10">
                   {/* Just use a generic icon for now */}
                   <EditNoteIcon style={{ fontSize: 14 }} />
                 </div>
                 
                 <div className="w-[calc(100%-3rem)] md:w-[calc(50%-2rem)] p-3 rounded-lg border border-gray-100 bg-gray-50 shadow-sm ml-10 md:ml-0">
                   <div className="flex items-center justify-between mb-1">
-                    <span className="text-xs font-semibold text-[#00704A] uppercase">
+                    <span className="text-xs font-semibold text-[#0f7f6d] uppercase">
                       {activity.entityType}
                     </span>
                     <span className="text-xs text-gray-400">

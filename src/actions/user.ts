@@ -4,7 +4,6 @@ import prisma from "@/lib/prisma";
 import { revalidatePath } from "next/cache";
 import { requireAuth, requireRole } from "@/lib/auth-guard";
 import { createUserSchema, updateUserSchema, updateProfileSchema } from "@/lib/validators/user";
-import bcrypt from "bcryptjs";
 import { Prisma } from "@prisma/client";
 
 export async function getUsers(page = 1, limit = 10, search = "", role = "") {
@@ -14,8 +13,8 @@ export async function getUsers(page = 1, limit = 10, search = "", role = "") {
     const where: Prisma.UserWhereInput = {
       ...(search ? {
         OR: [
-          { name: { contains: search, mode: "insensitive" } },
-          { email: { contains: search, mode: "insensitive" } }
+          { sharedUser: { full_name: { contains: search, mode: "insensitive" } } },
+          { sharedUser: { email: { contains: search, mode: "insensitive" } } }
         ]
       } : {}),
       ...(role && role !== "ALL" ? { role: role as any } : {})
@@ -30,21 +29,28 @@ export async function getUsers(page = 1, limit = 10, search = "", role = "") {
         include: {
           _count: {
             select: { posts: true }
+          },
+          sharedUser: {
+            select: { full_name: true, email: true }
           }
         }
       }),
       prisma.user.count({ where })
     ]);
 
-    // Exclude passwords
-    const safeUsers = users.map(u => {
-      const { password, ...rest } = u;
-      return rest;
+    // Map sharedUser data to name and email for the frontend
+    const mappedUsers = users.map(u => {
+      const { sharedUser, ...rest } = u;
+      return {
+        ...rest,
+        name: sharedUser?.full_name || "Unknown",
+        email: sharedUser?.email || "Unknown"
+      };
     });
 
     return {
       success: true,
-      data: safeUsers,
+      data: mappedUsers,
       total,
       totalPages: Math.ceil(total / limit)
     };
@@ -65,11 +71,14 @@ export async function getUserById(id: string) {
   try {
     const user = await prisma.user.findUnique({
       where: { id },
+      include: {
+        sharedUser: { select: { full_name: true, email: true } }
+      }
     });
     if (!user) return { success: false, error: "User not found" };
     
-    const { password, ...rest } = user;
-    return { success: true, data: rest };
+    const { sharedUser, ...rest } = user;
+    return { success: true, data: { ...rest, name: sharedUser?.full_name || "Unknown", email: sharedUser?.email || "Unknown" } };
   } catch (error) {
     console.error("Failed to fetch user:", error);
     return { success: false, error: "Failed to fetch user" };
@@ -82,16 +91,18 @@ export async function createUser(data: unknown) {
   try {
     const validatedData = createUserSchema.parse(data);
     
-    const existing = await prisma.user.findUnique({ where: { email: validatedData.email } });
-    if (existing) return { success: false, error: "Email already in use" };
+    const shared = await prisma.sharedUser.findUnique({ where: { email: validatedData.email } });
+    if (!shared) return { success: false, error: "User must be registered in SIM first" };
 
-    const hashedPassword = await bcrypt.hash(validatedData.password, 12);
-    
+    const existing = await prisma.user.findUnique({ where: { id: shared.id } });
+    if (existing) return { success: false, error: "User already has a CMS role" };
+
+    // In this pivot, users should already exist in Supabase Auth,
+    // so creating a user here might just mean assigning a role to an existing auth user
+    // if we know their ID. For now we will just create the profile if needed.
     const user = await prisma.user.create({
       data: {
-        name: validatedData.name,
-        email: validatedData.email,
-        password: hashedPassword,
+        id: shared.id,
         role: validatedData.role,
         bio: validatedData.bio,
         avatar: validatedData.avatar,
@@ -99,8 +110,7 @@ export async function createUser(data: unknown) {
     });
 
     revalidatePath("/admin/users");
-    const { password, ...rest } = user;
-    return { success: true, data: rest };
+    return { success: true, data: user };
   } catch (error: any) {
     console.error("Failed to create user:", error);
     return { success: false, error: error.message || "Failed to create user" };
@@ -117,33 +127,21 @@ export async function updateUser(id: string, data: unknown) {
     if (currentUser.role === "ADMIN") {
       const validatedData = updateUserSchema.parse(data);
       updateData = { ...validatedData };
-      if (updateData.password) {
-        updateData.password = await bcrypt.hash(updateData.password, 12);
-      } else {
-        delete updateData.password;
-      }
+      delete updateData.password;
     } 
     // If user updating themselves
     else if (currentUser.id === id) {
       const validatedData = updateProfileSchema.parse(data);
       updateData = { ...validatedData };
-      if (updateData.password) {
-        updateData.password = await bcrypt.hash(updateData.password, 12);
-      } else {
-        delete updateData.password;
-      }
+      delete updateData.password;
     } 
     else {
       return { success: false, error: "Unauthorized" };
     }
 
-    // Check email uniqueness if email changed
-    if (updateData.email) {
-      const existing = await prisma.user.findUnique({ where: { email: updateData.email } });
-      if (existing && existing.id !== id) {
-        return { success: false, error: "Email already in use" };
-      }
-    }
+    // Name and email are managed by SIM, so we ignore them in CMS update
+    delete updateData.name;
+    delete updateData.email;
 
     const user = await prisma.user.update({
       where: { id },
@@ -155,8 +153,7 @@ export async function updateUser(id: string, data: unknown) {
       revalidatePath("/admin/profile");
     }
     
-    const { password, ...rest } = user;
-    return { success: true, data: rest };
+    return { success: true, data: user };
   } catch (error: any) {
     console.error("Failed to update user:", error);
     return { success: false, error: error.message || "Failed to update user" };

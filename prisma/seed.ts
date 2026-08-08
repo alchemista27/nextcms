@@ -1,24 +1,7 @@
 import { Prisma } from '@prisma/client'
-import bcrypt from 'bcryptjs'
 import prisma from '../src/lib/prisma'
-
 async function main() {
-  // Check if admin already exists
-  const existingAdmin = await prisma.user.findUnique({
-    where: { email: 'admin@nextcms.local' },
-  })
-
-  if (!existingAdmin) {
-    await prisma.user.create({
-      data: {
-        name: 'Admin',
-        email: 'admin@nextcms.local',
-        password: bcrypt.hashSync('admin123', 12),
-        role: 'ADMIN',
-      },
-    })
-    console.log('✅ Admin user created')
-  }
+  // Admin user should be created via Supabase Auth and SIM, so we skip seeding it here.
 
   // Seed settings
   const settings = [

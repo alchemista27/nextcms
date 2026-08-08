@@ -1,5 +1,4 @@
-import { getServerSession } from "next-auth";
-import { authOptions } from "@/lib/auth";
+import { getCurrentUser } from "@/lib/auth-guard";
 import { getCategories } from "@/actions/category";
 import { getTags } from "@/actions/tag";
 import PostEditorClient from "../post-editor-client";
@@ -11,8 +10,8 @@ export const metadata: Metadata = {
 };
 
 export default async function NewPostPage() {
-  const session = await getServerSession(authOptions);
-  if (!session?.user?.id) redirect("/login");
+  const user = await getCurrentUser();
+  if (!user) redirect("/login");
 
   const [categoriesResult, tagsResult] = await Promise.all([
     getCategories(),
@@ -22,7 +21,7 @@ export default async function NewPostPage() {
   return (
     <PostEditorClient
       post={null}
-      authorId={session.user.id}
+      authorId={user.id}
       allCategories={categoriesResult.success ? (categoriesResult.data as any[]) : []}
       allTags={tagsResult.success ? (tagsResult.data as any[]) : []}
     />

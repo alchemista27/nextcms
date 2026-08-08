@@ -62,7 +62,7 @@ export default function PermalinksClient({ initialSettings }: PermalinksClientPr
                       value={s.id}
                       checked={settings.permalink_structure === s.id}
                       onChange={(e) => setSettings({ ...settings, permalink_structure: e.target.value })}
-                      className="w-4 h-4 text-[#00704A] border-gray-300 focus:ring-[#00704A]"
+                      className="w-4 h-4 text-[#0f7f6d] border-gray-300 focus:ring-[#0f7f6d]"
                     />
                   </div>
                   <div className="flex-1">
@@ -79,7 +79,7 @@ export default function PermalinksClient({ initialSettings }: PermalinksClientPr
                           type="text"
                           value={settings.permalink_custom_pattern}
                           onChange={(e) => setSettings({ ...settings, permalink_custom_pattern: e.target.value })}
-                          className="w-full border border-gray-300 rounded px-3 py-2 text-sm font-mono focus:outline-none focus:ring-1 focus:ring-[#00704A]"
+                          className="w-full border border-gray-300 rounded px-3 py-2 text-sm font-mono focus:outline-none focus:ring-1 focus:ring-[#0f7f6d]"
                           placeholder="/%category%/%postname%/"
                         />
                         <div className="flex flex-wrap gap-2 mt-2">
@@ -119,7 +119,7 @@ export default function PermalinksClient({ initialSettings }: PermalinksClientPr
                   name="permalink_category_base"
                   value={settings.permalink_category_base}
                   onChange={(e) => setSettings({ ...settings, permalink_category_base: e.target.value })}
-                  className="flex-1 max-w-xs border border-gray-300 rounded px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-[#00704A]"
+                  className="flex-1 max-w-xs border border-gray-300 rounded px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-[#0f7f6d]"
                   placeholder="category"
                 />
               </div>
@@ -130,7 +130,7 @@ export default function PermalinksClient({ initialSettings }: PermalinksClientPr
                   name="permalink_tag_base"
                   value={settings.permalink_tag_base}
                   onChange={(e) => setSettings({ ...settings, permalink_tag_base: e.target.value })}
-                  className="flex-1 max-w-xs border border-gray-300 rounded px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-[#00704A]"
+                  className="flex-1 max-w-xs border border-gray-300 rounded px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-[#0f7f6d]"
                   placeholder="tag"
                 />
               </div>
@@ -149,7 +149,7 @@ export default function PermalinksClient({ initialSettings }: PermalinksClientPr
           <button
             type="submit"
             disabled={isSaving}
-            className="flex items-center gap-2 bg-[#00704A] text-white px-4 py-2 rounded text-sm font-medium hover:bg-[#1E3932] transition-colors disabled:opacity-50"
+            className="flex items-center gap-2 bg-[#0f7f6d] text-white px-4 py-2 rounded text-sm font-medium hover:bg-[#454545] transition-colors disabled:opacity-50"
           >
             <SaveIcon fontSize="small" />
             {isSaving ? "Saving..." : "Save Changes"}

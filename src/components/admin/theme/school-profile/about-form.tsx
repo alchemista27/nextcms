@@ -52,17 +52,17 @@ export default function AboutSectionForm({ initialData }: { initialData: any }) 
         <div className="grid grid-cols-2 gap-4">
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">School Name</label>
-            <input className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-[#00704A]" value={form.schoolName} onChange={e => setForm(p => ({...p, schoolName: e.target.value}))} />
+            <input className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-[#0f7f6d]" value={form.schoolName} onChange={e => setForm(p => ({...p, schoolName: e.target.value}))} />
           </div>
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">Years Experience Badge</label>
-            <input type="number" min={0} className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-[#00704A]" value={form.yearsExperience} onChange={e => setForm(p => ({...p, yearsExperience: parseInt(e.target.value) || 0}))} />
+            <input type="number" min={0} className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-[#0f7f6d]" value={form.yearsExperience} onChange={e => setForm(p => ({...p, yearsExperience: parseInt(e.target.value) || 0}))} />
           </div>
         </div>
 
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-1">Description Paragraph</label>
-          <textarea rows={3} className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-[#00704A]" value={form.description} onChange={e => setForm(p => ({...p, description: e.target.value}))} />
+          <textarea rows={3} className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-[#0f7f6d]" value={form.description} onChange={e => setForm(p => ({...p, description: e.target.value}))} />
         </div>
 
         <div className="grid grid-cols-2 gap-4">
@@ -95,16 +95,16 @@ export default function AboutSectionForm({ initialData }: { initialData: any }) 
           <div className="grid grid-cols-2 gap-4">
             <div>
               <label className="block text-xs font-medium text-gray-600 mb-1">Name</label>
-              <input className="w-full border border-gray-300 rounded-lg px-3 py-1.5 text-sm focus:outline-none focus:border-[#00704A]" value={form.principalName} onChange={e => setForm(p => ({...p, principalName: e.target.value}))} />
+              <input className="w-full border border-gray-300 rounded-lg px-3 py-1.5 text-sm focus:outline-none focus:border-[#0f7f6d]" value={form.principalName} onChange={e => setForm(p => ({...p, principalName: e.target.value}))} />
             </div>
             <div>
               <label className="block text-xs font-medium text-gray-600 mb-1">Title</label>
-              <input className="w-full border border-gray-300 rounded-lg px-3 py-1.5 text-sm focus:outline-none focus:border-[#00704A]" value={form.principalTitle} onChange={e => setForm(p => ({...p, principalTitle: e.target.value}))} />
+              <input className="w-full border border-gray-300 rounded-lg px-3 py-1.5 text-sm focus:outline-none focus:border-[#0f7f6d]" value={form.principalTitle} onChange={e => setForm(p => ({...p, principalTitle: e.target.value}))} />
             </div>
           </div>
           <div>
             <label className="block text-xs font-medium text-gray-600 mb-1">Quote</label>
-            <textarea rows={2} className="w-full border border-gray-300 rounded-lg px-3 py-1.5 text-sm focus:outline-none focus:border-[#00704A]" value={form.principalQuote} onChange={e => setForm(p => ({...p, principalQuote: e.target.value}))} />
+            <textarea rows={2} className="w-full border border-gray-300 rounded-lg px-3 py-1.5 text-sm focus:outline-none focus:border-[#0f7f6d]" value={form.principalQuote} onChange={e => setForm(p => ({...p, principalQuote: e.target.value}))} />
           </div>
           <div>
             <label className="block text-xs font-medium text-gray-600 mb-1">Photo</label>
@@ -122,12 +122,12 @@ export default function AboutSectionForm({ initialData }: { initialData: any }) 
         <div>
           <div className="flex items-center justify-between mb-2">
             <label className="block text-sm font-medium text-gray-700">Features List (2x2 Grid)</label>
-            <button type="button" onClick={addFeature} className="text-xs text-[#00704A] font-semibold hover:underline">+ Add Feature</button>
+            <button type="button" onClick={addFeature} className="text-xs text-[#0f7f6d] font-semibold hover:underline">+ Add Feature</button>
           </div>
           <div className="grid grid-cols-2 gap-2">
             {features.map((f, i) => (
               <div key={i} className="flex gap-2">
-                <input className="flex-1 border border-gray-300 rounded-lg px-3 py-1.5 text-sm focus:outline-none focus:border-[#00704A]" value={f} onChange={e => updateFeature(i, e.target.value)} />
+                <input className="flex-1 border border-gray-300 rounded-lg px-3 py-1.5 text-sm focus:outline-none focus:border-[#0f7f6d]" value={f} onChange={e => updateFeature(i, e.target.value)} />
                 <button type="button" onClick={() => removeFeature(i)} className="text-red-400 hover:text-red-600">×</button>
               </div>
             ))}
@@ -135,7 +135,7 @@ export default function AboutSectionForm({ initialData }: { initialData: any }) 
         </div>
 
         <div className="flex justify-end pt-2">
-          <button type="submit" disabled={saving} className="px-6 py-2.5 bg-[#00704A] text-white text-sm font-semibold rounded-lg hover:bg-[#1E3932] transition disabled:opacity-50">
+          <button type="submit" disabled={saving} className="px-6 py-2.5 bg-[#0f7f6d] text-white text-sm font-semibold rounded-lg hover:bg-[#454545] transition disabled:opacity-50">
             {saving ? "Saving..." : "Save Changes"}
           </button>
         </div>

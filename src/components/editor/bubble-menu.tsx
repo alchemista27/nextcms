@@ -37,7 +37,7 @@ export function BubbleMenu({ editor }: BubbleMenuProps) {
         onClick={() => editor.chain().focus().toggleBold().run()}
         className={clsx(
           "p-1.5 rounded transition-colors text-white hover:bg-gray-700",
-          editor.isActive("bold") && "bg-gray-700 text-[#00704A]"
+          editor.isActive("bold") && "bg-gray-700 text-[#0f7f6d]"
         )}
       >
         <FormatBoldIcon fontSize="small" />
@@ -46,7 +46,7 @@ export function BubbleMenu({ editor }: BubbleMenuProps) {
         onClick={() => editor.chain().focus().toggleItalic().run()}
         className={clsx(
           "p-1.5 rounded transition-colors text-white hover:bg-gray-700",
-          editor.isActive("italic") && "bg-gray-700 text-[#00704A]"
+          editor.isActive("italic") && "bg-gray-700 text-[#0f7f6d]"
         )}
       >
         <FormatItalicIcon fontSize="small" />
@@ -55,7 +55,7 @@ export function BubbleMenu({ editor }: BubbleMenuProps) {
         onClick={() => editor.chain().focus().toggleUnderline().run()}
         className={clsx(
           "p-1.5 rounded transition-colors text-white hover:bg-gray-700",
-          editor.isActive("underline") && "bg-gray-700 text-[#00704A]"
+          editor.isActive("underline") && "bg-gray-700 text-[#0f7f6d]"
         )}
       >
         <FormatUnderlinedIcon fontSize="small" />
@@ -65,7 +65,7 @@ export function BubbleMenu({ editor }: BubbleMenuProps) {
         onClick={setLink}
         className={clsx(
           "p-1.5 rounded transition-colors text-white hover:bg-gray-700",
-          editor.isActive("link") && "bg-gray-700 text-[#00704A]"
+          editor.isActive("link") && "bg-gray-700 text-[#0f7f6d]"
         )}
       >
         <LinkIcon fontSize="small" />

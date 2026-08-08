@@ -1,16 +1,19 @@
 generator client {
-  provider = "prisma-client-js"
+  provider        = "prisma-client-js"
+  previewFeatures = ["multiSchema"]
 }
 
 datasource db {
-  provider = "postgresql"
+  provider  = "postgresql"
+  schemas   = ["cms", "shared"]
 }
 
 enum Role {
   ADMIN
-  EDITOR
-  AUTHOR
+  CONTRIBUTOR
   SUBSCRIBER
+
+  @@schema("cms")
 }
 
 enum PostStatus {
@@ -18,12 +21,8 @@ enum PostStatus {
   PUBLISHED
   PENDING
   TRASH
-}
 
-enum PageStatus {
-  DRAFT
-  PUBLISHED
-  TRASH
+  @@schema("cms")
 }
 
 enum MenuItemType {
@@ -31,68 +30,44 @@ enum MenuItemType {
   PAGE
   POST
   CATEGORY
+
+  @@schema("cms")
 }
 
 model User {
-  id            String    @id @default(cuid())
-  name          String
-  email         String    @unique
-  emailVerified DateTime?
-  password      String?
-  role          Role      @default(SUBSCRIBER)
-  avatar        String?
-  bio           String?
-  createdAt     DateTime  @default(now())
-  updatedAt     DateTime  @updatedAt
+  id        String   @id @db.Uuid
+  role      Role     @default(SUBSCRIBER)
+  avatar    String?
+  bio       String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
-  accounts      Account[]
-  sessions      Session[]
-  posts         Post[]
-  pages         Page[]
-  media         Media[]
-  revisions     Revision[]
+  sharedUser SharedUser @relation(fields: [id], references: [id])
+  posts      Post[]
+  media      Media[]
+  revisions  Revision[]
 
   @@map("users")
+  @@schema("cms")
 }
 
-model Account {
-  id                String  @id @default(cuid())
-  userId            String
-  type              String
-  provider          String
-  providerAccountId String
-  refresh_token     String? @db.Text
-  access_token      String? @db.Text
-  expires_at        Int?
-  token_type        String?
-  scope             String?
-  id_token          String? @db.Text
-  session_state     String?
+model SharedUser {
+  id            String    @id @db.Uuid
+  email         String    @unique @db.VarChar
+  full_name     String?   @db.VarChar
+  phone         String?   @db.VarChar
+  password_hash String?   @db.VarChar
+  is_active     Boolean?
+  created_at    DateTime? @db.Timestamptz
+  updated_at    DateTime? @db.Timestamptz
 
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  cmsUser       User?
 
-  @@unique([provider, providerAccountId])
-  @@map("accounts")
+  @@map("users")
+  @@schema("shared")
 }
 
-model Session {
-  id           String   @id @default(cuid())
-  sessionToken String   @unique
-  userId       String
-  expires      DateTime
-  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 
-  @@map("sessions")
-}
-
-model VerificationToken {
-  identifier String
-  token      String   @unique
-  expires    DateTime
-
-  @@unique([identifier, token])
-  @@map("verification_tokens")
-}
 
 model Post {
   id              String     @id @default(cuid())
@@ -109,7 +84,7 @@ model Post {
   createdAt       DateTime   @default(now())
   updatedAt       DateTime   @updatedAt
 
-  authorId   String
+  authorId   String     @db.Uuid
   author     User       @relation(fields: [authorId], references: [id])
   categories Category[] @relation("PostCategories")
   tags       Tag[]      @relation("PostTags")
@@ -119,33 +94,48 @@ model Post {
   @@index([authorId])
   @@index([publishedAt])
   @@map("posts")
+  @@schema("cms")
 }
 
-model Page {
-  id              String     @id @default(cuid())
-  title           String
-  slug            String     @unique
-  content         String?    @db.Text
-  status          PageStatus @default(DRAFT)
-  template        String     @default("default")
-  menuOrder       Int        @default(0)
-  metaTitle       String?
-  metaDescription String?    @db.Text
-  ogImage         String?
-  publishedAt     DateTime?
-  createdAt       DateTime   @default(now())
-  updatedAt       DateTime   @updatedAt
+model TeamMember {
+  id        String   @id @default(cuid())
+  name      String
+  position  String
+  bio       String?  @db.Text
+  photoUrl  String?
+  order     Int      @default(0)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
-  authorId  String
-  author    User       @relation(fields: [authorId], references: [id])
-  parentId  String?
-  parent    Page?      @relation("PageHierarchy", fields: [parentId], references: [id])
-  children  Page[]     @relation("PageHierarchy")
+  @@map("team_members")
+  @@schema("cms")
+}
 
-  @@index([slug])
-  @@index([status])
-  @@index([parentId])
-  @@map("pages")
+model GalleryImage {
+  id          String   @id @default(cuid())
+  title       String
+  description String?  @db.Text
+  url         String
+  category    String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@map("gallery_images")
+  @@schema("cms")
+}
+
+model Testimonial {
+  id          String   @id @default(cuid())
+  name        String
+  role        String
+  content     String   @db.Text
+  avatarUrl   String?
+  isPublished Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@map("testimonials")
+  @@schema("cms")
 }
 
 model Category {
@@ -164,6 +154,7 @@ model Category {
   @@index([slug])
   @@index([parentId])
   @@map("categories")
+  @@schema("cms")
 }
 
 model Tag {
@@ -178,6 +169,7 @@ model Tag {
 
   @@index([slug])
   @@map("tags")
+  @@schema("cms")
 }
 
 model Media {
@@ -192,12 +184,13 @@ model Media {
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
 
-  uploadedById String
-  uploadedBy   User @relation(fields: [uploadedById], references: [id])
+  uploadedById String @db.Uuid
+  uploadedBy   User   @relation(fields: [uploadedById], references: [id])
 
   @@index([mimeType])
   @@index([uploadedById])
   @@map("media")
+  @@schema("cms")
 }
 
 model Menu {
@@ -210,6 +203,7 @@ model Menu {
   items MenuItem[]
 
   @@map("menus")
+  @@schema("cms")
 }
 
 model MenuItem {
@@ -224,14 +218,15 @@ model MenuItem {
   updatedAt   DateTime     @updatedAt
 
   menuId   String
-  menu     Menu      @relation(fields: [menuId], references: [id], onDelete: Cascade)
+  menu     Menu       @relation(fields: [menuId], references: [id], onDelete: Cascade)
   parentId String?
-  parent   MenuItem? @relation("MenuItemHierarchy", fields: [parentId], references: [id])
+  parent   MenuItem?  @relation("MenuItemHierarchy", fields: [parentId], references: [id])
   children MenuItem[] @relation("MenuItemHierarchy")
 
   @@index([menuId])
   @@index([parentId])
   @@map("menu_items")
+  @@schema("cms")
 }
 
 model Revision {
@@ -243,12 +238,13 @@ model Revision {
   metadata   Json?
   createdAt  DateTime @default(now())
 
-  authorId String
-  author   User @relation(fields: [authorId], references: [id])
+  authorId String @db.Uuid
+  author   User   @relation(fields: [authorId], references: [id])
 
   @@index([entityType, entityId])
   @@index([authorId])
   @@map("revisions")
+  @@schema("cms")
 }
 
 model SiteSettings {
@@ -258,6 +254,7 @@ model SiteSettings {
   updatedAt DateTime @updatedAt
 
   @@map("site_settings")
+  @@schema("cms")
 }
 
 model Appearance {
@@ -267,4 +264,5 @@ model Appearance {
   updatedAt DateTime @updatedAt
 
   @@map("appearance")
+  @@schema("cms")
 }

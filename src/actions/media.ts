@@ -23,16 +23,27 @@ export async function getMedia(page = 1, perPage = 20, search = "") {
         skip,
         take: perPage,
         include: {
-          uploadedBy: { select: { id: true, name: true } },
+          uploadedBy: { select: { id: true, sharedUser: { select: { full_name: true } } } },
         },
         orderBy: { createdAt: "desc" },
       }),
       prisma.media.count({ where }),
     ]);
     
+    const mappedMedia = media.map(m => {
+      const { uploadedBy, ...rest } = m;
+      return {
+        ...rest,
+        uploadedBy: uploadedBy ? {
+          id: uploadedBy.id,
+          name: uploadedBy.sharedUser?.full_name || "Unknown"
+        } : null
+      };
+    });
+    
     return {
       success: true,
-      data: media,
+      data: mappedMedia,
       total,
       totalPages: Math.ceil(total / perPage),
     };

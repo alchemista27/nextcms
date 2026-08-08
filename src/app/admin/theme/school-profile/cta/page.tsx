@@ -7,7 +7,7 @@ export default async function CTASectionPage() {
   return (
     <div className="max-w-2xl mx-auto">
       <div className="mb-6">
-        <h1 className="text-2xl font-bold text-[#1E3932]">CTA Section</h1>
+        <h1 className="text-2xl font-bold text-[#454545]">CTA Section</h1>
         <p className="text-gray-500 text-sm mt-1">Call-to-action enrollment section at the bottom of the page.</p>
       </div>
       <CTASectionForm initialData={data?.cta || {}} />

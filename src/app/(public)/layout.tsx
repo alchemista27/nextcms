@@ -12,8 +12,8 @@ export default async function PublicLayout({ children }: { children: ReactNode }
   const { data: appearance } = await getAppearanceSettings();
   
   // Set up CSS variables based on appearance settings
-  const primaryColor = appearance?.primary_color || "#00704A";
-  const secondaryColor = appearance?.secondary_color || "#1E3932";
+  const primaryColor = appearance?.primary_color || "#0f7f6d";
+  const secondaryColor = appearance?.secondary_color || "#454545";
   const footerText = appearance?.footer_text || "© 2026 NextCMS. All rights reserved.";
 
   return (

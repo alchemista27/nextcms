@@ -28,7 +28,7 @@ export default function AdminError({
       <div className="flex items-center gap-4">
         <button
           onClick={reset}
-          className="px-6 py-2.5 bg-[#00704A] hover:bg-[#1E3932] text-white font-medium rounded-lg transition-colors"
+          className="px-6 py-2.5 bg-[#0f7f6d] hover:bg-[#454545] text-white font-medium rounded-lg transition-colors"
         >
           Try again
         </button>

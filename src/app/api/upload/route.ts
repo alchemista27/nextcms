@@ -1,13 +1,12 @@
 import { NextResponse } from "next/server";
-import { getServerSession } from "next-auth";
-import { authOptions } from "@/lib/auth";
-import { saveFile } from "@/lib/upload";
+import { getCurrentUser } from "@/lib/auth-guard";
+import cloudinary from "@/lib/cloudinary";
 import prisma from "@/lib/prisma";
 
 export async function POST(req: Request) {
   try {
-    const session = await getServerSession(authOptions);
-    if (!session?.user?.id) {
+    const user = await getCurrentUser();
+    if (!user) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
@@ -27,29 +26,57 @@ export async function POST(req: Request) {
         continue;
       }
       
-      const allowedTypes = ["image/jpeg", "image/png", "image/gif", "image/webp", "image/svg+xml", "video/mp4", "video/webm", "application/pdf", "application/msword", "application/vnd.openxmlformats-officedocument.wordprocessingml.document"];
+      const allowedTypes = ["image/jpeg", "image/png", "image/gif", "image/webp", "image/svg+xml"];
       if (!allowedTypes.includes(file.type)) {
-        results.push({ error: `File type ${file.type} is not allowed` });
+        results.push({ error: `File type ${file.type} is not allowed. Only images are supported.` });
         continue;
       }
       
-      const saved = await saveFile(file);
-      
-      const media = await prisma.media.create({
-        data: {
-          filename: saved.filename,
-          originalName: saved.originalName,
-          mimeType: saved.mimeType,
-          size: saved.size,
-          url: saved.url,
-          uploadedById: session.user.id,
-        },
-        include: {
-          uploadedBy: { select: { id: true, name: true } }
-        }
-      });
-      
-      results.push(media);
+      try {
+        const bytes = await file.arrayBuffer();
+        const buffer = Buffer.from(bytes);
+
+        const uploadResult = await new Promise((resolve, reject) => {
+          const uploadStream = cloudinary.uploader.upload_stream(
+            { folder: "alfida_cms" },
+            (error, result) => {
+              if (error) reject(error);
+              else resolve(result);
+            }
+          );
+          uploadStream.end(buffer);
+        }) as any;
+
+        const media = await prisma.media.create({
+          data: {
+            filename: uploadResult.public_id,
+            originalName: file.name,
+            mimeType: file.type,
+            size: uploadResult.bytes,
+            url: uploadResult.secure_url,
+            uploadedById: user.id,
+          },
+          include: {
+            uploadedBy: {
+              select: { id: true, sharedUser: { select: { full_name: true } } }
+            }
+          }
+        });
+
+        // Remap for the frontend
+        const { uploadedBy, ...rest } = media;
+        const mappedMedia = {
+          ...rest,
+          uploadedBy: uploadedBy ? {
+            id: uploadedBy.id,
+            name: uploadedBy.sharedUser?.full_name || "Unknown"
+          } : null
+        };
+        
+        results.push(mappedMedia);
+      } catch (err: any) {
+        results.push({ error: `Failed to upload ${file.name}: ${err.message}` });
+      }
     }
     
     const successful = results.filter((r) => !("error" in r));
@@ -60,9 +87,8 @@ export async function POST(req: Request) {
       data: successful,
       errors: failed,
     });
-    
-  } catch (error) {
-    console.error("Upload error:", error);
-    return NextResponse.json({ error: "Upload failed" }, { status: 500 });
+  } catch (error: any) {
+    console.error("Upload Error:", error);
+    return NextResponse.json({ error: error.message || "Internal server error" }, { status: 500 });
   }
 }

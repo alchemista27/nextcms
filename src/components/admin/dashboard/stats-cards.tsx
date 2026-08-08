@@ -51,7 +51,7 @@ export default function StatsCards({ stats }: StatsCardsProps) {
           <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6 flex items-center justify-between transition-shadow hover:shadow-md">
             <div>
               <p className="text-sm font-medium text-gray-500 mb-1">{card.label}</p>
-              <h3 className="text-3xl font-bold text-gray-900 group-hover:text-[#00704A] transition-colors">
+              <h3 className="text-3xl font-bold text-gray-900 group-hover:text-[#0f7f6d] transition-colors">
                 {card.value}
               </h3>
             </div>

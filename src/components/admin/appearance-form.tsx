@@ -25,8 +25,8 @@ export default function AppearanceForm({ initialData }: { initialData: Partial<A
       },
       logo: initialData.logo || "",
       favicon: initialData.favicon || "",
-      primary_color: initialData.primary_color || "#00704A",
-      secondary_color: initialData.secondary_color || "#1E3932",
+      primary_color: initialData.primary_color || "#0f7f6d",
+      secondary_color: initialData.secondary_color || "#454545",
       font_family: initialData.font_family || "Inter",
       header_style: initialData.header_style || "left-aligned",
       sidebar_position: initialData.sidebar_position || "right",
@@ -75,7 +75,7 @@ export default function AppearanceForm({ initialData }: { initialData: Partial<A
             <label className="text-sm font-medium text-gray-700">Active Theme</label>
             <select 
               {...register("active_theme")}
-              className="w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-[#00704A] focus:border-[#00704A] sm:text-sm"
+              className="w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-[#0f7f6d] focus:border-[#0f7f6d] sm:text-sm"
             >
               <option value="school-profile">School Profile</option>
               <option value="company-profile">Company Profile (Coming Soon)</option>
@@ -97,7 +97,7 @@ export default function AppearanceForm({ initialData }: { initialData: Partial<A
             <input 
               type="text" 
               {...register("footer_text")}
-              className="w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-[#00704A] focus:border-[#00704A] sm:text-sm"
+              className="w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-[#0f7f6d] focus:border-[#0f7f6d] sm:text-sm"
             />
           </div>
 
@@ -119,7 +119,7 @@ export default function AppearanceForm({ initialData }: { initialData: Partial<A
                 <input 
                   type="text" 
                   {...register("theme_school_profile.hero.title")}
-                  className="w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-[#00704A] focus:border-[#00704A] sm:text-sm"
+                  className="w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-[#0f7f6d] focus:border-[#0f7f6d] sm:text-sm"
                   placeholder="e.g. Welcome to SMA Antigravity"
                 />
               </div>
@@ -128,7 +128,7 @@ export default function AppearanceForm({ initialData }: { initialData: Partial<A
                 <textarea 
                   {...register("theme_school_profile.hero.subtitle")}
                   rows={3}
-                  className="w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-[#00704A] focus:border-[#00704A] sm:text-sm"
+                  className="w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-[#0f7f6d] focus:border-[#0f7f6d] sm:text-sm"
                   placeholder="e.g. Building the future leaders of tomorrow."
                 ></textarea>
               </div>
@@ -146,7 +146,7 @@ export default function AppearanceForm({ initialData }: { initialData: Partial<A
                 <textarea 
                   {...register("theme_school_profile.visionMission.vision")}
                   rows={3}
-                  className="w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-[#00704A] focus:border-[#00704A] sm:text-sm"
+                  className="w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-[#0f7f6d] focus:border-[#0f7f6d] sm:text-sm"
                 ></textarea>
               </div>
               <div className="space-y-2">
@@ -154,7 +154,7 @@ export default function AppearanceForm({ initialData }: { initialData: Partial<A
                 <textarea 
                   {...register("theme_school_profile.visionMission.missions")}
                   rows={4}
-                  className="w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-[#00704A] focus:border-[#00704A] sm:text-sm"
+                  className="w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-[#0f7f6d] focus:border-[#0f7f6d] sm:text-sm"
                   placeholder="Mission 1, Mission 2, Mission 3"
                 ></textarea>
               </div>
@@ -172,7 +172,7 @@ export default function AppearanceForm({ initialData }: { initialData: Partial<A
                 <input 
                   type="number" 
                   {...register("theme_school_profile.stats.students", { valueAsNumber: true })}
-                  className="w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-[#00704A] focus:border-[#00704A] sm:text-sm"
+                  className="w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-[#0f7f6d] focus:border-[#0f7f6d] sm:text-sm"
                 />
               </div>
               <div className="space-y-2">
@@ -180,7 +180,7 @@ export default function AppearanceForm({ initialData }: { initialData: Partial<A
                 <input 
                   type="number" 
                   {...register("theme_school_profile.stats.teachers", { valueAsNumber: true })}
-                  className="w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-[#00704A] focus:border-[#00704A] sm:text-sm"
+                  className="w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-[#0f7f6d] focus:border-[#0f7f6d] sm:text-sm"
                 />
               </div>
               <div className="space-y-2">
@@ -188,7 +188,7 @@ export default function AppearanceForm({ initialData }: { initialData: Partial<A
                 <input 
                   type="number" 
                   {...register("theme_school_profile.stats.awards", { valueAsNumber: true })}
-                  className="w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-[#00704A] focus:border-[#00704A] sm:text-sm"
+                  className="w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-[#0f7f6d] focus:border-[#0f7f6d] sm:text-sm"
                 />
               </div>
             </div>
@@ -201,7 +201,7 @@ export default function AppearanceForm({ initialData }: { initialData: Partial<A
         <button 
           type="submit" 
           disabled={isSaving}
-          className="inline-flex justify-center rounded-md border border-transparent bg-[#00704A] py-2 px-6 text-sm font-medium text-white shadow-sm hover:bg-[#1E3932] focus:outline-none focus:ring-2 focus:ring-[#00704A] focus:ring-offset-2 disabled:opacity-50"
+          className="inline-flex justify-center rounded-md border border-transparent bg-[#0f7f6d] py-2 px-6 text-sm font-medium text-white shadow-sm hover:bg-[#454545] focus:outline-none focus:ring-2 focus:ring-[#0f7f6d] focus:ring-offset-2 disabled:opacity-50"
         >
           {isSaving ? "Saving..." : "Save Changes"}
         </button>

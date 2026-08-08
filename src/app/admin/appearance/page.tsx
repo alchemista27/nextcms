@@ -21,7 +21,7 @@ export default async function AppearancePage() {
   return (
     <div className="p-6 max-w-6xl mx-auto">
       <div className="mb-8">
-        <h1 className="text-3xl font-bold text-[#1E3932] mb-2">Appearance Settings</h1>
+        <h1 className="text-3xl font-bold text-[#454545] mb-2">Appearance Settings</h1>
         <p className="text-gray-500">Configure your active theme and customize its settings.</p>
       </div>
 

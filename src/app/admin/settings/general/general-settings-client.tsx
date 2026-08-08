@@ -73,7 +73,7 @@ export default function GeneralSettingsClient({ initialSettings }: GeneralSettin
               name="site_title"
               value={formData.site_title}
               onChange={handleChange}
-              className="w-full border border-gray-300 rounded px-3 py-2 text-sm focus:outline-none focus:border-[#00704A]"
+              className="w-full border border-gray-300 rounded px-3 py-2 text-sm focus:outline-none focus:border-[#0f7f6d]"
             />
           </div>
         </div>
@@ -91,7 +91,7 @@ export default function GeneralSettingsClient({ initialSettings }: GeneralSettin
               name="site_tagline"
               value={formData.site_tagline}
               onChange={handleChange}
-              className="w-full border border-gray-300 rounded px-3 py-2 text-sm focus:outline-none focus:border-[#00704A]"
+              className="w-full border border-gray-300 rounded px-3 py-2 text-sm focus:outline-none focus:border-[#0f7f6d]"
             />
           </div>
         </div>
@@ -108,7 +108,7 @@ export default function GeneralSettingsClient({ initialSettings }: GeneralSettin
               name="site_url"
               value={formData.site_url}
               onChange={handleChange}
-              className="w-full border border-gray-300 rounded px-3 py-2 text-sm focus:outline-none focus:border-[#00704A]"
+              className="w-full border border-gray-300 rounded px-3 py-2 text-sm focus:outline-none focus:border-[#0f7f6d]"
             />
           </div>
         </div>
@@ -126,7 +126,7 @@ export default function GeneralSettingsClient({ initialSettings }: GeneralSettin
               name="admin_email"
               value={formData.admin_email}
               onChange={handleChange}
-              className="w-full border border-gray-300 rounded px-3 py-2 text-sm focus:outline-none focus:border-[#00704A]"
+              className="w-full border border-gray-300 rounded px-3 py-2 text-sm focus:outline-none focus:border-[#0f7f6d]"
             />
           </div>
         </div>
@@ -144,7 +144,7 @@ export default function GeneralSettingsClient({ initialSettings }: GeneralSettin
                 name="registration_open"
                 checked={formData.registration_open === "true"}
                 onChange={handleChange}
-                className="text-[#00704A] focus:ring-[#00704A] rounded"
+                className="text-[#0f7f6d] focus:ring-[#0f7f6d] rounded"
               />
               Anyone can register
             </label>
@@ -155,11 +155,10 @@ export default function GeneralSettingsClient({ initialSettings }: GeneralSettin
                 name="default_role"
                 value={formData.default_role}
                 onChange={handleChange}
-                className="w-full max-w-xs border border-gray-300 rounded px-3 py-2 text-sm focus:outline-none focus:border-[#00704A]"
+                className="w-full max-w-xs border border-gray-300 rounded px-3 py-2 text-sm focus:outline-none focus:border-[#0f7f6d]"
               >
                 <option value="SUBSCRIBER">Subscriber</option>
-                <option value="AUTHOR">Author</option>
-                <option value="EDITOR">Editor</option>
+                <option value="CONTRIBUTOR">Contributor</option>
               </select>
             </div>
           </div>
@@ -180,7 +179,7 @@ export default function GeneralSettingsClient({ initialSettings }: GeneralSettin
                 value={formData.posts_per_page}
                 onChange={handleChange}
                 min="1"
-                className="w-20 border border-gray-300 rounded px-3 py-2 text-sm focus:outline-none focus:border-[#00704A]"
+                className="w-20 border border-gray-300 rounded px-3 py-2 text-sm focus:outline-none focus:border-[#0f7f6d]"
               />
               <span className="text-sm text-gray-600">posts</span>
             </div>
@@ -193,7 +192,7 @@ export default function GeneralSettingsClient({ initialSettings }: GeneralSettin
         <button 
           onClick={handleSave} 
           disabled={isPending}
-          className="px-6 py-2 bg-[#00704A] text-white text-sm font-medium rounded hover:bg-[#1E3932] disabled:opacity-50"
+          className="px-6 py-2 bg-[#0f7f6d] text-white text-sm font-medium rounded hover:bg-[#454545] disabled:opacity-50"
         >
           {isPending ? "Saving..." : "Save Changes"}
         </button>

@@ -1,8 +1,7 @@
 import { getRevisions } from "@/actions/revision";
 import { notFound } from "next/navigation";
 import RevisionClient from "./revision-client";
-import { getServerSession } from "next-auth/next";
-import { authOptions } from "@/lib/auth";
+import { getCurrentUser } from "@/lib/auth-guard";
 
 interface RevisionsPageProps {
   params: { entityType: string; entityId: string };
@@ -10,9 +9,9 @@ interface RevisionsPageProps {
 
 export default async function RevisionsPage({ params }: RevisionsPageProps) {
   const { entityType, entityId } = params;
-  const session = await getServerSession(authOptions);
+  const user = await getCurrentUser();
   
-  if (!session?.user?.id) {
+  if (!user) {
     return null;
   }
 
@@ -46,7 +45,7 @@ export default async function RevisionsPage({ params }: RevisionsPageProps) {
         revisions={revisions} 
         entityType={entityType} 
         entityId={entityId} 
-        authorId={session.user.id} 
+        authorId={user.id} 
       />
     </div>
   );
