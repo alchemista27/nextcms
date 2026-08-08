@@ -36,7 +36,7 @@ export async function getRecentPosts() {
       orderBy: { createdAt: "desc" },
       include: { author: { select: { id: true, sharedUser: { select: { full_name: true } } } } }
     });
-    const mappedPosts = posts.map(p => {
+    const mappedPosts = posts.map((p: any) => {
       const { author, ...rest } = p;
       return {
         ...rest,
