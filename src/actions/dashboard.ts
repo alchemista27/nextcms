@@ -91,11 +91,11 @@ export async function getChartData() {
     }
 
     // Populate data
-    posts.forEach(post => {
+    posts.forEach((post: any) => {
       const postMonth = post.createdAt.getMonth();
       const postYear = post.createdAt.getFullYear();
       
-      const dataPoint = chartData.find(d => d.month === postMonth && d.year === postYear);
+      const dataPoint = chartData.find((d: any) => d.month === postMonth && d.year === postYear);
       if (dataPoint) {
         dataPoint.posts += 1;
       }
@@ -119,7 +119,7 @@ export async function getActivityLog() {
     });
 
     const combined = [
-      ...recentPosts.map(p => ({ ...p, entityType: "Post" }))
+      ...recentPosts.map((p: any) => ({ ...p, entityType: "Post" }))
     ]
       .sort((a, b) => b.updatedAt.getTime() - a.updatedAt.getTime())
       .slice(0, 10);

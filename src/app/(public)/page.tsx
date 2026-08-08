@@ -32,7 +32,7 @@ export default async function PublicHomePage() {
   ]);
 
   // Format news author data to match the component's expectation
-  const formattedNews = news.map(post => ({
+  const formattedNews = news.map((post: any) => ({
     ...post,
     author: {
       user_metadata: {
