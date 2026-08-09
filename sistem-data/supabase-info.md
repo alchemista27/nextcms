@@ -1,2 +1,0 @@
-DATABASE_URL="postgresql://postgres.flwnqyfdsiqcaqiqegol:AFtvDRYbmAInYSd9@aws-0-ap-northeast-2.pooler.supabase.com:6543/postgres?pgbouncer=true&schema=cms"
-DIRECT_URL="postgresql://postgres.flwnqyfdsiqcaqiqegol:AFtvDRYbmAInYSd9@aws-0-ap-northeast-2.pooler.supabase.com:5432/postgres?schema=cms"
