@@ -1,89 +1,110 @@
-# 🚀 SIM Alfida (Sistem Informasi Manajemen Yayasan Alfida)
+# Alfida CMS
 
-**SIM Alfida** adalah Content Management System (CMS) modern yang dibangun secara khusus untuk mengelola portal informasi Yayasan Pendidikan Alfida. Dibangun dengan framework **Next.js 14 (App Router)**, **Supabase**, dan **Cloudinary**, sistem ini menyediakan antarmuka manajemen konten yang cepat, aman, dan dirancang secara khusus untuk memenuhi kebutuhan yayasan.
-
----
-
-## ✨ Fitur Utama
-
-- **Desain Khusus Alfida**: UI/UX yang diimplementasikan secara spesifik mengikuti panduan desain resmi Yayasan Alfida (`docs/DESIGN.md`), menggunakan skema warna yang elegan (Primary: `#454545`, Secondary: `#06bfa2`, Tertiary: `#0f7f6d`).
-- **Manajemen Konten Terstruktur**: Pengelolaan data yang dirancang khusus untuk entitas yayasan, seperti Artikel/Berita (Posts), Galeri Kegiatan, Profil Tim/Guru, dan Testimoni.
-- **Media Storage Cloud**: Integrasi mulus dengan **Cloudinary** untuk penyimpanan aset gambar yang cepat, teroptimasi, dan handal.
-- **Database Scalable**: Didukung oleh arsitektur **Supabase PostgreSQL** untuk manajemen data dan otentikasi.
-- **Role-Based Access Control (RBAC)**: Pembagian peran pengguna (Admin, Editor, Author, dll) yang aman.
-
-## 🛠️ Tech Stack
-
-- **Framework**: Next.js 14 (App Router), React, TypeScript
-- **Database & Backend**: Supabase (PostgreSQL)
-- **ORM**: Prisma
-- **Storage**: Cloudinary
-- **Styling**: Tailwind CSS & shadcn/UI
-- **Forms & Validation**: React Hook Form + Zod
-- **Rich Text Editor**: TipTap
-
----
-
-## 🚀 Memulai (Getting Started)
-
-### Prasyarat
-- Node.js versi 18.x atau lebih baru
-- Akun Supabase (untuk database)
-- Akun Cloudinary (untuk storage media)
-
-### 1. Kloning Repositori & Instalasi
-```bash
-git clone <repository-url> nextcms
-cd nextcms
-npm install
-```
-
-### 2. Konfigurasi Environment Variables
-Buat file `.env` di root direktori berdasarkan `.env.example`, lalu isi dengan kredensial Anda:
-
-```env
-# Supabase PostgreSQL connection
-DATABASE_URL="postgresql://postgres.[YOUR-SUPABASE-ID]:[YOUR-PASSWORD]@aws-0-ap-southeast-1.pooler.supabase.com:6543/postgres"
-DIRECT_URL="postgresql://postgres.[YOUR-SUPABASE-ID]:[YOUR-PASSWORD]@aws-0-ap-southeast-1.pooler.supabase.com:5432/postgres"
-
-# NextAuth
-NEXTAUTH_SECRET="your-super-secret-key"
-NEXTAUTH_URL="http://localhost:3000"
-
-# Cloudinary Storage
-CLOUDINARY_CLOUD_NAME="your-cloud-name"
-CLOUDINARY_API_KEY="your-api-key"
-CLOUDINARY_API_SECRET="your-api-secret"
-```
-
-### 3. Setup Database (Supabase)
-Jalankan perintah prisma untuk menyingkronkan skema ke database Supabase:
-```bash
-npx prisma generate
-npx prisma db push
-```
-
-*(Opsional)* Anda dapat menjalankan seed untuk mengisi data awal:
-```bash
-npx prisma db seed
-```
-
-### 4. Jalankan Development Server
-```bash
-npm run dev
-```
-Aplikasi dapat diakses di `http://localhost:3000`. Dasbor admin berada di `http://localhost:3000/admin`.
+Sebuah Content Management System (CMS) khusus yang dikembangkan untuk lingkungan Yayasan Alfida Bengkulu. Proyek ini ditujukan untuk mengelola profil yayasan dan unit pendidikan yang ada di lingkungan Yayasan Alfida, dengan integrasi otentikasi tersentralisasi (SIM).
 
 ---
 
 ## 📚 Dokumentasi
 
-Dokumentasi detail mengenai arsitektur, fitur, dan skema database terdapat di folder `/docs`:
-- [`PRD.md`](./docs/PRD.md) - Product Requirements Document
-- [`TDD.md`](./docs/TDD.md) - Technical Design Document (Arsitektur & Supabase/Cloudinary)
-- [`DESIGN.md`](./docs/DESIGN.md) - Panduan Sistem Desain Alfida
-- [`db-scheme.md`](./docs/db-scheme.md) - Skema struktur database relasional
-- [`sprint-plan.md`](./docs/sprint-plan.md) - Rencana dan pelacakan sprint
+Dokumentasi lengkap proyek dapat ditemukan di direktori `docs/`:
+
+1. **[Product Requirements Document (PRD)](./docs/PRD.md)**: Spesifikasi kebutuhan fungsional dan non-fungsional.
+2. **[Technical Design Document (TDD)](./docs/TDD.md)**: Arsitektur sistem, struktur routing, integrasi eksternal, dan standar penulisan kode.
+3. **[Database Schema](./docs/db-schema.md)**: Dokumentasi lengkap skema database Prisma (Multi-schema: `cms` & `shared`), relasi, dan enumerasi.
+4. **[Sprint Plan](./docs/sprint-plan.md)**: Timeline pengembangan dan pembagian tugas per sprint.
+5. **[Development Log](./docs/log.md)**: Catatan histori pengembangan.
+
+### 🎨 UI Mockups
+- **[Admin Wireframes](./docs/ui-wireframe/index.html)**
+- **[Public Frontend (School Profile)](./docs/ui/school-profile/index.html)**
+
+*(Buka file `index.html` di browser untuk melihat preview desain)*
 
 ---
-© 2026 Yayasan Pendidikan Alfida & NextCMS Development Team.
+
+## 🛠️ Stack Teknologi
+
+- **Framework**: Next.js 15 (React · App Router)
+- **Styling**: Tailwind CSS v4 (CSS-based theme, referensi: `DESIGN.md`)
+- **Database & Auth**: Supabase (PostgreSQL & Supabase Auth SSR)
+- **ORM**: Prisma 6.x (Fitur Multi-Schema)
+- **Storage**: Cloudinary (Image & PDF storage)
+- **Editor**: TipTap (Rich Text Editor)
+- **Validation**: Zod
+- **Icons**: Material UI Icons (Google)
+
+---
+
+## ⚙️ Persyaratan Sistem
+
+- Node.js >= 18.17.0
+- pnpm >= 8.x
+- Akun Supabase (Database & Auth)
+- Akun Cloudinary (Media Storage)
+
+---
+
+## 🚀 Panduan Setup (Local Development)
+
+### 1. Instalasi Dependensi
+Gunakan `pnpm` untuk menginstal dependensi:
+```bash
+pnpm install
+```
+
+### 2. Konfigurasi Environment
+Salin file template `.env` dan sesuaikan nilainya:
+```bash
+cp .env.example .env.local
+```
+*(Isi kredensial Supabase dan Cloudinary pada `.env.local`)*
+
+### 3. Setup Database (Prisma)
+Proyek ini menggunakan fitur multi-schema Prisma. Jalankan migrasi:
+```bash
+pnpm prisma generate
+pnpm prisma db push
+```
+
+### 4. Menjalankan Development Server
+```bash
+pnpm dev
+```
+Buka [http://localhost:3000](http://localhost:3000) di browser Anda.
+
+---
+
+## 📁 Struktur Direktori Utama
+
+```
+├── src/
+│   ├── app/           # Next.js App Router (Public & Admin Routes)
+│   ├── components/    # Reusable React Components (Admin & Public)
+│   ├── lib/           # Konfigurasi Prisma, Supabase, Cloudinary
+│   ├── middleware.ts  # Supabase Auth Middleware
+│   └── validators/    # Zod Schemas untuk form validation
+├── docs/              # Dokumentasi proyek & referensi UI
+├── prisma/            # Skema database Prisma
+├── sistem-data/       # Info kredensial (gitignored)
+```
+
+---
+
+## 🧑‍💻 Konvensi Pengembangan
+
+Panduan ini wajib diikuti oleh seluruh agen AI dan *developer*:
+
+- **TypeScript Strict**: Gunakan TypeScript untuk semua file baru. Hindari `any`.
+- **Formatting**: *Auto-format* menggunakan Prettier, linting menggunakan ESLint.
+- **Styling**: Gunakan Tailwind CSS. Ekstrak ke komponen jika pola berulang > 3 kali.
+- **Commits**: Gunakan format *Conventional Commits* (`feat:`, `fix:`, `chore:`, dll).
+- **Security**: 
+  - Tidak boleh commit kunci API atau secret ke dalam *repository*.
+  - Semua API routes dan Server Actions wajib memvalidasi autentikasi & peran (role) di *server-side*.
+  - Gunakan Zod untuk memvalidasi *request payload*.
+
+Selengkapnya baca di **[AGENTS.md](./AGENTS.md)**.
+
+---
+
+*Dikembangkan untuk Yayasan Alfida Bengkulu.*

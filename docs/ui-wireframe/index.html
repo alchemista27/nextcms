@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Alfida CMS — Admin Dashboard Wireframes</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Roboto:wght@700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #454545;
+      --secondary: #06bfa2;
+      --tertiary: #0f7f6d;
+      --neutral: #F7F8F8;
+      --surface: #FFFFFF;
+      --on-tertiary: #F7F8F8;
+      --border: #E3E8E7;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--neutral);
+      color: var(--primary);
+      min-height: 100vh;
+    }
+
+    .header {
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      padding: 32px 0;
+      text-align: center;
+    }
+
+    .header h1 {
+      font-family: 'Roboto', sans-serif;
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--primary);
+      margin-bottom: 8px;
+    }
+
+    .header p {
+      color: #6B7280;
+      font-size: 1rem;
+    }
+
+    .header .badge {
+      display: inline-block;
+      background: var(--tertiary);
+      color: var(--on-tertiary);
+      padding: 4px 12px;
+      border-radius: 4px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      margin-top: 12px;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 40px 24px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      gap: 20px;
+    }
+
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 24px;
+      text-decoration: none;
+      color: var(--primary);
+      transition: all 0.2s ease;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .card:hover {
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+      border-color: var(--tertiary);
+      transform: translateY(-2px);
+    }
+
+    .card .icon {
+      width: 48px;
+      height: 48px;
+      background: var(--neutral);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .card:hover .icon {
+      background: var(--tertiary);
+    }
+
+    .card .icon .material-symbols-outlined {
+      font-size: 24px;
+      color: var(--tertiary);
+    }
+
+    .card:hover .icon .material-symbols-outlined {
+      color: var(--on-tertiary);
+    }
+
+    .card h3 {
+      font-family: 'Roboto', sans-serif;
+      font-weight: 700;
+      font-size: 1rem;
+    }
+
+    .card p {
+      font-size: 0.875rem;
+      color: #6B7280;
+      line-height: 1.5;
+    }
+
+    .footer {
+      text-align: center;
+      padding: 32px 24px;
+      color: #6B7280;
+      font-size: 0.875rem;
+      border-top: 1px solid var(--border);
+      margin-top: 40px;
+    }
+
+    .footer a {
+      color: var(--tertiary);
+      text-decoration: none;
+    }
+
+    .footer a:hover {
+      text-decoration: underline;
+    }
+
+    @media (max-width: 640px) {
+      .grid {
+        grid-template-columns: 1fr;
+      }
+      .header h1 {
+        font-size: 1.5rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <h1>Alfida CMS — Admin Dashboard</h1>
+    <p>Wireframe mockup halaman admin dashboard</p>
+    <span class="badge">11 Halaman</span>
+  </div>
+
+  <div class="container">
+    <div class="grid">
+      <a href="login.html" class="card">
+        <div class="icon"><span class="material-symbols-outlined">login</span></div>
+        <h3>Login</h3>
+        <p>Halaman login admin</p>
+      </a>
+
+      <a href="dashboard.html" class="card">
+        <div class="icon"><span class="material-symbols-outlined">dashboard</span></div>
+        <h3>Dashboard</h3>
+        <p>Overview statistik dan quick actions</p>
+      </a>
+
+      <a href="post-list.html" class="card">
+        <div class="icon"><span class="material-symbols-outlined">article</span></div>
+        <h3>Posts</h3>
+        <p>Daftar post / berita</p>
+      </a>
+
+      <a href="post-editor.html" class="card">
+        <div class="icon"><span class="material-symbols-outlined">edit_note</span></div>
+        <h3>Post Editor</h3>
+        <p>Rich text editor (TipTap)</p>
+      </a>
+
+      <a href="categories.html" class="card">
+        <div class="icon"><span class="material-symbols-outlined">category</span></div>
+        <h3>Categories</h3>
+        <p>Manajemen kategori</p>
+      </a>
+
+      <a href="tags.html" class="card">
+        <div class="icon"><span class="material-symbols-outlined">label</span></div>
+        <h3>Tags</h3>
+        <p>Manajemen tags</p>
+      </a>
+
+      <a href="media-library.html" class="card">
+        <div class="icon"><span class="material-symbols-outlined">perm_media</span></div>
+        <h3>Media Library</h3>
+        <p>Upload &amp; kelola media Cloudinary</p>
+      </a>
+
+      <a href="menus.html" class="card">
+        <div class="icon"><span class="material-symbols-outlined">menu</span></div>
+        <h3>Menus</h3>
+        <p>Pengaturan menu navigasi</p>
+      </a>
+
+      <a href="settings-general.html" class="card">
+        <div class="icon"><span class="material-symbols-outlined">settings</span></div>
+        <h3>Settings</h3>
+        <p>Pengaturan umum yayasan</p>
+      </a>
+
+      <a href="users.html" class="card">
+        <div class="icon"><span class="material-symbols-outlined">group</span></div>
+        <h3>Users</h3>
+        <p>Manajemen user &amp; role</p>
+      </a>
+
+      <a href="revisions.html" class="card">
+        <div class="icon"><span class="material-symbols-outlined">history</span></div>
+        <h3>Revisions</h3>
+        <p>Riwayat revisi konten</p>
+      </a>
+    </div>
+  </div>
+
+  <div class="footer">
+    <p>Alfida CMS &mdash; Yayasan Alfida Bengkulu &bull; Referensi: <a href="../../DESIGN.md">DESIGN.md</a></p>
+  </div>
+</body>
+</html>

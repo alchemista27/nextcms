@@ -14,7 +14,7 @@
             theme: {
                 extend: {
                     fontFamily: { sans: ['Inter', 'sans-serif'] },
-                    colors: { primary: '#00704A', secondary: '#1E3932', accent: '#D4E9E2', graylight: '#F8F9FA' }
+                    colors: { primary: '#0f7f6d', secondary: '#454545', accent: '#E3E8E7', graylight: '#F7F8F8' }
                 }
             }
         }
@@ -26,10 +26,10 @@
         .fade-in-section.is-visible { opacity: 1; transform: none; }
         .contact-card { transition: all 0.3s ease; }
         .contact-card:hover { transform: translateY(-8px); box-shadow: 0 20px 40px rgba(0,0,0,0.08); }
-        .contact-card:hover .contact-icon { background-color: #00704A; color: white; transform: scale(1.1) rotate(10deg); }
+        .contact-card:hover .contact-icon { background-color: #0f7f6d; color: white; transform: scale(1.1) rotate(10deg); }
         .contact-icon { transition: all 0.35s ease; }
         .form-input { transition: border-color 0.25s, box-shadow 0.25s; }
-        .form-input:focus { outline: none; border-color: #00704A; box-shadow: 0 0 0 3px rgba(0,112,74,0.15); }
+        .form-input:focus { outline: none; border-color: #0f7f6d; box-shadow: 0 0 0 3px rgba(0,112,74,0.15); }
     </style>
 </head>
 <body class="bg-graylight antialiased">
@@ -114,7 +114,7 @@
                 </div>
                 <!-- Fake map grid overlay -->
                 <div class="absolute inset-0 opacity-5">
-                    <svg width="100%" height="100%"><defs><pattern id="mapgrid" width="40" height="40" patternUnits="userSpaceOnUse"><path d="M 40 0 L 0 0 0 40" fill="none" stroke="#1E3932" stroke-width="1"/></pattern></defs><rect width="100%" height="100%" fill="url(#mapgrid)"/></svg>
+                    <svg width="100%" height="100%"><defs><pattern id="mapgrid" width="40" height="40" patternUnits="userSpaceOnUse"><path d="M 40 0 L 0 0 0 40" fill="none" stroke="#454545" stroke-width="1"/></pattern></defs><rect width="100%" height="100%" fill="url(#mapgrid)"/></svg>
                 </div>
                 <!-- Map pin -->
                 <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex flex-col items-center">

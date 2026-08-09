@@ -19,3 +19,16 @@
   - Menerjemahkan *wireframe* `home.html` menjadi kumpulan komponen React statis yang dinamis (mengambil data *live* dari database) seperti *Hero*, *Info Boxes*, *About*, *Stats*, *Teachers*, *Gallery*, *Testimonial*, *News*, dan *CTA*.
   - Melakukan kompilasi (*build*) untuk memastikan kode bebas error dari *type-checker* dan `eslint`.
 - **Commit Message**: `feat: complete sprint 8 testimonials and public routes`
+
+---
+
+- **Tanggal**: 9 Agustus 2026
+- **Progress**:
+  - Menyusun dokumen **PRD.md** (Product Requirements Document) berdasarkan `AGENTS.md`, `DESIGN.md`, dan `PROJECTS.md` — mencakup 30+ kebutuhan fungsional dengan ID dan prioritas (P0/P1).
+  - Menyusun dokumen **TDD.md** (Technical Design Document) berdasarkan PRD dan analisis langsung terhadap codebase — mencakup arsitektur, ER diagram, routing, data layer, media storage, SEO, security, dan dependency graph.
+  - Mengupdate TDD.md dengan route structure lengkap dari *build manifest* (`.next/`), termasuk route baru: `appearance`, `profile`, `revisions`, `settings/*` (general, permalinks, seo), `theme/school-profile/*`, dan full CRUD routes untuk gallery/team/testimonials/users.
+  - Menyusun dokumen **db-schema.md** berdasarkan Prisma schema aktual dari *build artifact* (`prisma_schema.prisma`) — mendokumentasikan 17 tabel, relasi, enum, dan mapping Prisma-ke-DB secara lengkap. Menemukan 5 model baru yang belum terdokumentasi: `GalleryAlbum`, `Menu`, `MenuItem`, `Revision`, `ThemeSection`.
+  - Melakukan *bulk replace* warna pada **24 file HTML mockup** di `docs/ui-wireframe/` (12 file) dan `docs/ui/school-profile/` (12 file) — mengganti warna lama (`#00704A`, `#1E3932`, `#CBA258`, dll.) dengan warna sesuai `DESIGN.md` (`#0f7f6d`, `#454545`, `#06bfa2`, dll.).
+  - Membuat halaman **index.html** di `docs/ui-wireframe/` dan `docs/ui/school-profile/` sebagai navigasi hub untuk mempermudah preview mockup di browser.
+  - Menghapus referensi halaman **Register** dari index wireframe dan dokumen PRD/TDD karena registrasi user dilakukan di SIM (auth sharing via schema `shared`).
+- **Commit Message**: `docs: create PRD, TDD, db-schema, sync UI mockup colors with DESIGN.md, add index pages`

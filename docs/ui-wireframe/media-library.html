@@ -8,9 +8,9 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
     <style>
         :root {
-            --primary: #00704A; --primary-dark: #1E3932; --bg: #F3F4F6;
-            --surface: #FFFFFF; --text-primary: #111827; --text-secondary: #6B7280;
-            --border: #E5E7EB; --danger: #DC2626; --sidebar-width: 260px; --header-height: 64px;
+            --primary: #0f7f6d; --primary-dark: #454545; --bg: #F7F8F8;
+            --surface: #FFFFFF; --text-primary: #454545; --text-secondary: #6B7280;
+            --border: #E3E8E7; --danger: #DC2626; --sidebar-width: 260px; --header-height: 64px;
         }
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
         body { background-color: var(--bg); color: var(--text-primary); display: flex; min-height: 100vh; overflow: hidden; }
@@ -33,7 +33,7 @@
         
         .view-toggles { display: flex; border: 1px solid var(--border); border-radius: 6px; overflow: hidden; }
         .view-toggle { background: white; border: none; padding: 6px 12px; cursor: pointer; color: var(--text-secondary); display: flex; align-items: center; justify-content: center; }
-        .view-toggle.active { background: #E5E7EB; color: var(--text-primary); }
+        .view-toggle.active { background: #E3E8E7; color: var(--text-primary); }
 
         .content-area { flex: 1; display: flex; overflow: hidden; }
         .media-main { flex: 1; padding: 24px; overflow-y: auto; display: flex; flex-direction: column; }
@@ -51,7 +51,7 @@
         .media-item.selected { border-color: var(--primary); box-shadow: 0 0 0 2px var(--primary); }
         .media-item.selected::after { content: 'check_circle'; font-family: 'Material Icons Outlined'; position: absolute; top: 8px; right: 8px; color: var(--primary); background: white; border-radius: 50%; font-size: 20px; line-height: 20px;}
         
-        .media-thumb { aspect-ratio: 1; background-color: #E5E7EB; display: flex; align-items: center; justify-content: center; font-size: 48px; color: #9CA3AF; }
+        .media-thumb { aspect-ratio: 1; background-color: #E3E8E7; display: flex; align-items: center; justify-content: center; font-size: 48px; color: #9CA3AF; }
         /* Simulated images using gradients for wireframe */
         .img-1 { background: linear-gradient(45deg, #f3ec78, #af4261); }
         .img-2 { background: linear-gradient(45deg, #2193b0, #6dd5ed); }
