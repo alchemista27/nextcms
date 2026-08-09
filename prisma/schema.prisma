@@ -1,0 +1,175 @@
+generator client {
+  provider        = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  schemas   = ["cms", "shared"]
+}
+
+// ========================
+// Enums (match DB actual)
+// ========================
+
+enum Role {
+  ADMIN
+  CONTRIBUTOR
+  SUBSCRIBER
+
+  @@schema("cms")
+}
+
+enum PostStatus {
+  DRAFT
+  PUBLISHED
+  PENDING
+  TRASH
+
+  @@schema("cms")
+}
+
+// ========================
+// Shared Schema
+// ========================
+
+model SharedUser {
+  id        String    @id @db.Uuid
+  email     String    @unique
+  fullName  String?   @map("full_name")
+  phone     String?
+  isActive  Boolean?  @default(true) @map("is_active")
+  createdAt DateTime? @map("created_at")
+  updatedAt DateTime? @map("updated_at")
+
+  cmsUser   CmsUser?
+
+  @@map("users")
+  @@schema("shared")
+}
+
+// ========================
+// CMS Schema
+// ========================
+
+/// CMS user — directly tied to shared.users by id (same UUID)
+model CmsUser {
+  id           String    @id @db.Uuid
+  role         Role      @default(CONTRIBUTOR)
+  avatar       String?
+  bio          String?
+  createdAt    DateTime  @default(now()) @map("createdAt")
+  updatedAt    DateTime  @updatedAt @map("updatedAt")
+
+  sharedUser   SharedUser @relation(fields: [id], references: [id], onDelete: Cascade)
+  posts        Post[]
+  media        Media[]
+
+  @@map("users")
+  @@schema("cms")
+}
+
+model Post {
+  id              String     @id
+  title           String
+  slug            String     @unique
+  content         String?
+  excerpt         String?
+  status          PostStatus @default(DRAFT)
+  featuredImage   String?
+  metaTitle       String?
+  metaDescription String?
+  ogImage         String?
+  publishedAt     DateTime?
+  createdAt       DateTime   @default(now()) @map("createdAt")
+  updatedAt       DateTime   @updatedAt @map("updatedAt")
+  authorId        String     @db.Uuid
+
+  author       CmsUser      @relation(fields: [authorId], references: [id])
+  categories   Category[]   @relation("_PostCategories")
+  tags         Tag[]        @relation("_PostTags")
+
+  @@map("posts")
+  @@schema("cms")
+}
+
+model Category {
+  id          String    @id
+  name        String
+  slug        String    @unique
+  description String?
+  parentId    String?
+  createdAt   DateTime  @default(now()) @map("createdAt")
+  updatedAt   DateTime  @updatedAt @map("updatedAt")
+
+  posts       Post[]    @relation("_PostCategories")
+
+  @@map("categories")
+  @@schema("cms")
+}
+
+model Tag {
+  id        String    @id
+  name      String
+  slug      String    @unique
+  createdAt DateTime  @default(now()) @map("createdAt")
+  updatedAt DateTime  @updatedAt @map("updatedAt")
+
+  posts     Post[]    @relation("_PostTags")
+
+  @@map("tags")
+  @@schema("cms")
+}
+
+model Media {
+  id           String   @id
+  filename     String
+  originalName String
+  mimeType     String
+  size         Int
+  url          String
+  alt          String?
+  caption      String?
+  uploadedById String   @db.Uuid
+  createdAt    DateTime @default(now()) @map("createdAt")
+  updatedAt    DateTime @updatedAt @map("updatedAt")
+
+  uploadedBy   CmsUser  @relation(fields: [uploadedById], references: [id])
+
+  @@map("media")
+  @@schema("cms")
+}
+
+model TeamMember {
+  id        String   @id
+  name      String
+  position  String
+  bio       String?
+  photoUrl  String?
+  order     Int      @default(0)
+  createdAt DateTime @default(now()) @map("createdAt")
+  updatedAt DateTime @updatedAt @map("updatedAt")
+
+  @@map("team_members")
+  @@schema("cms")
+}
+
+model GalleryImage {
+  id          String   @id
+  title       String?
+  description String?
+  url         String
+  category    String?
+  createdAt   DateTime @default(now()) @map("createdAt")
+  updatedAt   DateTime @updatedAt @map("updatedAt")
+
+  @@map("gallery_images")
+  @@schema("cms")
+}
+
+model SiteSetting {
+  key       String  @id
+  value     String?
+
+  @@map("site_settings")
+  @@schema("cms")
+}

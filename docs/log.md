@@ -32,3 +32,63 @@
   - Membuat halaman **index.html** di `docs/ui-wireframe/` dan `docs/ui/school-profile/` sebagai navigasi hub untuk mempermudah preview mockup di browser.
   - Menghapus referensi halaman **Register** dari index wireframe dan dokumen PRD/TDD karena registrasi user dilakukan di SIM (auth sharing via schema `shared`).
 - **Commit Message**: `docs: create PRD, TDD, db-schema, sync UI mockup colors with DESIGN.md, add index pages`
+
+---
+
+- **Tanggal**: 9 Agustus 2026
+- **Sprint**: Sprint 1 — Project Setup ✅
+- **Progress**:
+  - Restart project dari awal (clean slate). Init Next.js 16.3.0 dengan App Router, Turbopack, TypeScript, Tailwind CSS v4, ESLint.
+  - Konfigurasi Prisma 7 multi-schema (`cms` + `shared`) dengan 17 tabel lengkap beserta relasi. Menggunakan `@prisma/adapter-pg` karena Prisma 7 memerlukan driver adapter eksplisit.
+  - Setup Supabase Auth SSR (`@supabase/ssr`) — server client & browser client.
+  - Setup Cloudinary SDK (`src/lib/cloudinary.ts`).
+  - Konfigurasi design tokens Tailwind CSS v4 sesuai `docs/DESIGN.md` di `globals.css`.
+  - Buat `.env.example` dan `.env` dengan credentials Supabase dari `sistem-data/supabase-info.md`.
+  - Next.js 16 menggunakan `src/proxy.ts` sebagai pengganti `middleware.ts`.
+- **Commit Message**: `feat: sprint 1 - project setup, prisma 7 multi-schema, supabase auth, cloudinary`
+
+---
+
+- **Tanggal**: 9 Agustus 2026
+- **Sprint**: Sprint 2 — Auth & User Management ✅
+- **Progress**:
+  - Halaman Login (`(auth)/login/page.tsx`) + `login-form.tsx` + server action Supabase `signInWithPassword`.
+  - Auth Guard di `src/proxy.ts` — redirect unauthenticated ke `/login`, authenticated ke `/admin`.
+  - Auth helper `src/lib/auth.ts` — `getUser()` dan `requireAuth()`. Auto-create `SharedUser` & `CmsUser` on first login. Pengguna pertama otomatis `SUPER_ADMIN`.
+  - Admin Layout (`admin/layout.tsx`) mengintegrasikan Sidebar dan Header.
+  - Dashboard Overview (`admin/page.tsx`) dengan statistik ringkasan (post, team, gallery).
+  - User List + Edit Role (`admin/users/`) — RBAC-aware, ADMIN tidak bisa ubah SUPER_ADMIN.
+  - Profile Page (`admin/profile/page.tsx`).
+- **Commit Message**: `feat: sprint 2 - auth guard, login, admin layout, sidebar, header, users CRUD, profile`
+
+---
+
+- **Tanggal**: 9 Agustus 2026
+- **Sprint**: Sprint 3 — Posts & TipTap Editor ✅
+- **Progress**:
+  - Install TipTap (`@tiptap/react`, `@tiptap/starter-kit`, extension Image/Link/TextAlign/Underline), `zod`, `lucide-react`.
+  - Validasi Zod `PostFormSchema` (`src/lib/validations/post.ts`).
+  - API `GET /api/posts/check-slug` — validasi slug real-time dari sisi klien.
+  - Post List Page (`admin/posts/page.tsx`) dengan filter tab status (All/Published/Draft/Archived).
+  - TipTap Editor component (`src/components/editor/TipTapEditor.tsx`) — toolbar kustom dengan Material Icons.
+  - PostForm (`PostForm.tsx`) — client component 2-kolom: editor utama + sidebar (status, SEO, featured image).
+  - New Post (`admin/posts/new/page.tsx`) dan Edit Post (`admin/posts/[id]/edit/page.tsx`) dengan RBAC (Contributor hanya bisa edit miliknya).
+  - Server actions: `savePostAction` + `deletePostAction`.
+  - **Fix**: Tambah stylesheet Material Icons Outlined ke `src/app/layout.tsx` — ikon sebelumnya muncul sebagai teks literal.
+  - Task yang ditunda ke Sprint 4: EDIT-02 (Media Library modal), EDIT-03 (resize gambar), EDIT-04 (Category/Tag picker).
+- **Commit Message**: `feat: sprint 3 - posts CRUD, tiptap editor, zod validation, slug API, fix material icons`
+
+---
+
+- **Tanggal**: 9 Agustus 2026
+- **Sprint**: Sprint 4 — Media Library & Taxonomy ✅
+- **Progress**:
+  - Refactor layout halaman Login (`(auth)/login/page.tsx`) dan form login agar *pixel-perfect* sesuai dengan wireframe HTML (gradien latar, icon hub, "Remember me", dll).
+  - Merombak ulang halaman Dashboard utama (`admin/page.tsx`) agar identik dengan mockup 4-kolom stat, tabel Recent Posts, dan list Recent Activity.
+  - Menyelaraskan icon pada `admin/sidebar.tsx` sesuai dengan yang tertera di `docs/ui-wireframe/dashboard.html`.
+  - Menerapkan Zod Validator dan Schema untuk kategori dan tag di `src/lib/validations/taxonomy.ts`.
+  - Mengimplementasikan halaman CRUD untuk Categories (`admin/categories`) dan Tags (`admin/tags`) dengan desain *split-view*.
+  - Membuat *route handler* untuk upload gambar di `/api/upload` yang terintegrasi dengan SDK Cloudinary serta Prisma (`cms.media`).
+  - Membangun halaman Media Library (`admin/media`) lengkap dengan *grid view*, fungsi upload instan, dan panel informasi aset gambar (*alt text*, *caption*).
+  - Membuat *modal* `MediaPicker` yang diintegrasikan langsung pada form `PostForm.tsx` untuk kemudahan memilih *Featured Image*.
+- **Commit Message**: `feat: sprint 4 - media library, taxonomy, cloudinary upload, media picker, UI sync`

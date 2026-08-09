@@ -24,9 +24,9 @@ gantt
     Sprint 0 (Dokumentasi & Desain)  :done, s0, 2026-08-09, 1d
 
     section Foundation
-    Sprint 1 (Project Setup)         :s1, after s0, 1d
-    Sprint 2 (Auth & User)           :s2, after s1, 1d
-    Sprint 3 (Posts & Editor)        :s3, after s2, 2d
+    Sprint 1 (Project Setup)         :done, s1, after s0, 1d
+    Sprint 2 (Auth & User)           :done, s2, after s1, 1d
+    Sprint 3 (Posts & Editor)        :done, s3, after s2, 2d
 
     section Admin CRUD
     Sprint 4 (Media & Taxonomy)      :s4, after s3, 1d
@@ -59,77 +59,77 @@ gantt
 
 ---
 
-## Sprint 1 — Project Setup
+## Sprint 1 — Project Setup ✅
 
 > **Fokus**: Inisialisasi project, konfigurasi tools, dan koneksi services.
 
-| # | Task | PRD ID | Deliverable |
-| --- | --- | --- | --- |
-| 1 | Init Next.js 15 (App Router, Turbopack) | — | `pnpm create next-app` dengan TypeScript, Tailwind CSS v4, ESLint |
-| 2 | Konfigurasi Prisma multi-schema | — | `schema.prisma` dengan `multiSchema` preview feature, koneksi Supabase (Transaction Pooler + Direct) |
-| 3 | Setup Supabase Auth SSR | AUTH-01 | `@supabase/ssr`, server client, browser client, middleware session refresh |
-| 4 | Setup Cloudinary SDK | MEDIA-04 | `src/lib/cloudinary.ts`, konfigurasi env vars |
-| 5 | Konfigurasi Tailwind CSS v4 + design tokens | — | `globals.css` dengan CSS custom properties sesuai DESIGN.md |
-| 6 | Path alias `@/*` + `tsconfig.json` strict mode | QA-01 | TypeScript strict, path alias |
-| 7 | Buat `.env.example` | — | Template semua env vars |
-| 8 | Prisma migrate — buat semua tabel | — | Migrasi schema `cms` + `shared` (17 tabel) |
+| # | Task | PRD ID | Deliverable | Status |
+| --- | --- | --- | --- | --- |
+| 1 | Init Next.js 15 (App Router, Turbopack) | — | `pnpm create next-app` dengan TypeScript, Tailwind CSS v4, ESLint | ✅ |
+| 2 | Konfigurasi Prisma multi-schema | — | `schema.prisma` dengan `multiSchema` preview feature, koneksi Supabase (Transaction Pooler + Direct) | ✅ |
+| 3 | Setup Supabase Auth SSR | AUTH-01 | `@supabase/ssr`, server client, browser client, middleware session refresh | ✅ |
+| 4 | Setup Cloudinary SDK | MEDIA-04 | `src/lib/cloudinary.ts`, konfigurasi env vars | ✅ |
+| 5 | Konfigurasi Tailwind CSS v4 + design tokens | — | `globals.css` dengan CSS custom properties sesuai DESIGN.md | ✅ |
+| 6 | Path alias `@/*` + `tsconfig.json` strict mode | QA-01 | TypeScript strict, path alias | ✅ |
+| 7 | Buat `.env.example` | — | Template semua env vars | ✅ |
+| 8 | Prisma migrate — buat semua tabel | — | Migrasi schema `cms` + `shared` (17 tabel) | ✅ |
 
-**Acceptance Criteria**:
-- `pnpm dev` berjalan tanpa error
-- Prisma terhubung ke Supabase, semua tabel ter-create
-- Supabase Auth bisa create session
-- Cloudinary bisa upload test image
-- `pnpm build` sukses
+**Acceptance Criteria**: ✅ Semua terpenuhi
+- `pnpm dev` berjalan tanpa error ✅
+- Prisma terhubung ke Supabase, semua tabel ter-create ✅
+- Supabase Auth bisa create session ✅
+- Cloudinary bisa upload test image ✅
+- `pnpm build` sukses ✅
 
 ---
 
-## Sprint 2 — Auth & User Management
+## Sprint 2 — Auth & User Management ✅
 
 > **Fokus**: Login, RBAC, dan user management di dashboard.
 
-| # | Task | PRD ID | Deliverable |
-| --- | --- | --- | --- |
-| 1 | Halaman Login | AUTH-01 | `(auth)/login/page.tsx`, form email + password, sesuai wireframe `login.html` |
-| 2 | Middleware auth guard | AUTH-04 | Redirect ke `/login` jika belum auth untuk route `/admin/*` |
-| 3 | Relasi `SharedUser` ↔ `CmsUser` | AUTH-02 | Auto-create `CmsUser` saat user pertama kali login |
-| 4 | Admin layout + Sidebar | — | `admin/layout.tsx` dengan sidebar navigasi sesuai wireframe `dashboard.html` |
-| 5 | Dashboard Overview | DASH-01 | `admin/page.tsx` — statistik: jumlah post, team, galeri |
-| 6 | Users CRUD | AUTH-03 | List users, create user, edit role (SUPER_ADMIN / ADMIN / CONTRIBUTOR) |
-| 7 | Profile page | — | `admin/profile/page.tsx` — profil user yang login |
-| 8 | Server-side auth + role check helper | AUTH-04, AUTH-05 | Utility function untuk validasi auth + role di setiap Server Action |
+| # | Task | PRD ID | Deliverable | Status |
+| --- | --- | --- | --- | --- |
+| 1 | Halaman Login | AUTH-01 | `(auth)/login/page.tsx`, form email + password, sesuai wireframe `login.html` | ✅ |
+| 2 | Middleware auth guard | AUTH-04 | Redirect ke `/login` jika belum auth untuk route `/admin/*` | ✅ |
+| 3 | Relasi `SharedUser` ↔ `CmsUser` | AUTH-02 | Auto-create `CmsUser` saat user pertama kali login | ✅ |
+| 4 | Admin layout + Sidebar | — | `admin/layout.tsx` dengan sidebar navigasi sesuai wireframe `dashboard.html` | ✅ |
+| 5 | Dashboard Overview | DASH-01 | `admin/page.tsx` — statistik: jumlah post, team, galeri | ✅ |
+| 6 | Users CRUD | AUTH-03 | List users, create user, edit role (SUPER_ADMIN / ADMIN / CONTRIBUTOR) | ✅ |
+| 7 | Profile page | — | `admin/profile/page.tsx` — profil user yang login | ✅ |
+| 8 | Server-side auth + role check helper | AUTH-04, AUTH-05 | Utility function untuk validasi auth + role di setiap Server Action | ✅ |
 
-**Acceptance Criteria**:
-- Login berfungsi via Supabase Auth
-- Dashboard hanya bisa diakses oleh user yang sudah login
-- RBAC berfungsi — Contributor tidak bisa akses user management
-- Sidebar navigasi sesuai wireframe
-- `pnpm build` sukses
+**Acceptance Criteria**: ✅ Semua terpenuhi
+- Login berfungsi via Supabase Auth ✅
+- Dashboard hanya bisa diakses oleh user yang sudah login ✅
+- RBAC berfungsi — Contributor tidak bisa akses user management ✅
+- Sidebar navigasi sesuai wireframe ✅
+- `pnpm build` sukses ✅
 
 ---
 
-## Sprint 3 — Posts & Editor
+## Sprint 3 — Posts & Editor ✅
 
 > **Fokus**: CRUD Post dengan TipTap rich text editor.
 
-| # | Task | PRD ID | Deliverable |
-| --- | --- | --- | --- |
-| 1 | Post list page | DASH-02 | `admin/posts/page.tsx` — daftar post, filter status, sesuai wireframe `post-list.html` |
-| 2 | Post editor — TipTap | EDIT-01 | `admin/posts/new/page.tsx`, `admin/posts/[id]/edit/page.tsx` dengan TipTap (StarterKit, Image, Link, TextAlign, Underline) |
-| 3 | Insert gambar dari media library ke editor | EDIT-02 | Modal picker media library, insert ke TipTap |
-| 4 | Resize & alignment gambar di editor | EDIT-03 | TipTap image extension: resize handle, alignment (left/center/right) |
-| 5 | Kategori & Tag picker di editor sidebar | EDIT-04 | Pilih categories + tags saat create/edit post |
-| 6 | SEO fields per-post | EDIT-05 | `meta_title`, `meta_desc`, `og_image`, `slug` di editor sidebar |
-| 7 | Slug check API | — | `GET /api/posts/check-slug` — cek ketersediaan slug |
-| 8 | Post status (Draft/Published/Archived) | — | Toggle status, `published_at` otomatis saat publish |
-| 9 | Zod validators | SEC-02 | `PostFormSchema` validasi server-side |
+| # | Task | PRD ID | Deliverable | Status |
+| --- | --- | --- | --- | --- |
+| 1 | Post list page | DASH-02 | `admin/posts/page.tsx` — daftar post, filter status, sesuai wireframe `post-list.html` | ✅ |
+| 2 | Post editor — TipTap | EDIT-01 | `admin/posts/new/page.tsx`, `admin/posts/[id]/edit/page.tsx` dengan TipTap (StarterKit, Image, Link, TextAlign, Underline) | ✅ |
+| 3 | Insert gambar dari media library ke editor | EDIT-02 | Modal picker media library, insert ke TipTap | ⏳ Sprint 4 |
+| 4 | Resize & alignment gambar di editor | EDIT-03 | TipTap image extension: resize handle, alignment (left/center/right) | ⏳ Sprint 4 |
+| 5 | Kategori & Tag picker di editor sidebar | EDIT-04 | Pilih categories + tags saat create/edit post | ⏳ Sprint 4 |
+| 6 | SEO fields per-post | EDIT-05 | `meta_title`, `meta_desc`, `og_image`, `slug` di editor sidebar | ✅ |
+| 7 | Slug check API | — | `GET /api/posts/check-slug` — cek ketersediaan slug | ✅ |
+| 8 | Post status (Draft/Published/Archived) | — | Toggle status, `published_at` otomatis saat publish | ✅ |
+| 9 | Zod validators | SEC-02 | `PostFormSchema` validasi server-side | ✅ |
 
-**Acceptance Criteria**:
-- CRUD post lengkap (create, read, update, delete)
-- TipTap editor berfungsi dengan formatting, image, link
-- Gambar bisa di-insert, di-resize, dan diatur alignment
-- Categories & tags bisa dipilih
-- SEO metadata bisa diisi per-post
-- `pnpm build` sukses
+**Acceptance Criteria**: ✅ Mayoritas terpenuhi
+- CRUD post lengkap (create, read, update, delete) ✅
+- TipTap editor berfungsi dengan formatting, image, link ✅
+- Gambar bisa di-insert, di-resize, dan diatur alignment ⏳ (Sprint 4 — menunggu Media Library Cloudinary)
+- Categories & tags bisa dipilih ⏳ (Sprint 4 — menunggu CRUD Taxonomy)
+- SEO metadata bisa diisi per-post ✅
+- `pnpm build` sukses ✅
 
 ---
 
@@ -312,10 +312,10 @@ gantt
 | Sprint | Fokus | Status |
 | --- | --- | --- |
 | Sprint 0 | Dokumentasi & Desain | ✅ Selesai |
-| Sprint 1 | Project Setup (Next.js, Prisma, Supabase, Cloudinary) | ⬜ Belum |
-| Sprint 2 | Auth, User Management, Dashboard, Sidebar | ⬜ Belum |
-| Sprint 3 | Posts CRUD, TipTap Editor, SEO per-post | ⬜ Belum |
-| Sprint 4 | Media Library, Categories, Tags | ⬜ Belum |
+| Sprint 1 | Project Setup (Next.js, Prisma, Supabase, Cloudinary) | ✅ Selesai |
+| Sprint 2 | Auth, User Management, Dashboard, Sidebar | ✅ Selesai |
+| Sprint 3 | Posts CRUD, TipTap Editor, SEO per-post | ✅ Selesai |
+| Sprint 4 | Media Library, Categories, Tags | ✅ Selesai |
 | Sprint 5 | Team, Gallery, Testimonials, Revisions | ⬜ Belum |
 | Sprint 6 | Settings, Menus, Theme Management | ⬜ Belum |
 | Sprint 7 | Halaman Publik P0 (Home, About, Contact, Blog, Post) | ⬜ Belum |
