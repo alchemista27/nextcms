@@ -29,9 +29,9 @@ gantt
     Sprint 3 (Posts & Editor)        :done, s3, after s2, 2d
 
     section Admin CRUD
-    Sprint 4 (Media & Taxonomy)      :s4, after s3, 1d
-    Sprint 5 (Team, Gallery, Testi)  :s5, after s4, 2d
-    Sprint 6 (Settings & Menus)      :s6, after s5, 1d
+    Sprint 4 (Media & Taxonomy)      :done, s4, after s3, 1d
+    Sprint 5 (Team, Gallery, Testi)  :done, s5, after s4, 2d
+    Sprint 6 (Settings & Menus)      :done, s6, after s5, 1d
 
     section Public Frontend
     Sprint 7 (Halaman Publik P0)     :s7, after s6, 2d
@@ -156,47 +156,47 @@ gantt
 
 ---
 
-## Sprint 5 — Team, Gallery & Testimonials
+## Sprint 5 — Team, Gallery & Testimonials ✅
 
 > **Fokus**: CRUD untuk konten pendukung.
 
-| # | Task | PRD ID | Deliverable |
-| --- | --- | --- | --- |
-| 1 | Team Member CRUD | DASH-05 | List, create (`new/`), edit (`[id]/edit/`). Fields: name, slug, position, bio, photo, order, isActive |
-| 2 | Gallery Album CRUD | DASH-06 | List albums, create, edit. Fields: name, slug, description, cover_image, order |
-| 3 | Gallery Image CRUD | DASH-06 | List images per album, create, edit. Fields: title, image_url, caption, album_id, order |
-| 4 | Testimonial CRUD | DASH-07 | List, create (`new/`), edit (`[id]/edit/`). Fields: name, role, content, photo, rating, isActive, order |
-| 5 | Revisions system | — | `admin/revisions/[entityType]/[entityId]/` — simpan snapshot JSON saat edit post, support rollback |
-| 6 | Zod validators | SEC-02 | `TeamMemberFormSchema`, `GalleryImageFormSchema`, `TestimonialFormSchema` |
+| # | Task | PRD ID | Deliverable | Status |
+| --- | --- | --- | --- | --- |
+| 1 | Team Member CRUD | DASH-05 | List, create (`new/`), edit (`[id]/edit/`). Fields: name, slug, position, bio, photo, order, isActive | ✅ |
+| 2 | Gallery Album CRUD | DASH-06 | List albums, create, edit. Fields: name, slug, description, cover_image, order | ✅ |
+| 3 | Gallery Image CRUD | DASH-06 | List images per album, create, edit. Fields: title, image_url, caption, album_id, order | ✅ |
+| 4 | Testimonial CRUD | DASH-07 | List, create (`new/`), edit (`[id]/edit/`). Fields: name, role, content, photo, rating, isActive, order | ✅ |
+| 5 | Revisions system | — | `admin/revisions/[entityType]/[entityId]/` — simpan snapshot JSON saat edit post, support rollback | ✅ |
+| 6 | Zod validators | SEC-02 | `TeamMemberFormSchema`, `GalleryImageFormSchema`, `TestimonialFormSchema` | ✅ |
 
-**Acceptance Criteria**:
-- CRUD lengkap untuk Team, Gallery (Album + Image), Testimonial
-- Media picker terintegrasi untuk photo fields
-- Revisions tersimpan saat edit post
-- Semua form divalidasi Zod
-- `pnpm build` sukses
+**Acceptance Criteria**: ✅ Semua terpenuhi
+- CRUD lengkap untuk Team, Gallery (Album + Image), Testimonial ✅
+- Media picker terintegrasi untuk photo fields ✅
+- Revisions tersimpan saat edit post ✅
+- Semua form divalidasi Zod ✅
+- `pnpm build` sukses ✅
 
 ---
 
-## Sprint 6 — Settings, Menus & Theme
+## Sprint 6 — Settings, Menus & Theme ✅
 
 > **Fokus**: Pengaturan situs, menu navigasi, dan konfigurasi tema.
 
-| # | Task | PRD ID | Deliverable |
-| --- | --- | --- | --- |
-| 1 | Settings General | DASH-09 | `admin/settings/general/` — identitas yayasan, kontak (key-value `SiteSetting` group: general) |
-| 2 | Settings SEO | DASH-10 | `admin/settings/seo/` — default meta title, description, OG image (group: seo) |
-| 3 | Settings Permalinks | — | `admin/settings/permalinks/` — konfigurasi URL structure |
-| 4 | Menus CRUD | DASH-08 | `admin/menus/` — CRUD Menu container + MenuItem tree (nested, drag-reorder) |
-| 5 | Appearance | — | `admin/appearance/` — pengaturan tampilan situs |
-| 6 | Theme Management | — | `admin/theme/school-profile/*` — konfigurasi per-section (hero, about, vision, stats, teachers, contact, CTA) via `ThemeSection` |
-| 7 | Zod validators | SEC-02 | `SettingsFormSchema`, menu validators |
+| # | Task | PRD ID | Deliverable | Status |
+| --- | --- | --- | --- | --- |
+| 1 | Settings General | DASH-09 | `admin/settings/general/` — identitas yayasan, kontak (key-value `SiteSetting` group: general) | ✅ |
+| 2 | Settings SEO | DASH-10 | `admin/settings/seo/` — default meta title, description, OG image (group: seo) | ✅ |
+| 3 | Settings Permalinks | — | `admin/settings/permalinks/` — konfigurasi URL structure | ✅ |
+| 4 | Menus CRUD | DASH-08 | `admin/menus/` — CRUD Menu container + MenuItem tree (nested, drag-reorder) | ✅ |
+| 5 | Appearance | — | `admin/appearance/` — pengaturan tampilan situs | ✅ |
+| 6 | Theme Management | — | `admin/theme/school-profile/*` — konfigurasi per-section (hero, about, vision, stats, teachers, contact, CTA) via `ThemeSection` | ✅ |
+| 7 | Zod validators | SEC-02 | `SettingsFormSchema`, menu validators | ✅ |
 
-**Acceptance Criteria**:
-- Settings tersimpan dan terbaca di halaman publik
-- Menu navigasi bisa dikelola dengan tree structure (parent-child)
-- Theme sections bisa dikonfigurasi per-section
-- `pnpm build` sukses
+**Acceptance Criteria**: ✅ Semua terpenuhi
+- Settings tersimpan dan terbaca di halaman publik ✅
+- Menu navigasi bisa dikelola dengan tree structure (parent-child) ✅
+- Theme sections bisa dikonfigurasi per-section ✅
+- `pnpm build` sukses ✅
 
 ---
 
@@ -316,8 +316,8 @@ gantt
 | Sprint 2 | Auth, User Management, Dashboard, Sidebar | ✅ Selesai |
 | Sprint 3 | Posts CRUD, TipTap Editor, SEO per-post | ✅ Selesai |
 | Sprint 4 | Media Library, Categories, Tags | ✅ Selesai |
-| Sprint 5 | Team, Gallery, Testimonials, Revisions | ⬜ Belum |
-| Sprint 6 | Settings, Menus, Theme Management | ⬜ Belum |
+| Sprint 5 | Team, Gallery, Testimonials, Revisions | ✅ Selesai |
+| Sprint 6 | Settings, Menus, Theme Management | ✅ Selesai |
 | Sprint 7 | Halaman Publik P0 (Home, About, Contact, Blog, Post) | ⬜ Belum |
 | Sprint 8 | Halaman Publik P1 (Gallery, Team, Testimony, 404) | ⬜ Belum |
 | Sprint 9 | Search, SEO, Performance, Polish | ⬜ Belum |

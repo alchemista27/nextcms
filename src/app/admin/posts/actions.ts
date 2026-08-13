@@ -5,6 +5,7 @@ import { requireAuth } from "@/lib/auth";
 import { PostFormSchema } from "@/lib/validations/post";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
+import crypto from "crypto";
 
 export async function deletePostAction(postId: string) {
   await requireAuth();
@@ -62,12 +63,15 @@ export async function savePostAction(postId: string | null, formData: FormData) 
     publishedAt: data.status === "PUBLISHED" ? new Date() : null,
   };
 
+  let savedPostId: string;
+
   if (postId) {
     // Update
     await prisma.post.update({
       where: { id: postId },
       data: postData,
     });
+    savedPostId = postId;
   } else {
     // Create
     const newId = crypto.randomUUID();
@@ -78,6 +82,23 @@ export async function savePostAction(postId: string | null, formData: FormData) 
         authorId: user.id,
       },
     });
+    savedPostId = newId;
+  }
+
+  // Save revision snapshot
+  try {
+    await prisma.revision.create({
+      data: {
+        id: crypto.randomUUID(),
+        entityType: "post",
+        entityId: savedPostId,
+        data: JSON.parse(JSON.stringify(postData)),
+        authorId: user.id,
+      },
+    });
+  } catch (revErr) {
+    // Non-fatal: don't block the save if revision fails
+    console.error("Failed to save revision:", revErr);
   }
 
   revalidatePath("/admin/posts");

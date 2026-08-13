@@ -1,10 +1,10 @@
 generator client {
-  provider        = "prisma-client-js"
+  provider = "prisma-client-js"
 }
 
 datasource db {
-  provider  = "postgresql"
-  schemas   = ["cms", "shared"]
+  provider = "postgresql"
+  schemas  = ["cms", "shared"]
 }
 
 // ========================
@@ -15,6 +15,15 @@ enum Role {
   ADMIN
   CONTRIBUTOR
   SUBSCRIBER
+
+  @@schema("cms")
+}
+
+enum MenuItemType {
+  CUSTOM
+  PAGE
+  POST
+  CATEGORY
 
   @@schema("cms")
 }
@@ -33,15 +42,16 @@ enum PostStatus {
 // ========================
 
 model SharedUser {
-  id        String    @id @db.Uuid
-  email     String    @unique
-  fullName  String?   @map("full_name")
-  phone     String?
-  isActive  Boolean?  @default(true) @map("is_active")
-  createdAt DateTime? @map("created_at")
-  updatedAt DateTime? @map("updated_at")
+  id           String    @id @db.Uuid
+  email        String    @unique
+  fullName     String?   @map("full_name")
+  phone        String?
+  passwordHash String?   @map("password_hash")
+  isActive     Boolean?  @default(true) @map("is_active")
+  createdAt    DateTime? @map("created_at")
+  updatedAt    DateTime? @map("updated_at")
 
-  cmsUser   CmsUser?
+  cmsUser CmsUser?
 
   @@map("users")
   @@schema("shared")
@@ -53,16 +63,17 @@ model SharedUser {
 
 /// CMS user — directly tied to shared.users by id (same UUID)
 model CmsUser {
-  id           String    @id @db.Uuid
-  role         Role      @default(CONTRIBUTOR)
-  avatar       String?
-  bio          String?
-  createdAt    DateTime  @default(now()) @map("createdAt")
-  updatedAt    DateTime  @updatedAt @map("updatedAt")
+  id        String   @id @db.Uuid
+  role      Role     @default(CONTRIBUTOR)
+  avatar    String?
+  bio       String?
+  createdAt DateTime @default(now()) @map("createdAt")
+  updatedAt DateTime @updatedAt @map("updatedAt")
 
-  sharedUser   SharedUser @relation(fields: [id], references: [id], onDelete: Cascade)
-  posts        Post[]
-  media        Media[]
+  sharedUser SharedUser @relation(fields: [id], references: [id], onDelete: Cascade)
+  posts      Post[]
+  media      Media[]
+  revisions  Revision[]
 
   @@map("users")
   @@schema("cms")
@@ -84,37 +95,37 @@ model Post {
   updatedAt       DateTime   @updatedAt @map("updatedAt")
   authorId        String     @db.Uuid
 
-  author       CmsUser      @relation(fields: [authorId], references: [id])
-  categories   Category[]   @relation("_PostCategories")
-  tags         Tag[]        @relation("_PostTags")
+  author     CmsUser    @relation(fields: [authorId], references: [id])
+  categories Category[] @relation("PostCategories")
+  tags       Tag[]      @relation("PostTags")
 
   @@map("posts")
   @@schema("cms")
 }
 
 model Category {
-  id          String    @id
+  id          String   @id
   name        String
-  slug        String    @unique
+  slug        String   @unique
   description String?
   parentId    String?
-  createdAt   DateTime  @default(now()) @map("createdAt")
-  updatedAt   DateTime  @updatedAt @map("updatedAt")
+  createdAt   DateTime @default(now()) @map("createdAt")
+  updatedAt   DateTime @updatedAt @map("updatedAt")
 
-  posts       Post[]    @relation("_PostCategories")
+  posts Post[] @relation("PostCategories")
 
   @@map("categories")
   @@schema("cms")
 }
 
 model Tag {
-  id        String    @id
+  id        String   @id
   name      String
-  slug      String    @unique
-  createdAt DateTime  @default(now()) @map("createdAt")
-  updatedAt DateTime  @updatedAt @map("updatedAt")
+  slug      String   @unique
+  createdAt DateTime @default(now()) @map("createdAt")
+  updatedAt DateTime @updatedAt @map("updatedAt")
 
-  posts     Post[]    @relation("_PostTags")
+  posts Post[] @relation("PostTags")
 
   @@map("tags")
   @@schema("cms")
@@ -133,7 +144,7 @@ model Media {
   createdAt    DateTime @default(now()) @map("createdAt")
   updatedAt    DateTime @updatedAt @map("updatedAt")
 
-  uploadedBy   CmsUser  @relation(fields: [uploadedById], references: [id])
+  uploadedBy CmsUser @relation(fields: [uploadedById], references: [id])
 
   @@map("media")
   @@schema("cms")
@@ -142,10 +153,12 @@ model Media {
 model TeamMember {
   id        String   @id
   name      String
+  slug      String   @unique
   position  String
   bio       String?
   photoUrl  String?
   order     Int      @default(0)
+  isActive  Boolean  @default(true)
   createdAt DateTime @default(now()) @map("createdAt")
   updatedAt DateTime @updatedAt @map("updatedAt")
 
@@ -153,23 +166,117 @@ model TeamMember {
   @@schema("cms")
 }
 
+model GalleryAlbum {
+  id          String       @id
+  name        String
+  slug        String       @unique
+  description String?
+  coverImage  String?
+  order       Int          @default(0)
+  createdAt   DateTime     @default(now()) @map("createdAt")
+  updatedAt   DateTime     @updatedAt @map("updatedAt")
+  images      GalleryImage[]
+
+  @@map("gallery_albums")
+  @@schema("cms")
+}
+
 model GalleryImage {
-  id          String   @id
+  id          String        @id
   title       String?
   description String?
   url         String
   category    String?
-  createdAt   DateTime @default(now()) @map("createdAt")
-  updatedAt   DateTime @updatedAt @map("updatedAt")
+  albumId     String?
+  order       Int           @default(0)
+  createdAt   DateTime      @default(now()) @map("createdAt")
+  updatedAt   DateTime      @updatedAt @map("updatedAt")
+
+  album GalleryAlbum? @relation(fields: [albumId], references: [id], onDelete: SetNull)
 
   @@map("gallery_images")
   @@schema("cms")
 }
 
+model Testimonial {
+  id        String   @id
+  name      String
+  role      String?
+  content   String
+  photoUrl  String?
+  rating    Int      @default(5)
+  isActive  Boolean  @default(true)
+  order     Int      @default(0)
+  createdAt DateTime @default(now()) @map("createdAt")
+  updatedAt DateTime @updatedAt @map("updatedAt")
+
+  @@map("testimonials")
+  @@schema("cms")
+}
+
+model Revision {
+  id         String   @id
+  entityType String
+  entityId   String
+  data       Json?
+  authorId   String   @db.Uuid
+  createdAt  DateTime @default(now()) @map("createdAt")
+
+  author CmsUser @relation(fields: [authorId], references: [id])
+
+  @@map("revisions")
+  @@schema("cms")
+}
+
 model SiteSetting {
-  key       String  @id
-  value     String?
+  key   String  @id
+  value String?
 
   @@map("site_settings")
+  @@schema("cms")
+}
+
+model Menu {
+  id        String     @id
+  name      String
+  location  String?
+  createdAt DateTime   @default(now()) @map("createdAt")
+  updatedAt DateTime   @updatedAt @map("updatedAt")
+  items     MenuItem[]
+
+  @@map("menus")
+  @@schema("cms")
+}
+
+model MenuItem {
+  id          String       @id
+  label       String
+  url         String?
+  target      String       @default("_self")
+  type        MenuItemType @default(CUSTOM)
+  referenceId String?
+  order       Int          @default(0)
+  createdAt   DateTime     @default(now()) @map("createdAt")
+  updatedAt   DateTime     @updatedAt @map("updatedAt")
+  menuId      String
+  parentId    String?
+
+  menu     Menu       @relation(fields: [menuId], references: [id], onDelete: Cascade)
+  parent   MenuItem?  @relation("MenuHierarchy", fields: [parentId], references: [id], onDelete: SetNull)
+  children MenuItem[] @relation("MenuHierarchy")
+
+  @@index([menuId])
+  @@index([parentId])
+  @@map("menu_items")
+  @@schema("cms")
+}
+
+model Appearance {
+  id        String   @id
+  key       String   @unique
+  value     Json
+  updatedAt DateTime @updatedAt @map("updatedAt")
+
+  @@map("appearance")
   @@schema("cms")
 }

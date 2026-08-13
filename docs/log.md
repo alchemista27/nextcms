@@ -92,3 +92,31 @@
   - Membangun halaman Media Library (`admin/media`) lengkap dengan *grid view*, fungsi upload instan, dan panel informasi aset gambar (*alt text*, *caption*).
   - Membuat *modal* `MediaPicker` yang diintegrasikan langsung pada form `PostForm.tsx` untuk kemudahan memilih *Featured Image*.
 - **Commit Message**: `feat: sprint 4 - media library, taxonomy, cloudinary upload, media picker, UI sync`
+
+---
+
+- **Tanggal**: 13 Agustus 2026
+- **Sprint**: Sprint 5 — Team, Gallery & Testimonials ✅
+- **Progress**:
+  - Mengupdate Prisma schema agar sesuai dengan DB yang ada, mempertahankan kolom `password_hash` untuk backward-compatibility, dan menambahkan model baru `TeamMember`, `GalleryAlbum`, `GalleryImage`, `Testimonial`.
+  - Mengimplementasikan Zod Validator dan Server Actions terpusat untuk kelima model tersebut.
+  - Membangun halaman CRUD untuk **Team Members**, dilengkapi dengan pengurutan posisi (Order) dan pemilihan foto via `MediaPicker`.
+  - Membangun halaman **Gallery** dengan fitur grouping berdasarkan Album beserta fitur pengaturan urutan gambar dan cover album.
+  - Membangun halaman CRUD untuk **Testimonials**, lengkap dengan komponen rating bintang kustom.
+  - Mengintegrasikan sistem penyimpan revisi historis (Tabel `Revision`) ke dalam fitur `savePostAction`, sehingga mem-backup snapshot post setiap kali perubahan disimpan.
+  - Melakukan update pada Sidebar komponen agar memunculkan menu Team Members, Gallery, dan Testimonials.
+  - Memperbaiki build error terkait `prisma.config.ts` dan *type mapping* JSON di proses penyimpanan revision.
+- **Commit Message**: `feat: sprint 5 - team members, gallery, testimonials CRUD and post revisions`
+
+- **Tanggal**: 13 Agustus 2026
+- **Sprint**: Sprint 6 — Settings, Menus & Theme ✅
+- **Progress**:
+  - Mengupdate `prisma/schema.prisma` dengan tabel `Menu`, `MenuItem`, dan `Appearance` beserta Enum `MenuItemType` untuk memfasilitasi konfigurasi situs, menyesuaikan struktur yang ada di DB.
+  - Memperbaiki penamaan relasi (dari `_PostCategories` menjadi `PostCategories`) untuk mencegah crash saat pencarian tabel implicit many-to-many karena Prisma otomatis menambahkan prefix `_`.
+  - Mengimplementasikan `zod` validator (`SettingsFormSchema`, `MenuFormSchema`, `MenuItemFormSchema`) pada `src/lib/validations/sprint6.ts`.
+  - Membangun halaman antarmuka konfigurasi `General`, `SEO`, dan `Permalinks` di `/admin/settings/` menggunakan komponen `SettingsForm`.
+  - Membuat sistem manajemen menu bersarang di `/admin/menus/` yang memungkinkan pembuatan `Menu` (header/footer) dan item di dalamnya (Custom, Page, Post, Category).
+  - Menyusun panel konfigurasi tema spesifik (Hero, About, Stats) di `/admin/appearance/` yang memanfaatkan penyimpanan JSONB dinamis pada tabel `appearance`.
+  - Menyematkan route untuk Settings, Menus, dan Appearance ke dalam *Sidebar* Admin.
+  - Verifikasi kompatibilitas dengan eksekusi `pnpm build` sukses secara keseluruhan.
+- **Commit Message**: `feat: sprint 6 - site settings, dynamic menus, appearance theme config, and implicit many-to-many schema fix`
