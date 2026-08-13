@@ -146,6 +146,8 @@ export default function PublicHeader({
             ) : (
               <>
                 <Link href="/about" className="hover:text-[#0f7f6d] transition-colors">About Us</Link>
+                <Link href="/team" className="hover:text-[#0f7f6d] transition-colors">Teachers</Link>
+                <Link href="/gallery" className="hover:text-[#0f7f6d] transition-colors">Gallery</Link>
                 <Link href="/blog" className="hover:text-[#0f7f6d] transition-colors">News</Link>
                 <Link href="/contact" className="hover:text-[#0f7f6d] transition-colors">Contact</Link>
               </>
@@ -211,6 +213,8 @@ export default function PublicHeader({
               ) : (
                 <>
                   <Link href="/about" className="hover:text-[#0f7f6d]" onClick={() => setIsMobileMenuOpen(false)}>About Us</Link>
+                  <Link href="/team" className="hover:text-[#0f7f6d]" onClick={() => setIsMobileMenuOpen(false)}>Teachers</Link>
+                  <Link href="/gallery" className="hover:text-[#0f7f6d]" onClick={() => setIsMobileMenuOpen(false)}>Gallery</Link>
                   <Link href="/blog" className="hover:text-[#0f7f6d]" onClick={() => setIsMobileMenuOpen(false)}>News</Link>
                 </>
               )}
