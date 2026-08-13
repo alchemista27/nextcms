@@ -4,7 +4,6 @@ import { prisma } from "@/lib/prisma";
 import { requireAuth } from "@/lib/auth";
 import { MenuFormSchema, MenuItemFormSchema } from "@/lib/validations/sprint6";
 import { revalidatePath } from "next/cache";
-import crypto from "crypto";
 
 export async function saveMenuAction(id: string | null, formData: FormData) {
   await requireAuth(["ADMIN"]);
@@ -19,14 +18,16 @@ export async function saveMenuAction(id: string | null, formData: FormData) {
 
   const data = parsed.data;
 
+  let menuId = id;
   if (id) {
     await prisma.menu.update({ where: { id }, data });
   } else {
-    await prisma.menu.create({ data: { ...data, id: crypto.randomUUID() } });
+    menuId = crypto.randomUUID();
+    await prisma.menu.create({ data: { ...data, id: menuId } });
   }
 
   revalidatePath("/admin/menus");
-  return { success: true };
+  return { success: true, id: menuId };
 }
 
 export async function deleteMenuAction(id: string) {

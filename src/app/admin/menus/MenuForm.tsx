@@ -16,6 +16,8 @@ export function MenuForm({ initialData }: { initialData?: { id: string; name: st
     if (result?.error) {
       setError(result.error);
       setPending(false);
+    } else if (result?.id) {
+      router.push(`/admin/menus/${result.id}`);
     } else {
       router.push("/admin/menus");
     }

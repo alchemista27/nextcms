@@ -55,7 +55,7 @@ export default async function MenusPage() {
                       href={`/admin/menus/${menu.id}/edit`}
                       className="px-3 py-1.5 text-xs border border-border rounded-md hover:bg-bg text-text-primary transition"
                     >
-                      Edit
+                      Settings
                     </Link>
                     <form action={deleteMenuAction.bind(null, menu.id)}>
                       <button
