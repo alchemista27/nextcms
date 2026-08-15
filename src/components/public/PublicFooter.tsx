@@ -11,6 +11,7 @@ interface PublicFooterProps {
   youtube?: string;
   siteName?: string;
   siteDescription?: string;
+  favicon?: string;
 }
 
 export default function PublicFooter({
@@ -22,6 +23,7 @@ export default function PublicFooter({
   youtube,
   siteName,
   siteDescription,
+  favicon,
 }: PublicFooterProps) {
   return (
     <footer className="bg-[#454545] text-gray-300 py-16 border-t-4 border-[#0f7f6d]">
@@ -30,8 +32,13 @@ export default function PublicFooter({
           {/* Col 1 */}
           <div>
             <div className="flex items-center gap-2 mb-6">
-              <div className="w-10 h-10 bg-[#0f7f6d] rounded flex items-center justify-center text-white">
-                <span className="material-icons-outlined text-xl">school</span>
+              <div className="w-10 h-10 bg-[#0f7f6d] rounded flex items-center justify-center text-white overflow-hidden">
+                {favicon ? (
+                  /* eslint-disable-next-line @next/next/no-img-element */
+                  <img src={favicon} alt="Website Logo" className="w-8 h-8 object-contain" />
+                ) : (
+                  <span className="material-icons-outlined text-xl">school</span>
+                )}
               </div>
               <span className="font-bold text-xl text-white">
                 {siteName || "SMaRT School"}
@@ -87,8 +94,8 @@ export default function PublicFooter({
                 </Link>
               </li>
               <li>
-                <Link href="/academics" className="hover:text-[#0f7f6d] transition-colors flex items-center gap-2">
-                  <span className="material-icons-outlined text-xs">chevron_right</span> Academics
+                <Link href="/blog" className="hover:text-[#0f7f6d] transition-colors flex items-center gap-2">
+                  <span className="material-icons-outlined text-xs">chevron_right</span> News
                 </Link>
               </li>
               <li>

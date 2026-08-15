@@ -12,6 +12,7 @@ interface PublicHeaderProps {
   instagram?: string;
   youtube?: string;
   siteName?: string;
+  favicon?: string;
 }
 
 export default function PublicHeader({
@@ -22,6 +23,7 @@ export default function PublicHeader({
   instagram,
   youtube,
   siteName,
+  favicon,
 }: PublicHeaderProps) {
   const [isScrolled, setIsScrolled] = useState(false);
   const pathname = usePathname();
@@ -39,7 +41,7 @@ export default function PublicHeader({
   const navLinks = [
     { label: "Home", href: "/" },
     { label: "About Us", href: "/about" },
-    { label: "Academics", href: "/academics" },
+    { label: "News", href: "/blog" },
     { label: "Teachers", href: "/team" },
     { label: "Gallery", href: "/gallery" },
     { label: "Contact", href: "/contact" },
@@ -98,7 +100,12 @@ export default function PublicHeader({
           <Link href="/" className="flex items-center gap-3">
             <div className="w-12 h-12 bg-[#0f7f6d] rounded-lg flex items-center justify-center text-white relative overflow-hidden group">
               <div className="absolute inset-0 bg-white/20 -translate-x-full group-hover:translate-x-full transition-transform duration-700 ease-out"></div>
-              <span className="material-icons-outlined text-2xl">school</span>
+              {favicon ? (
+                /* eslint-disable-next-line @next/next/no-img-element */
+                <img src={favicon} alt="Website Logo" className="w-10 h-10 object-contain" />
+              ) : (
+                <span className="material-icons-outlined text-2xl">school</span>
+              )}
             </div>
             <div className="flex flex-col">
               <span className="font-bold text-2xl text-[#454545] leading-none">

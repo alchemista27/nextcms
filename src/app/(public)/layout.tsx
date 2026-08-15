@@ -15,6 +15,7 @@ export default async function PublicLayout({
         in: [
           "general_siteTitle",
           "general_siteDescription",
+          "general_favicon",
           "contact_phone",
           "contact_email",
           "contact_address",
@@ -35,6 +36,7 @@ export default async function PublicLayout({
     <div className="flex flex-col min-h-screen bg-[#F7F8F8] font-sans selection:bg-[#0f7f6d] selection:text-white">
       <PublicHeader
         siteName={settings["general_siteTitle"]}
+        favicon={settings["general_favicon"]}
         phone={settings["contact_phone"]}
         email={settings["contact_email"]}
         address={settings["contact_address"]}
@@ -50,6 +52,7 @@ export default async function PublicLayout({
       <PublicFooter
         siteName={settings["general_siteTitle"]}
         siteDescription={settings["general_siteDescription"]}
+        favicon={settings["general_favicon"]}
         phone={settings["contact_phone"]}
         email={settings["contact_email"]}
         address={settings["contact_address"]}
