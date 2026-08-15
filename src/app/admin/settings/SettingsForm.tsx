@@ -71,7 +71,12 @@ export function SettingsForm({ initialData, fields }: SettingsFormProps) {
     setError(null);
     setSuccess(false);
 
-    const result = await saveSettingsAction(formData);
+    const data: Record<string, string> = {};
+    fields.forEach((f) => {
+      data[f.key] = (formData.get(f.key) as string) || "";
+    });
+
+    const result = await saveSettingsAction(data);
     
     if (result?.error) {
       setError(result.error);

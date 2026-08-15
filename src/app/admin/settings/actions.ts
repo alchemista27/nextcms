@@ -5,23 +5,16 @@ import { requireAuth } from "@/lib/auth";
 import { SettingsFormSchema } from "@/lib/validations/sprint6";
 import { revalidatePath } from "next/cache";
 
-export async function saveSettingsAction(formData: FormData) {
+export async function saveSettingsAction(data: Record<string, string>) {
   await requireAuth(["ADMIN"]);
 
-  const rawData: Record<string, string> = {};
-  formData.forEach((value, key) => {
-    if (typeof value === "string" && !key.startsWith("$ACTION")) {
-      rawData[key] = value;
-    }
-  });
-
-  const parsed = SettingsFormSchema.safeParse(rawData);
+  const parsed = SettingsFormSchema.safeParse(data);
   if (!parsed.success) return { error: "Invalid data format." };
 
-  const data = parsed.data;
+  const validData = parsed.data;
   
   // Upsert all settings
-  const promises = Object.entries(data).map(([key, value]) =>
+  const promises = Object.entries(validData).map(([key, value]) =>
     prisma.siteSetting.upsert({
       where: { key },
       update: { value },
