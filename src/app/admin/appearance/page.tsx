@@ -13,6 +13,7 @@ export default async function AppearancePage() {
     "theme:vision",
     "theme:stats",
     "theme:cta",
+    "theme:chairman",
   ];
 
   const appearanceData = await prisma.appearance.findMany({
@@ -46,6 +47,18 @@ export default async function AppearancePage() {
         />
         
         <AppearanceForm
+          sectionKey="theme:chairman"
+          title="Sambutan Ketua Yayasan"
+          initialData={configMap["theme:chairman"] || {}}
+          fields={[
+            { key: "heading", label: "Heading", type: "text" },
+            { key: "message", label: "Message / Sambutan", type: "textarea" },
+            { key: "name", label: "Chairman Name", type: "text" },
+            { key: "imageUrl", label: "Photo / Image", type: "image" },
+          ]}
+        />
+        
+        <AppearanceForm
           sectionKey="theme:about"
           title="About Section"
           initialData={configMap["theme:about"] || {}}
@@ -59,27 +72,17 @@ export default async function AppearancePage() {
         <AppearanceForm
           sectionKey="theme:stats"
           title="Statistics Section"
-          initialData={configMap["theme:stats"] || {}}
+          initialData={configMap["theme:stats"] || { items: [] }}
           fields={[
-            { key: "stat1_label", label: "Stat 1 Label", type: "text" },
-            { key: "stat1_value", label: "Stat 1 Value", type: "text" },
-            { key: "stat2_label", label: "Stat 2 Label", type: "text" },
-            { key: "stat2_value", label: "Stat 2 Value", type: "text" },
-            { key: "stat3_label", label: "Stat 3 Label", type: "text" },
-            { key: "stat3_value", label: "Stat 3 Value", type: "text" },
+            { key: "items", label: "Statistics Items", type: "dynamic-list" },
           ]}
         />
         <AppearanceForm
           sectionKey="theme:features"
           title="Features Section (Info Boxes)"
-          initialData={configMap["theme:features"] || {}}
+          initialData={configMap["theme:features"] || { items: [] }}
           fields={[
-            { key: "box1_title", label: "Box 1 Title", type: "text" },
-            { key: "box1_desc", label: "Box 1 Description", type: "textarea" },
-            { key: "box2_title", label: "Box 2 Title", type: "text" },
-            { key: "box2_desc", label: "Box 2 Description", type: "textarea" },
-            { key: "box3_title", label: "Box 3 Title", type: "text" },
-            { key: "box3_desc", label: "Box 3 Description", type: "textarea" },
+            { key: "items", label: "Feature Items", type: "dynamic-list" },
           ]}
         />
 

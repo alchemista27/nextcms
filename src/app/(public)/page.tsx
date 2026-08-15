@@ -26,7 +26,7 @@ export default async function HomePage() {
     prisma.appearance.findMany({
       where: {
         key: {
-          in: ["theme:hero", "theme:features", "theme:about", "theme:stats", "theme:cta"],
+          in: ["theme:hero", "theme:features", "theme:chairman", "theme:about", "theme:stats", "theme:cta"],
         },
       },
     }),
@@ -91,44 +91,79 @@ export default async function HomePage() {
       {/* 2. OVERLAPPING INFO BOXES */}
       <section className="relative z-20 -mt-24 lg:-mt-32 pb-16">
         <div className="container mx-auto px-6 md:px-12">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {/* Box 1 */}
-            <div className="bg-white p-8 rounded-lg border-b-4 border-[#0f7f6d] shadow-lg hover:-translate-y-2 transition-transform">
-              <div className="w-16 h-16 bg-[#E3E8E7] text-[#0f7f6d] rounded-full flex items-center justify-center mb-6">
-                <span className="material-icons-outlined text-3xl">menu_book</span>
+          <div className={`grid grid-cols-1 gap-6 ${
+            (features.items?.length || 3) === 1 ? "md:grid-cols-1" :
+            (features.items?.length || 3) === 2 ? "md:grid-cols-2" :
+            "md:grid-cols-3"
+          }`}>
+            {(features.items && features.items.length > 0 ? features.items : [
+              { icon: "menu_book", label: "Quality Education", value: "We provide a comprehensive curriculum designed to challenge and inspire students to reach their full potential." },
+              { icon: "psychology", label: "Expert Teachers", value: "Our faculty consists of highly qualified, dedicated professionals who are passionate about teaching." },
+              { icon: "emoji_events", label: "Global Recognition", value: "Recognized for academic excellence and outstanding extracurricular achievements worldwide." }
+            ]).map((feature: any, i: number) => {
+              const isMiddle = i % 3 === 1; // Middle box gets the dark theme
+              return (
+                <div key={i} className={`${isMiddle ? 'bg-[#0f7f6d] text-white shadow-xl' : 'bg-white text-[#454545] border-b-4 border-[#0f7f6d] shadow-lg'} p-8 rounded-lg hover:-translate-y-2 transition-transform`}>
+                  <div className={`w-16 h-16 ${isMiddle ? 'bg-white/20 text-white' : 'bg-[#E3E8E7] text-[#0f7f6d]'} rounded-full flex items-center justify-center mb-6`}>
+                    <span className="material-icons-outlined text-3xl">{feature.icon || "star"}</span>
+                  </div>
+                  <h3 className="text-xl font-bold mb-3">{feature.label}</h3>
+                  <p className={`${isMiddle ? 'text-[#E3E8E7]/90' : 'text-gray-500'} mb-4 line-clamp-3`}>
+                    {feature.value}
+                  </p>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      </section>
+
+      {/* 3. SAMBUTAN KETUA YAYASAN */}
+      <section className="py-16 lg:py-24 bg-white relative overflow-hidden">
+        <div className="container mx-auto px-6 md:px-12">
+          <div className="flex flex-col lg:flex-row items-center gap-12 lg:gap-20">
+            {/* Image Side */}
+            <div className="w-full lg:w-5/12">
+              <div className="relative">
+                <div className="absolute inset-0 bg-[#0f7f6d] translate-x-4 translate-y-4 rounded-xl -z-10"></div>
+                <img
+                  src={configMap["theme:chairman"]?.imageUrl || "https://images.unsplash.com/photo-1560250097-0b93528c311a?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"}
+                  alt="Ketua Yayasan"
+                  className="rounded-xl w-full h-auto object-cover shadow-lg aspect-[3/4]"
+                />
+                <div className="absolute -bottom-6 -right-6 bg-white p-4 rounded-lg shadow-xl border border-gray-100 hidden md:block">
+                  <p className="font-bold text-[#454545] text-lg">{configMap["theme:chairman"]?.name || "Bpk. H. Ahmad Fulan, M.Pd"}</p>
+                  <p className="text-[#0f7f6d] font-medium text-sm">Ketua Yayasan Alfida</p>
+                </div>
               </div>
-              <h3 className="text-xl font-bold text-[#454545] mb-3">{features.box1_title || "Quality Education"}</h3>
-              <p className="text-gray-500 mb-4 line-clamp-3">
-                {features.box1_desc || "We provide a comprehensive curriculum designed to challenge and inspire students to reach their full potential."}
-              </p>
             </div>
 
-            {/* Box 2 */}
-            <div className="bg-[#0f7f6d] p-8 rounded-lg shadow-xl text-white hover:-translate-y-2 transition-transform">
-              <div className="w-16 h-16 bg-white/20 text-white rounded-full flex items-center justify-center mb-6">
-                <span className="material-icons-outlined text-3xl">psychology</span>
+            {/* Content Side */}
+            <div className="w-full lg:w-7/12">
+              <div className="flex items-center gap-2 text-[#0f7f6d] font-semibold mb-2 uppercase tracking-widest text-sm">
+                <span className="w-8 h-0.5 bg-[#0f7f6d]"></span> Sambutan <span className="w-8 h-0.5 bg-[#0f7f6d]"></span>
               </div>
-              <h3 className="text-xl font-bold mb-3">{features.box2_title || "Expert Teachers"}</h3>
-              <p className="text-[#E3E8E7]/90 mb-4 line-clamp-3">
-                {features.box2_desc || "Our faculty consists of highly qualified, dedicated professionals who are passionate about teaching."}
-              </p>
-            </div>
+              <h2 className="text-3xl md:text-4xl font-bold text-[#454545] mb-6 leading-tight">
+                {configMap["theme:chairman"]?.heading || "Membangun Generasi Rabbani yang Cerdas dan Berakhlak Mulia"}
+              </h2>
+              
+              <div className="relative">
+                <span className="absolute -top-4 -left-6 text-6xl text-gray-200 material-icons-outlined opacity-50 font-serif">format_quote</span>
+                <div className="text-gray-600 mb-6 leading-relaxed whitespace-pre-wrap relative z-10 pl-6 text-lg italic">
+                  {configMap["theme:chairman"]?.message || "Bismillahirrohmanirrohim. Puji syukur ke hadirat Allah SWT, Yayasan Alfida terus berkomitmen untuk memberikan layanan pendidikan terbaik. Kami percaya bahwa pendidikan sejati tidak hanya mengasah kecerdasan intelektual, tetapi juga membangun karakter dan akhlak mulia. Melalui unit-unit pendidikan di lingkungan Yayasan Alfida, kami bertekad melahirkan generasi yang tidak hanya siap menghadapi tantangan global, tetapi juga teguh memegang nilai-nilai agama."}
+                </div>
+              </div>
 
-            {/* Box 3 */}
-            <div className="bg-white p-8 rounded-lg shadow-xl border-b-4 border-[#0f7f6d] hover:-translate-y-2 transition-transform">
-              <div className="w-16 h-16 bg-[#E3E8E7] text-[#0f7f6d] rounded-full flex items-center justify-center mb-6">
-                <span className="material-icons-outlined text-3xl">emoji_events</span>
+              <div className="md:hidden mt-6 pb-2 border-b border-gray-100 inline-block">
+                <p className="font-bold text-[#454545] text-lg">{configMap["theme:chairman"]?.name || "Bpk. H. Ahmad Fulan, M.Pd"}</p>
+                <p className="text-[#0f7f6d] font-medium text-sm">Ketua Yayasan Alfida</p>
               </div>
-              <h3 className="text-xl font-bold text-[#454545] mb-3">{features.box3_title || "Global Recognition"}</h3>
-              <p className="text-gray-500 mb-4 line-clamp-3">
-                {features.box3_desc || "Recognized for academic excellence and outstanding extracurricular achievements worldwide."}
-              </p>
             </div>
           </div>
         </div>
       </section>
 
-      {/* 3. ABOUT US SECTION */}
+      {/* 4. ABOUT US SECTION */}
       <section className="py-16 lg:py-24 bg-[#F7F8F8] overflow-hidden">
         <div className="container mx-auto px-6 md:px-12">
           <div className="flex flex-col lg:flex-row items-center gap-16">
@@ -198,27 +233,24 @@ export default async function HomePage() {
       {/* 4. STATISTICS SECTION */}
       <section className="py-20 relative bg-fixed bg-center bg-cover" style={{ backgroundImage: "linear-gradient(rgba(15, 127, 109, 0.9), rgba(15, 127, 109, 0.9)), url('https://images.unsplash.com/photo-1577896851231-70ef18881754?ixlib=rb-4.0.3')" }}>
         <div className="container mx-auto px-6 md:px-12 relative z-10">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center divide-x-0 md:divide-x divide-white/20">
-            <div className="flex flex-col items-center">
-              <span className="material-icons-outlined text-5xl text-[#E3E8E7] mb-4">groups</span>
-              <h3 className="text-5xl font-bold text-white mb-2">{stats.stat1_value || "2500"}</h3>
-              <p className="text-[#E3E8E7] font-medium uppercase tracking-widest text-sm">{stats.stat1_label || "Students Enrolled"}</p>
-            </div>
-            <div className="flex flex-col items-center">
-              <span className="material-icons-outlined text-5xl text-[#E3E8E7] mb-4">school</span>
-              <h3 className="text-5xl font-bold text-white mb-2">{stats.stat2_value || "150"}</h3>
-              <p className="text-[#E3E8E7] font-medium uppercase tracking-widest text-sm">{stats.stat2_label || "Certified Teachers"}</p>
-            </div>
-            <div className="flex flex-col items-center">
-              <span className="material-icons-outlined text-5xl text-[#E3E8E7] mb-4">emoji_events</span>
-              <h3 className="text-5xl font-bold text-white mb-2">{stats.stat3_value || "85"}</h3>
-              <p className="text-[#E3E8E7] font-medium uppercase tracking-widest text-sm">{stats.stat3_label || "Awards Won"}</p>
-            </div>
-            <div className="flex flex-col items-center">
-              <span className="material-icons-outlined text-5xl text-[#E3E8E7] mb-4">apartment</span>
-              <h3 className="text-5xl font-bold text-white mb-2">45</h3>
-              <p className="text-[#E3E8E7] font-medium uppercase tracking-widest text-sm">Modern Classrooms</p>
-            </div>
+          <div className={`grid grid-cols-2 gap-8 text-center divide-x-0 md:divide-x divide-white/20 ${
+            (stats.items?.length || 4) === 1 ? "md:grid-cols-1" :
+            (stats.items?.length || 4) === 2 ? "md:grid-cols-2" :
+            (stats.items?.length || 4) === 3 ? "md:grid-cols-3" :
+            "md:grid-cols-4"
+          }`}>
+            {(stats.items && stats.items.length > 0 ? stats.items : [
+              { icon: "groups", value: "2500", label: "Students Enrolled" },
+              { icon: "school", value: "150", label: "Certified Teachers" },
+              { icon: "emoji_events", value: "85", label: "Awards Won" },
+              { icon: "apartment", value: "45", label: "Modern Classrooms" },
+            ]).map((stat: any, i: number) => (
+              <div key={i} className="flex flex-col items-center">
+                <span className="material-icons-outlined text-5xl text-[#E3E8E7] mb-4">{stat.icon || "star"}</span>
+                <h3 className="text-5xl font-bold text-white mb-2">{stat.value}</h3>
+                <p className="text-[#E3E8E7] font-medium uppercase tracking-widest text-sm">{stat.label}</p>
+              </div>
+            ))}
           </div>
         </div>
       </section>

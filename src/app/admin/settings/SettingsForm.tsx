@@ -1,9 +1,11 @@
 "use client";
 
 import { useState } from "react";
-import { saveSettingsAction } from "./actions";
-import { MediaPicker } from "@/components/admin/media-picker";
+import dynamic from "next/dynamic";
 import type { Media } from "@prisma/client";
+import { saveSettingsAction } from "./actions";
+
+const MediaPicker = dynamic(() => import("@/components/admin/media-picker").then(m => m.MediaPicker), { ssr: false });
 
 interface SettingsFormProps {
   initialData: Record<string, string>;

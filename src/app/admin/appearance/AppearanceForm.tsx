@@ -1,15 +1,17 @@
 "use client";
 
 import { useState } from "react";
-import { saveAppearanceAction } from "./actions";
-import { MediaPicker } from "@/components/admin/media-picker";
+import dynamic from "next/dynamic";
 import type { Media } from "@prisma/client";
+import { saveAppearanceAction } from "./actions";
+
+const MediaPicker = dynamic(() => import("@/components/admin/media-picker").then(m => m.MediaPicker), { ssr: false });
 
 interface AppearanceFormProps {
   sectionKey: string;
   title: string;
   initialData: Record<string, any>;
-  fields: { key: string; label: string; type: "text" | "textarea" | "image" }[];
+  fields: { key: string; label: string; type: "text" | "textarea" | "image" | "dynamic-list" }[];
 }
 
 function ImageField({ name, initialUrl }: { name: string; initialUrl: string }) {
@@ -61,6 +63,63 @@ function ImageField({ name, initialUrl }: { name: string; initialUrl: string }) 
   );
 }
 
+function DynamicListField({ name, initialData }: { name: string; initialData: any }) {
+  const [items, setItems] = useState<{ label: string; value: string; icon: string }[]>(
+    Array.isArray(initialData) ? initialData : []
+  );
+
+  function addItem() {
+    setItems([...items, { label: "", value: "", icon: "star" }]);
+  }
+
+  function removeItem(index: number) {
+    setItems(items.filter((_, i) => i !== index));
+  }
+
+  function updateItem(index: number, key: keyof typeof items[0], value: string) {
+    const newItems = [...items];
+    newItems[index][key] = value;
+    setItems(newItems);
+  }
+
+  return (
+    <div className="flex flex-col gap-3">
+      <input type="hidden" name={name} value={JSON.stringify(items)} />
+      {items.map((item, index) => (
+        <div key={index} className="flex gap-2 items-center p-3 border border-border rounded-lg bg-surface">
+          <input
+            type="text"
+            value={item.icon}
+            onChange={(e) => updateItem(index, "icon", e.target.value)}
+            placeholder="Icon (e.g. groups)"
+            className="w-24 p-2 border border-border rounded text-sm outline-none focus:ring-1 focus:ring-primary"
+          />
+          <input
+            type="text"
+            value={item.value}
+            onChange={(e) => updateItem(index, "value", e.target.value)}
+            placeholder="Value (e.g. 2500)"
+            className="w-1/3 p-2 border border-border rounded text-sm outline-none focus:ring-1 focus:ring-primary"
+          />
+          <input
+            type="text"
+            value={item.label}
+            onChange={(e) => updateItem(index, "label", e.target.value)}
+            placeholder="Label (e.g. Students Enrolled)"
+            className="flex-1 p-2 border border-border rounded text-sm outline-none focus:ring-1 focus:ring-primary"
+          />
+          <button type="button" onClick={() => removeItem(index)} className="text-danger hover:bg-red-50 p-2 rounded">
+            <span className="material-icons-outlined text-sm">delete</span>
+          </button>
+        </div>
+      ))}
+      <button type="button" onClick={addItem} className="self-start text-sm px-3 py-1.5 border border-border rounded hover:bg-bg transition text-text-primary flex items-center gap-1">
+        <span className="material-icons-outlined text-[16px]">add</span> Add Item
+      </button>
+    </div>
+  );
+}
+
 export function AppearanceForm({ sectionKey, title, initialData, fields }: AppearanceFormProps) {
   const [pending, setPending] = useState(false);
   const [success, setSuccess] = useState(false);
@@ -73,7 +132,16 @@ export function AppearanceForm({ sectionKey, title, initialData, fields }: Appea
 
     const data: Record<string, any> = {};
     fields.forEach((f) => {
-      data[f.key] = formData.get(f.key) as string;
+      const val = formData.get(f.key) as string;
+      if (f.type === "dynamic-list") {
+        try {
+          data[f.key] = JSON.parse(val || "[]");
+        } catch {
+          data[f.key] = [];
+        }
+      } else {
+        data[f.key] = val;
+      }
     });
 
     const result = await saveAppearanceAction(sectionKey, data);
@@ -92,7 +160,7 @@ export function AppearanceForm({ sectionKey, title, initialData, fields }: Appea
       <h3 className="font-semibold text-lg text-text-primary mb-4 pb-2 border-b border-border">{title}</h3>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-5 mb-5">
         {fields.map((field) => (
-          <div key={field.key} className={field.type === "textarea" ? "md:col-span-2" : ""}>
+          <div key={field.key} className={field.type === "textarea" || field.type === "dynamic-list" ? "md:col-span-2" : ""}>
             <label className="block text-sm font-medium text-text-primary mb-1">{field.label}</label>
             {field.type === "textarea" ? (
               <textarea
@@ -105,6 +173,15 @@ export function AppearanceForm({ sectionKey, title, initialData, fields }: Appea
               <ImageField 
                 name={field.key} 
                 initialUrl={initialData[field.key] || ""} 
+              />
+            ) : field.type === "dynamic-list" ? (
+              <DynamicListField
+                name={field.key}
+                initialData={
+                  typeof initialData[field.key] === "string" 
+                    ? JSON.parse(initialData[field.key] || "[]") 
+                    : initialData[field.key]
+                }
               />
             ) : (
               <input
