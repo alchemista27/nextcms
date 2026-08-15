@@ -39,7 +39,7 @@ gantt
 
     section Polish
     Sprint 9 (Search, SEO, Polish)   :done, s9, after s8, 2d
-    Sprint 10 (Testing & Deploy)     :s10, after s9, 2d
+    Sprint 10 (Testing & Deploy)     :done, s10, after s9, 2d
 ```
 
 ---
@@ -270,7 +270,7 @@ gantt
 
 ---
 
-## Sprint 10 — Testing & Deployment
+## Sprint 10 — Testing & Deployment ✅
 
 > **Fokus**: Testing dan deploy ke production.
 
@@ -321,4 +321,4 @@ gantt
 | Sprint 7 | Halaman Publik P0 (Home, About, Contact, Blog, Post) | ✅ Selesai |
 | Sprint 8 | Halaman Publik P1 (Gallery, Team, Testimony, 404) | ✅ Selesai |
 | Sprint 9 | Search, SEO, Performance, Polish | ✅ Selesai |
-| Sprint 10 | Testing & Deployment | ⬜ Belum |
+| Sprint 10 | Testing & Deployment | ✅ Selesai |

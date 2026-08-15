@@ -148,3 +148,17 @@
   - Menyuntikkan perintah pembatalan cache ISR `revalidatePath('/', 'layout')` ke seluruh 9 endpoint Server Actions Admin untuk menjamin setiap perubahan langsung terlihat seketika di *frontend*.
   - Menyiapkan mode halaman *Coming Soon* `/coming-soon` dengan efek countdown interaktif dan animasi TailwindJS CSS.
 - **Commit Message**: `feat(seo): implement sprint 9 search, sitemap, seo panel, and isr`
+
+---
+
+- **Tanggal**: 15 Agustus 2026
+- **Sprint**: Sprint 10 — Testing & Deployment ✅
+- **Progress**:
+  - Menginstal `vitest` dan `@playwright/test` sebagai *framework testing* utama.
+  - Membangun *unit test* spesifik pada `src/lib/auth.test.ts` untuk memverifikasi fungsionalitas logika autentikasi dan penanganan autorisasi berbasis peran admin.
+  - Membangun *unit test* Server Action pada `src/app/admin/posts/actions.test.ts` yang memastikan ketahanan (robustness) validasi Form Zod dan generator UUID Prisma.
+  - Membangun *unit test* proteksi API `src/app/api/upload/route.test.ts` untuk menangkal payload upload kosong.
+  - Menyusun 3 buah shell skenario peramban *end-to-end* (E2E) pada direktori `tests/e2e` guna melatih *flow* CRUD esensial.
+  - Membuat `docs/DEPLOYMENT.md` beserta `env.example` sebagai dokumentasi standar devops yang mendemonstrasikan peluncuran mandiri ke Vercel dan Supabase.
+  - Verifikasi kompatibilitas tipe (*Typechecking*) dan kompilasi *build production* terkonfirmasi sempurna (0 error).
+- **Commit Message**: `feat(test): implement sprint 10 automated testing suite and deployment guide`
