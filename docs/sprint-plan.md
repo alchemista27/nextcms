@@ -38,7 +38,7 @@ gantt
     Sprint 8 (Halaman Publik P1)     :done, s8, after s7, 2d
 
     section Polish
-    Sprint 9 (Search, SEO, Polish)   :s9, after s8, 2d
+    Sprint 9 (Search, SEO, Polish)   :done, s9, after s8, 2d
     Sprint 10 (Testing & Deploy)     :s10, after s9, 2d
 ```
 
@@ -245,7 +245,7 @@ gantt
 
 ---
 
-## Sprint 9 — Search, SEO & Polish
+## Sprint 9 — Search, SEO & Polish ✅
 
 > **Fokus**: Fitur pencarian, SEO lanjutan, dan polishing.
 
@@ -320,5 +320,5 @@ gantt
 | Sprint 6 | Settings, Menus, Theme Management | ✅ Selesai |
 | Sprint 7 | Halaman Publik P0 (Home, About, Contact, Blog, Post) | ✅ Selesai |
 | Sprint 8 | Halaman Publik P1 (Gallery, Team, Testimony, 404) | ✅ Selesai |
-| Sprint 9 | Search, SEO, Performance, Polish | ⬜ Belum |
+| Sprint 9 | Search, SEO, Performance, Polish | ✅ Selesai |
 | Sprint 10 | Testing & Deployment | ⬜ Belum |

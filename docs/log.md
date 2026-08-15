@@ -133,3 +133,18 @@
   - Memastikan *type safety* pada properti HTML standar (seperti `alt`) untuk meminimalisir potensi error saat proses *build*.
   - Melakukan kompilasi (`pnpm build`) dengan status *exit code 0* yang memverifikasi 100% rute statis & dinamis berjalan mulus.
 - **Commit Message**: `feat(public): complete sprint 7 and sprint 8 implementation`
+
+---
+
+- **Tanggal**: 15 Agustus 2026
+- **Sprint**: Sprint 9 — Search, SEO, Performance & Polish ✅
+- **Progress**:
+  - Membangun antarmuka `/search?q=...` dengan fungsi pencarian global di tabel Post dan profil Staff secara simultan *case-insensitive*.
+  - Mengimplementasikan standar SEO via `sitemap.ts` (Dynamic Sitemap Next.js) untuk perayapan otomatis semua route statis dan dinamis.
+  - Memasang aturan `robots.ts` agar mesin pencari tidak mengindeks halaman panel admin (`/admin/`).
+  - Menyempurnakan form Editor di `/admin/posts` dengan Yoast-style panel untuk live preview snippet Google Search dan *character counters*.
+  - Menekan waktu pemuatan awal panel Editor dengan *Lazy-Loading* komponen editor TipTap via `next/dynamic`.
+  - Migrasi seluruh *tags image standard* HTML di layout publik ke komponen optimasi `<Image />` dari library `next/image`.
+  - Menyuntikkan perintah pembatalan cache ISR `revalidatePath('/', 'layout')` ke seluruh 9 endpoint Server Actions Admin untuk menjamin setiap perubahan langsung terlihat seketika di *frontend*.
+  - Menyiapkan mode halaman *Coming Soon* `/coming-soon` dengan efek countdown interaktif dan animasi TailwindJS CSS.
+- **Commit Message**: `feat(seo): implement sprint 9 search, sitemap, seo panel, and isr`
