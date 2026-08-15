@@ -34,8 +34,8 @@ gantt
     Sprint 6 (Settings & Menus)      :done, s6, after s5, 1d
 
     section Public Frontend
-    Sprint 7 (Halaman Publik P0)     :s7, after s6, 2d
-    Sprint 8 (Halaman Publik P1)     :s8, after s7, 2d
+    Sprint 7 (Halaman Publik P0)     :done, s7, after s6, 2d
+    Sprint 8 (Halaman Publik P1)     :done, s8, after s7, 2d
 
     section Polish
     Sprint 9 (Search, SEO, Polish)   :s9, after s8, 2d
@@ -200,7 +200,7 @@ gantt
 
 ---
 
-## Sprint 7 — Halaman Publik P0
+## Sprint 7 — Halaman Publik P0 ✅
 
 > **Fokus**: Halaman publik prioritas utama.
 
@@ -223,7 +223,7 @@ gantt
 
 ---
 
-## Sprint 8 — Halaman Publik P1
+## Sprint 8 — Halaman Publik P1 ✅
 
 > **Fokus**: Halaman publik pendukung.
 
@@ -318,7 +318,7 @@ gantt
 | Sprint 4 | Media Library, Categories, Tags | ✅ Selesai |
 | Sprint 5 | Team, Gallery, Testimonials, Revisions | ✅ Selesai |
 | Sprint 6 | Settings, Menus, Theme Management | ✅ Selesai |
-| Sprint 7 | Halaman Publik P0 (Home, About, Contact, Blog, Post) | ⬜ Belum |
-| Sprint 8 | Halaman Publik P1 (Gallery, Team, Testimony, 404) | ⬜ Belum |
+| Sprint 7 | Halaman Publik P0 (Home, About, Contact, Blog, Post) | ✅ Selesai |
+| Sprint 8 | Halaman Publik P1 (Gallery, Team, Testimony, 404) | ✅ Selesai |
 | Sprint 9 | Search, SEO, Performance, Polish | ⬜ Belum |
 | Sprint 10 | Testing & Deployment | ⬜ Belum |

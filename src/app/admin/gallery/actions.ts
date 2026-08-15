@@ -40,6 +40,7 @@ export async function saveAlbumAction(id: string | null, formData: FormData) {
     await prisma.galleryAlbum.create({ data: { ...data, id: crypto.randomUUID() } });
   }
 
+  revalidatePath('/', 'layout');
   revalidatePath("/admin/gallery");
   return { success: true };
 }
@@ -47,6 +48,7 @@ export async function saveAlbumAction(id: string | null, formData: FormData) {
 export async function deleteAlbumAction(id: string) {
   await requireAuth(["ADMIN"]);
   await prisma.galleryAlbum.delete({ where: { id } });
+  revalidatePath('/', 'layout');
   revalidatePath("/admin/gallery");
 }
 
@@ -74,6 +76,7 @@ export async function saveGalleryImageAction(id: string | null, formData: FormDa
     await prisma.galleryImage.create({ data: { id: crypto.randomUUID(), title: data.title, description: data.description, url: data.url, albumId: data.albumId, order: data.order } });
   }
 
+  revalidatePath('/', 'layout');
   revalidatePath("/admin/gallery");
   return { success: true };
 }
@@ -81,5 +84,6 @@ export async function saveGalleryImageAction(id: string | null, formData: FormDa
 export async function deleteGalleryImageAction(id: string) {
   await requireAuth(["ADMIN"]);
   await prisma.galleryImage.delete({ where: { id } });
+  revalidatePath('/', 'layout');
   revalidatePath("/admin/gallery");
 }

@@ -30,6 +30,7 @@ export async function saveTestimonialAction(id: string | null, formData: FormDat
     await prisma.testimonial.create({ data: { ...data, id: crypto.randomUUID() } });
   }
 
+  revalidatePath('/', 'layout');
   revalidatePath("/admin/testimonials");
   return { success: true };
 }
@@ -37,5 +38,6 @@ export async function saveTestimonialAction(id: string | null, formData: FormDat
 export async function deleteTestimonialAction(id: string) {
   await requireAuth(["ADMIN"]);
   await prisma.testimonial.delete({ where: { id } });
+  revalidatePath('/', 'layout');
   revalidatePath("/admin/testimonials");
 }

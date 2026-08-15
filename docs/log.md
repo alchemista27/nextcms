@@ -120,3 +120,16 @@
   - Menyematkan route untuk Settings, Menus, dan Appearance ke dalam *Sidebar* Admin.
   - Verifikasi kompatibilitas dengan eksekusi `pnpm build` sukses secara keseluruhan.
 - **Commit Message**: `feat: sprint 6 - site settings, dynamic menus, appearance theme config, and implicit many-to-many schema fix`
+
+---
+
+- **Tanggal**: 15 Agustus 2026
+- **Sprint**: Sprint 7 & 8 — Halaman Publik (Frontend) ✅
+- **Progress**:
+  - Menyelesaikan implementasi UI halaman beranda (`src/app/(public)/page.tsx`) dengan menambahkan seksi *Gallery & Achievements* serta *Call-to-Action* yang sepenuhnya dinamis dari database.
+  - Membangun halaman profil detail guru/staff secara dinamis di `src/app/(public)/team/[slug]/page.tsx` yang mendukung *rich-text bio* dan menampilkan daftar staff lainnya.
+  - Membangun halaman testimoni publik di `src/app/(public)/testimony/page.tsx` dengan variasi desain kartu *dark-mode* berselang-seling (masonry-style) sesuai mockup HTML asli.
+  - Membangun Global 404 Error page di `src/app/not-found.tsx` dengan animasi floating kustom berbasis Tailwind dan *simplified header* independen.
+  - Memastikan *type safety* pada properti HTML standar (seperti `alt`) untuk meminimalisir potensi error saat proses *build*.
+  - Melakukan kompilasi (`pnpm build`) dengan status *exit code 0* yang memverifikasi 100% rute statis & dinamis berjalan mulus.
+- **Commit Message**: `feat(public): complete sprint 7 and sprint 8 implementation`

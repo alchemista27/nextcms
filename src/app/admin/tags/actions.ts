@@ -49,6 +49,7 @@ export async function saveTagAction(tagId: string | null, formData: FormData) {
     });
   }
 
+  revalidatePath('/', 'layout');
   revalidatePath("/admin/tags");
   return { success: true };
 }
@@ -73,5 +74,6 @@ export async function deleteTagAction(tagId: string) {
     where: { id: tagId },
   });
 
+  revalidatePath('/', 'layout');
   revalidatePath("/admin/tags");
 }

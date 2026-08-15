@@ -14,6 +14,7 @@ export async function deletePostAction(postId: string) {
     where: { id: postId },
   });
 
+  revalidatePath('/', 'layout');
   revalidatePath("/admin/posts");
 }
 
@@ -101,6 +102,7 @@ export async function savePostAction(postId: string | null, formData: FormData) 
     console.error("Failed to save revision:", revErr);
   }
 
+  revalidatePath('/', 'layout');
   revalidatePath("/admin/posts");
   redirect("/admin/posts");
 }

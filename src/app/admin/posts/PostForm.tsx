@@ -1,9 +1,11 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import { TipTapEditor } from "@/components/editor/TipTapEditor";
-import { MediaPicker } from "@/components/admin/media-picker";
+import { useState, useEffect, useMemo } from "react";
+import dynamic from "next/dynamic";
 import { savePostAction } from "./actions";
+
+const TipTapEditor = dynamic(() => import("@/components/editor/TipTapEditor").then(m => m.TipTapEditor), { ssr: false, loading: () => <div className="h-96 bg-gray-100 animate-pulse rounded-xl border border-gray-200 flex items-center justify-center text-gray-400">Loading Editor...</div> });
+const MediaPicker = dynamic(() => import("@/components/admin/media-picker").then(m => m.MediaPicker), { ssr: false });
 import Link from "next/link";
 import type { Post } from "@prisma/client";
 
@@ -204,29 +206,52 @@ export function PostForm({ initialData }: PostFormProps) {
           )}
         </div>
 
-        <div className="bg-surface border border-border rounded-xl p-5 shadow-sm">
-          <h3 className="font-semibold text-text-primary mb-4 pb-2 border-b border-border">SEO Settings</h3>
+        <div className="bg-surface border border-border rounded-xl p-6">
+          <h3 className="text-lg font-semibold mb-4 text-text-primary">Search Engine Optimization</h3>
           
-          <div className="mb-4">
-            <label className="block text-sm text-text-secondary mb-1">Meta Title</label>
-            <input
-              type="text"
-              value={metaTitle}
-              onChange={(e) => setMetaTitle(e.target.value)}
-              className="w-full p-2 border border-border rounded text-sm focus:outline-none focus:border-primary"
-              placeholder={title || "Title"}
-            />
+          <div className="mb-6 bg-white border border-gray-200 rounded p-4 shadow-sm">
+            <h4 className="text-xs uppercase tracking-wider text-gray-500 mb-2 font-bold">Google Preview</h4>
+            <div className="flex flex-col">
+              <span className="text-sm text-green-700 truncate">{typeof window !== "undefined" ? window.location.origin : "https://smartschool.edu"}/blog/{slug || "post-slug"}</span>
+              <span className="text-xl text-[#1a0dab] hover:underline cursor-pointer truncate">{metaTitle || title || "Please add a title"}</span>
+              <span className="text-sm text-[#4d5156] line-clamp-2 mt-1">{metaDescription || excerpt || "Please provide a meta description or excerpt for this post. It helps users understand what your content is about before clicking."}</span>
+            </div>
           </div>
 
-          <div className="mb-4">
-            <label className="block text-sm font-medium text-text-primary mb-1">Meta Description</label>
-            <textarea
-              value={metaDescription}
-              onChange={(e) => setMetaDescription(e.target.value)}
-              className="w-full p-2.5 border border-border rounded-lg bg-bg focus:ring-1 focus:ring-primary outline-none resize-y"
-              rows={3}
-              placeholder="Brief description for search engines"
-            ></textarea>
+          <div className="flex flex-col gap-4">
+            <div className="flex flex-col gap-1">
+              <div className="flex justify-between">
+                <label className="text-sm text-text-secondary font-medium">Meta Title</label>
+                <span className={`text-xs ${metaTitle.length > 60 ? "text-red-500" : (metaTitle.length > 40 ? "text-green-500" : "text-gray-400")}`}>{metaTitle.length}/60</span>
+              </div>
+              <input
+                type="text"
+                value={metaTitle}
+                onChange={(e) => setMetaTitle(e.target.value)}
+                className="w-full p-2 border border-border rounded focus:outline-none focus:border-primary"
+                placeholder="SEO optimized title..."
+              />
+              <div className="h-1 w-full bg-gray-200 rounded mt-1 overflow-hidden">
+                <div className={`h-full ${metaTitle.length > 60 ? "bg-red-500" : (metaTitle.length > 40 ? "bg-green-500" : "bg-yellow-400")}`} style={{ width: `${Math.min(metaTitle.length / 60 * 100, 100)}%` }}></div>
+              </div>
+            </div>
+            
+            <div className="flex flex-col gap-1">
+              <div className="flex justify-between">
+                <label className="text-sm text-text-secondary font-medium">Meta Description</label>
+                <span className={`text-xs ${metaDescription.length > 160 ? "text-red-500" : (metaDescription.length > 120 ? "text-green-500" : "text-gray-400")}`}>{metaDescription.length}/160</span>
+              </div>
+              <textarea
+                value={metaDescription}
+                onChange={(e) => setMetaDescription(e.target.value)}
+                className="w-full p-2 border border-border rounded focus:outline-none focus:border-primary"
+                placeholder="Brief description for search results..."
+                rows={3}
+              />
+              <div className="h-1 w-full bg-gray-200 rounded mt-1 overflow-hidden">
+                <div className={`h-full ${metaDescription.length > 160 ? "bg-red-500" : (metaDescription.length > 120 ? "bg-green-500" : "bg-yellow-400")}`} style={{ width: `${Math.min(metaDescription.length / 160 * 100, 100)}%` }}></div>
+              </div>
+            </div>
           </div>
         </div>
       </div>

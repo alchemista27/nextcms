@@ -26,6 +26,7 @@ export async function saveMenuAction(id: string | null, formData: FormData) {
     await prisma.menu.create({ data: { ...data, id: menuId } });
   }
 
+  revalidatePath('/', 'layout');
   revalidatePath("/admin/menus");
   return { success: true, id: menuId };
 }
@@ -33,6 +34,7 @@ export async function saveMenuAction(id: string | null, formData: FormData) {
 export async function deleteMenuAction(id: string) {
   await requireAuth(["ADMIN"]);
   await prisma.menu.delete({ where: { id } });
+  revalidatePath('/', 'layout');
   revalidatePath("/admin/menus");
 }
 
@@ -61,6 +63,7 @@ export async function saveMenuItemAction(id: string | null, formData: FormData) 
     await prisma.menuItem.create({ data: { ...data, id: crypto.randomUUID() } });
   }
 
+  revalidatePath('/', 'layout');
   revalidatePath("/admin/menus");
   return { success: true };
 }
@@ -68,5 +71,6 @@ export async function saveMenuItemAction(id: string | null, formData: FormData) 
 export async function deleteMenuItemAction(id: string) {
   await requireAuth(["ADMIN"]);
   await prisma.menuItem.delete({ where: { id } });
+  revalidatePath('/', 'layout');
   revalidatePath("/admin/menus");
 }

@@ -51,6 +51,7 @@ export async function saveCategoryAction(categoryId: string | null, formData: Fo
     });
   }
 
+  revalidatePath('/', 'layout');
   revalidatePath("/admin/categories");
   return { success: true };
 }
@@ -84,5 +85,6 @@ export async function deleteCategoryAction(categoryId: string) {
     where: { id: categoryId },
   });
 
+  revalidatePath('/', 'layout');
   revalidatePath("/admin/categories");
 }

@@ -48,6 +48,7 @@ export async function saveTeamMemberAction(id: string | null, formData: FormData
     await prisma.teamMember.create({ data: { ...data, id: crypto.randomUUID() } });
   }
 
+  revalidatePath('/', 'layout');
   revalidatePath("/admin/team");
   return { success: true };
 }
@@ -55,5 +56,6 @@ export async function saveTeamMemberAction(id: string | null, formData: FormData
 export async function deleteTeamMemberAction(id: string) {
   await requireAuth(["ADMIN"]);
   await prisma.teamMember.delete({ where: { id } });
+  revalidatePath('/', 'layout');
   revalidatePath("/admin/team");
 }
