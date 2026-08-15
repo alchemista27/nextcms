@@ -56,32 +56,31 @@ export default async function HomePage() {
         <div className="container mx-auto px-6 md:px-12 relative z-10 text-center lg:text-left">
           <div className="w-full lg:w-2/3">
             <span className="inline-block px-4 py-1.5 bg-[#0f7f6d]/20 text-[#E3E8E7] font-semibold rounded border border-[#0f7f6d]/30 uppercase tracking-wider text-sm mb-6">
-              {hero.subheading || "Welcome to SMaRT School"}
+              {hero.subheading || "Selamat Datang di Yayasan Alfida"}
             </span>
             <h1 className="text-4xl lg:text-6xl xl:text-7xl font-bold text-white leading-[1.2] mb-6">
               {hero.heading || (
                 <>
-                  Empowering Students <br /> To Achieve <span className="text-[#E3E8E7]">Excellence</span>.
+                  Melahirkan Generasi <br /> Yang Cerdas & <span className="text-[#E3E8E7]">Berakhlak</span>.
                 </>
               )}
             </h1>
             <p className="text-lg text-gray-300 mb-10 max-w-xl mx-auto lg:mx-0">
-              A premier educational institution committed to academic excellence,
-              character development, and creating future leaders in a globally
-              competitive world.
+              Institusi pendidikan unggulan yang berkomitmen pada keunggulan akademik,
+              pembentukan karakter, dan melahirkan pemimpin masa depan.
             </p>
             <div className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4">
               <Link
                 href={hero.ctaLink || "/about"}
                 className="px-8 py-4 bg-[#0f7f6d] hover:bg-white hover:text-[#0f7f6d] text-white rounded font-bold transition-all shadow-lg w-full sm:w-auto text-center"
               >
-                {hero.ctaText || "Discover More"}
+                {hero.ctaText || "Pelajari Lebih Lanjut"}
               </Link>
               <Link
                 href="/contact"
                 className="px-8 py-4 bg-transparent border-2 border-white hover:bg-white text-white hover:text-[#454545] rounded font-bold transition-all w-full sm:w-auto text-center"
               >
-                Contact Us
+                Hubungi Kami
               </Link>
             </div>
           </div>
@@ -97,9 +96,9 @@ export default async function HomePage() {
             "md:grid-cols-3"
           }`}>
             {(features.items && features.items.length > 0 ? features.items : [
-              { icon: "menu_book", label: "Quality Education", value: "We provide a comprehensive curriculum designed to challenge and inspire students to reach their full potential." },
-              { icon: "psychology", label: "Expert Teachers", value: "Our faculty consists of highly qualified, dedicated professionals who are passionate about teaching." },
-              { icon: "emoji_events", label: "Global Recognition", value: "Recognized for academic excellence and outstanding extracurricular achievements worldwide." }
+              { icon: "menu_book", label: "Pendidikan Berkualitas", value: "Kami menyediakan kurikulum komprehensif yang dirancang untuk menantang dan menginspirasi siswa mencapai potensi maksimal mereka." },
+              { icon: "psychology", label: "Pengajar Ahli", value: "Fakultas kami terdiri dari para profesional yang sangat berkualitas, berdedikasi, dan bersemangat dalam mengajar." },
+              { icon: "emoji_events", label: "Pengakuan Global", value: "Diakui secara global atas keunggulan akademik dan prestasi ekstrakurikuler yang luar biasa." }
             ]).map((feature: any, i: number) => {
               const isMiddle = i % 3 === 1; // Middle box gets the dark theme
               return (
@@ -183,13 +182,13 @@ export default async function HomePage() {
 
             <div className="w-full lg:w-1/2">
               <div className="flex items-center gap-2 text-[#0f7f6d] font-semibold mb-2 uppercase tracking-widest text-sm">
-                <span className="w-8 h-0.5 bg-[#0f7f6d]"></span> About Our Institution
+                <span className="w-8 h-0.5 bg-[#0f7f6d]"></span> Tentang Institusi Kami
               </div>
               <h2 className="text-3xl md:text-4xl font-bold text-[#454545] mb-6 leading-tight whitespace-pre-wrap">
-                {about.heading || "We Are Creating Leaders\nFor Tomorrow's World"}
+                {about.heading || "Kami Menciptakan Pemimpin\nUntuk Dunia Masa Depan"}
               </h2>
               <p className="text-gray-600 mb-6 leading-relaxed whitespace-pre-wrap">
-                {about.content || "SMaRT School is a community of learners dedicated to academic excellence, personal growth, and global citizenship. We provide a supportive and challenging environment where students are encouraged to explore their passions."}
+                {about.content || "Yayasan Alfida adalah komunitas pembelajar yang berdedikasi pada keunggulan akademik, pertumbuhan pribadi, dan kepedulian sosial. Kami menyediakan lingkungan yang suportif dan menantang bagi siswa untuk mengeksplorasi potensi mereka."}
               </p>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-8">
@@ -197,25 +196,25 @@ export default async function HomePage() {
                   <div className="w-6 h-6 rounded-full bg-[#0f7f6d]/10 text-[#0f7f6d] flex items-center justify-center shrink-0 mt-0.5">
                     <span className="material-icons-outlined text-sm">check</span>
                   </div>
-                  <span className="font-medium text-[#454545]">Modern Infrastructure</span>
+                  <span className="font-medium text-[#454545]">Fasilitas Modern</span>
                 </div>
                 <div className="flex items-start gap-3">
                   <div className="w-6 h-6 rounded-full bg-[#0f7f6d]/10 text-[#0f7f6d] flex items-center justify-center shrink-0 mt-0.5">
                     <span className="material-icons-outlined text-sm">check</span>
                   </div>
-                  <span className="font-medium text-[#454545]">Innovative Curriculum</span>
+                  <span className="font-medium text-[#454545]">Kurikulum Inovatif</span>
                 </div>
                 <div className="flex items-start gap-3">
                   <div className="w-6 h-6 rounded-full bg-[#0f7f6d]/10 text-[#0f7f6d] flex items-center justify-center shrink-0 mt-0.5">
                     <span className="material-icons-outlined text-sm">check</span>
                   </div>
-                  <span className="font-medium text-[#454545]">Sports & Extracurricular</span>
+                  <span className="font-medium text-[#454545]">Olahraga & Ekstrakurikuler</span>
                 </div>
                 <div className="flex items-start gap-3">
                   <div className="w-6 h-6 rounded-full bg-[#0f7f6d]/10 text-[#0f7f6d] flex items-center justify-center shrink-0 mt-0.5">
                     <span className="material-icons-outlined text-sm">check</span>
                   </div>
-                  <span className="font-medium text-[#454545]">Global Partnerships</span>
+                  <span className="font-medium text-[#454545]">Kemitraan Global</span>
                 </div>
               </div>
 
@@ -223,7 +222,7 @@ export default async function HomePage() {
                 href="/about"
                 className="px-8 py-3.5 bg-[#454545] hover:bg-[#0f7f6d] text-white rounded font-semibold transition-all shadow-md inline-block"
               >
-                More About Us
+                Selengkapnya Tentang Kami
               </Link>
             </div>
           </div>
@@ -240,10 +239,10 @@ export default async function HomePage() {
             "md:grid-cols-4"
           }`}>
             {(stats.items && stats.items.length > 0 ? stats.items : [
-              { icon: "groups", value: "2500", label: "Students Enrolled" },
-              { icon: "school", value: "150", label: "Certified Teachers" },
-              { icon: "emoji_events", value: "85", label: "Awards Won" },
-              { icon: "apartment", value: "45", label: "Modern Classrooms" },
+              { icon: "groups", value: "2500", label: "Siswa Terdaftar" },
+              { icon: "school", value: "150", label: "Guru Tersertifikasi" },
+              { icon: "emoji_events", value: "85", label: "Penghargaan Diraih" },
+              { icon: "apartment", value: "45", label: "Ruang Kelas Modern" },
             ]).map((stat: any, i: number) => (
               <div key={i} className="flex flex-col items-center">
                 <span className="material-icons-outlined text-5xl text-[#E3E8E7] mb-4">{stat.icon || "star"}</span>
@@ -260,9 +259,9 @@ export default async function HomePage() {
         <div className="container mx-auto px-6 md:px-12">
           <div className="text-center max-w-2xl mx-auto mb-16">
             <div className="flex items-center justify-center gap-2 text-[#0f7f6d] font-semibold mb-2 uppercase tracking-widest text-sm">
-              <span className="w-8 h-0.5 bg-[#0f7f6d]"></span> Expert Faculty <span className="w-8 h-0.5 bg-[#0f7f6d]"></span>
+              <span className="w-8 h-0.5 bg-[#0f7f6d]"></span> Tenaga Pengajar Ahli <span className="w-8 h-0.5 bg-[#0f7f6d]"></span>
             </div>
-            <h2 className="text-3xl md:text-4xl font-bold text-[#454545]">Meet Our Dedicated Educators</h2>
+            <h2 className="text-3xl md:text-4xl font-bold text-[#454545]">Temui Pendidik Berdedikasi Kami</h2>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
@@ -285,7 +284,7 @@ export default async function HomePage() {
           
           <div className="text-center mt-12">
              <Link href="/team" className="px-8 py-3 bg-white border border-gray-200 text-[#454545] hover:bg-gray-50 rounded font-semibold transition-colors shadow-sm inline-block">
-                 View All Teachers
+                 Lihat Semua Guru
              </Link>
           </div>
         </div>
@@ -297,12 +296,12 @@ export default async function HomePage() {
           <div className="flex flex-col md:flex-row md:items-end justify-between mb-12">
             <div>
               <div className="flex items-center gap-2 text-[#0f7f6d] font-semibold mb-2 uppercase tracking-widest text-sm">
-                <span className="w-8 h-0.5 bg-[#0f7f6d]"></span> Campus Life
+                <span className="w-8 h-0.5 bg-[#0f7f6d]"></span> Kehidupan Kampus
               </div>
-              <h2 className="text-3xl md:text-4xl font-bold text-[#454545]">Photo Gallery & Achievements</h2>
+              <h2 className="text-3xl md:text-4xl font-bold text-[#454545]">Galeri Foto & Prestasi</h2>
             </div>
             <Link href="/gallery" className="text-[#0f7f6d] font-semibold flex items-center gap-1 mt-4 md:mt-0 hover:gap-2 transition-all">
-              View All Gallery <span className="material-icons-outlined text-sm">arrow_right_alt</span>
+              Lihat Semua Galeri <span className="material-icons-outlined text-sm">arrow_right_alt</span>
             </Link>
           </div>
 
@@ -328,9 +327,9 @@ export default async function HomePage() {
         <div className="container mx-auto px-6 md:px-12 relative z-10">
           <div className="text-center max-w-2xl mx-auto mb-16">
             <div className="flex items-center justify-center gap-2 text-[#0f7f6d] font-semibold mb-2 uppercase tracking-widest text-sm">
-              <span className="w-8 h-0.5 bg-[#0f7f6d]"></span> Latest News <span className="w-8 h-0.5 bg-[#0f7f6d]"></span>
+              <span className="w-8 h-0.5 bg-[#0f7f6d]"></span> Berita Terbaru <span className="w-8 h-0.5 bg-[#0f7f6d]"></span>
             </div>
-            <h2 className="text-3xl md:text-4xl font-bold text-[#454545]">Stay Updated With Us</h2>
+            <h2 className="text-3xl md:text-4xl font-bold text-[#454545]">Ikuti Perkembangan Kami</h2>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -354,7 +353,7 @@ export default async function HomePage() {
                     {post.excerpt || (post.content || '').replace(/<[^>]*>?/gm, '').substring(0, 100) + '...'}
                   </p>
                   <Link href={`/${post.slug}`} className="text-[#0f7f6d] text-sm font-bold flex items-center gap-1 group-hover:gap-2 transition-all">
-                    Read Article <span className="material-icons-outlined text-sm">arrow_right_alt</span>
+                    Baca Artikel <span className="material-icons-outlined text-sm">arrow_right_alt</span>
                   </Link>
                 </div>
               </div>
@@ -363,7 +362,7 @@ export default async function HomePage() {
           
             <div className="text-center mt-12">
                <Link href="/blog" className="px-8 py-3 bg-white border border-gray-200 text-[#454545] hover:bg-gray-50 rounded font-semibold transition-colors shadow-sm inline-block">
-                   More News & Articles
+                   Berita & Artikel Lainnya
                </Link>
             </div>
           </div>
@@ -388,20 +387,20 @@ export default async function HomePage() {
         <div className="container mx-auto px-6 md:px-12 relative z-10 text-center">
           <div>
             <span className="inline-block px-4 py-1.5 bg-white/10 text-[#E3E8E7] font-semibold rounded mb-6 border border-white/20 uppercase tracking-widest text-sm">
-              Join Our Community
+              Bergabung Bersama Kami
             </span>
             <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-8 leading-tight max-w-3xl mx-auto">
-              {cta.heading || "Ready to Take the Next Step in Your Education?"}
+              {cta.heading || "Siap Mengambil Langkah Selanjutnya Dalam Pendidikan Anda?"}
             </h2>
             
             <div className="flex flex-col sm:flex-row items-center justify-center gap-6 mt-10">
               <Link href={cta.button1_link || "/contact"} className="group px-8 py-4 bg-white text-[#0f7f6d] hover:bg-[#454545] hover:text-white rounded font-bold transition-all shadow-xl hover:shadow-2xl w-full sm:w-auto flex items-center justify-center gap-3 transform hover:-translate-y-2">
                 <span className="material-icons-outlined group-hover:rotate-12 transition-transform duration-300">school</span>
-                {cta.button1_text || "Enroll Now"}
+                {cta.button1_text || "Daftar Sekarang"}
               </Link>
               <Link href={cta.button2_link || "/contact"} className="group px-8 py-4 bg-transparent border-2 border-white hover:bg-white text-white hover:text-[#454545] rounded font-bold transition-all w-full sm:w-auto flex items-center justify-center gap-3 transform hover:-translate-y-2">
                 <span className="material-icons-outlined group-hover:scale-125 transition-transform duration-300">mail_outline</span>
-                {cta.button2_text || "Contact Us"}
+                {cta.button2_text || "Hubungi Kami"}
               </Link>
             </div>
           </div>

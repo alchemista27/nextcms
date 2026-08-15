@@ -39,12 +39,12 @@ export default function PublicHeader({
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   const navLinks = [
-    { label: "Home", href: "/" },
-    { label: "About Us", href: "/about" },
-    { label: "News", href: "/blog" },
-    { label: "Teachers", href: "/team" },
-    { label: "Gallery", href: "/gallery" },
-    { label: "Contact", href: "/contact" },
+    { label: "Beranda", href: "/" },
+    { label: "Tentang Kami", href: "/about" },
+    { label: "Berita", href: "/blog" },
+    { label: "Tenaga Pengajar", href: "/team" },
+    { label: "Galeri", href: "/gallery" },
+    { label: "Kontak", href: "/contact" },
   ];
 
   return (
@@ -143,7 +143,7 @@ export default function PublicHeader({
               href="/contact"
               className="bg-[#0f7f6d] hover:bg-[#454545] text-white px-6 py-2.5 rounded font-semibold transition-all shadow-md flex items-center gap-2 transform hover:scale-105"
             >
-              Apply Now
+              Daftar Sekarang
               <span className="material-icons-outlined text-sm">arrow_forward</span>
             </Link>
           </div>
@@ -182,7 +182,7 @@ export default function PublicHeader({
                   className="bg-[#0f7f6d] text-white text-center block w-full py-3 rounded-md shadow-sm"
                   onClick={() => setIsMobileMenuOpen(false)}
                 >
-                  Apply Now
+                  Daftar Sekarang
                 </Link>
               </div>
             </div>

@@ -46,7 +46,7 @@ export default function PublicFooter({
             </div>
             <p className="mb-6 text-sm leading-relaxed">
               {siteDescription ||
-                "Providing high-quality education and nurturing environments that empower students to become leaders of tomorrow."}
+                "Memberikan pendidikan berkualitas tinggi dan lingkungan yang mendukung untuk memberdayakan siswa menjadi pemimpin masa depan."}
             </p>
             <div className="flex gap-4">
               {facebook && (
@@ -85,32 +85,32 @@ export default function PublicFooter({
           {/* Col 2 */}
           <div>
             <h4 className="text-white font-bold text-lg mb-6 relative pb-2 after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-12 after:h-0.5 after:bg-[#0f7f6d]">
-              Quick Links
+              Tautan Cepat
             </h4>
             <ul className="space-y-3 text-sm">
               <li>
                 <Link href="/about" className="hover:text-[#0f7f6d] transition-colors flex items-center gap-2">
-                  <span className="material-icons-outlined text-xs">chevron_right</span> About Us
+                  <span className="material-icons-outlined text-xs">chevron_right</span> Tentang Kami
                 </Link>
               </li>
               <li>
                 <Link href="/blog" className="hover:text-[#0f7f6d] transition-colors flex items-center gap-2">
-                  <span className="material-icons-outlined text-xs">chevron_right</span> News
+                  <span className="material-icons-outlined text-xs">chevron_right</span> Berita
                 </Link>
               </li>
               <li>
                 <Link href="/team" className="hover:text-[#0f7f6d] transition-colors flex items-center gap-2">
-                  <span className="material-icons-outlined text-xs">chevron_right</span> Teachers
+                  <span className="material-icons-outlined text-xs">chevron_right</span> Tenaga Pengajar
                 </Link>
               </li>
               <li>
                 <Link href="/gallery" className="hover:text-[#0f7f6d] transition-colors flex items-center gap-2">
-                  <span className="material-icons-outlined text-xs">chevron_right</span> Gallery
+                  <span className="material-icons-outlined text-xs">chevron_right</span> Galeri
                 </Link>
               </li>
               <li>
                 <Link href="/contact" className="hover:text-[#0f7f6d] transition-colors flex items-center gap-2">
-                  <span className="material-icons-outlined text-xs">chevron_right</span> Contact Us
+                  <span className="material-icons-outlined text-xs">chevron_right</span> Kontak
                 </Link>
               </li>
             </ul>
@@ -119,7 +119,7 @@ export default function PublicFooter({
           {/* Col 3 */}
           <div>
             <h4 className="text-white font-bold text-lg mb-6 relative pb-2 after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-12 after:h-0.5 after:bg-[#0f7f6d]">
-              Contact Info
+              Info Kontak
             </h4>
             <ul className="space-y-4 text-sm">
               <li className="flex items-start gap-3">
@@ -144,29 +144,29 @@ export default function PublicFooter({
           {/* Col 4 */}
           <div>
             <h4 className="text-white font-bold text-lg mb-6 relative pb-2 after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-12 after:h-0.5 after:bg-[#0f7f6d]">
-              Newsletter
+              Buletin
             </h4>
             <p className="mb-4 text-sm">
-              Subscribe to our newsletter to get latest updates.
+              Berlangganan buletin kami untuk mendapatkan informasi terbaru.
             </p>
             <form className="flex flex-col gap-2">
               <input
                 type="email"
-                placeholder="Your Email Address"
+                placeholder="Alamat Email Anda"
                 className="bg-white/5 border border-white/10 px-4 py-2.5 rounded text-sm focus:outline-none focus:border-[#0f7f6d] text-white"
               />
               <button
                 type="submit"
                 className="bg-[#0f7f6d] hover:bg-white hover:text-[#0f7f6d] transition-colors text-white px-4 py-2.5 rounded text-sm font-bold uppercase tracking-wider"
               >
-                Subscribe
+                Berlangganan
               </button>
             </form>
           </div>
         </div>
 
         <div className="border-t border-white/10 mt-12 pt-8 text-center text-sm">
-          <p>&copy; {new Date().getFullYear()} {siteName || "NextCMS"}. All rights reserved.</p>
+          <p>&copy; {new Date().getFullYear()} {siteName || "NextCMS"}. Hak cipta dilindungi.</p>
         </div>
       </div>
     </footer>
