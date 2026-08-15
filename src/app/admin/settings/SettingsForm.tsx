@@ -2,10 +2,61 @@
 
 import { useState } from "react";
 import { saveSettingsAction } from "./actions";
+import { MediaPicker } from "@/components/admin/media-picker";
+import type { Media } from "@prisma/client";
 
 interface SettingsFormProps {
   initialData: Record<string, string>;
-  fields: { key: string; label: string; type?: "text" | "textarea" | "email" | "url" | "tel"; placeholder?: string; description?: string }[];
+  fields: { key: string; label: string; type?: "text" | "textarea" | "email" | "url" | "tel" | "image"; placeholder?: string; description?: string }[];
+}
+
+function ImageField({ name, initialUrl }: { name: string; initialUrl: string }) {
+  const [url, setUrl] = useState(initialUrl);
+  const [isPickerOpen, setIsPickerOpen] = useState(false);
+
+  return (
+    <div>
+      <div className="flex items-center gap-4">
+        {url ? (
+          /* eslint-disable-next-line @next/next/no-img-element */
+          <img src={url} alt="Preview" className="w-16 h-16 object-contain bg-surface border border-border rounded" />
+        ) : (
+          <div className="w-16 h-16 bg-bg border border-border rounded flex items-center justify-center text-text-secondary">
+            <span className="material-icons-outlined text-2xl">image</span>
+          </div>
+        )}
+        <div className="flex flex-col gap-2">
+          <input type="hidden" name={name} value={url} />
+          <button
+            type="button"
+            onClick={() => setIsPickerOpen(true)}
+            className="px-3 py-1.5 bg-surface border border-border text-text-primary text-sm rounded hover:bg-bg transition"
+          >
+            Choose Image
+          </button>
+          {url && (
+            <button
+              type="button"
+              onClick={() => setUrl("")}
+              className="text-xs text-danger hover:underline text-left"
+            >
+              Remove
+            </button>
+          )}
+        </div>
+      </div>
+      
+      {isPickerOpen && (
+        <MediaPicker
+          onSelect={(media: Media) => {
+            setUrl(media.url);
+            setIsPickerOpen(false);
+          }}
+          onClose={() => setIsPickerOpen(false)}
+        />
+      )}
+    </div>
+  );
 }
 
 export function SettingsForm({ initialData, fields }: SettingsFormProps) {
@@ -41,6 +92,11 @@ export function SettingsForm({ initialData, fields }: SettingsFormProps) {
               rows={4}
               className="w-full p-2.5 border border-border rounded-lg bg-bg text-sm focus:ring-1 focus:ring-primary outline-none resize-y"
               placeholder={field.placeholder}
+            />
+          ) : field.type === "image" ? (
+            <ImageField 
+              name={field.key} 
+              initialUrl={initialData[field.key] || ""} 
             />
           ) : (
             <input

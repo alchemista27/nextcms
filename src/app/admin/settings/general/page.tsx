@@ -25,7 +25,7 @@ export default async function GeneralSettingsPage() {
   const fields = [
     { key: "general_siteTitle", label: "Site Title", placeholder: "e.g. Yayasan Alfida Bengkulu" },
     { key: "general_siteDescription", label: "Site Description", type: "textarea" as const, placeholder: "Brief description about the school/foundation" },
-    { key: "general_favicon", label: "Favicon URL", type: "url" as const, placeholder: "e.g. https://example.com/favicon.ico" },
+    { key: "general_favicon", label: "Favicon & Logo URL", type: "image" as const, description: "Upload an image to be used as favicon and website logo." },
     { key: "contact_email", label: "Contact Email", type: "email" as const, placeholder: "e.g. info@alfida.sch.id" },
     { key: "contact_phone", label: "Contact Phone", type: "tel" as const, placeholder: "e.g. +6273612345" },
     { key: "contact_address", label: "Contact Address", type: "textarea" as const, placeholder: "Full physical address" },
