@@ -15,7 +15,7 @@ export default async function SEOSettingsPage() {
   const fields = [
     { key: "meta_title", label: "Default Meta Title", placeholder: "e.g. Yayasan Alfida" },
     { key: "meta_description", label: "Default Meta Description", type: "textarea" as const, placeholder: "Default description for search engines" },
-    { key: "og_image", label: "Default Open Graph Image URL", type: "url" as const, placeholder: "e.g. https://res.cloudinary.com/...", description: "Used when sharing links on social media if the page doesn't have a specific image." },
+    { key: "og_image", label: "Default Open Graph Image URL", type: "image" as const, description: "Used when sharing links on social media if the page doesn't have a specific image." },
   ];
 
   return (

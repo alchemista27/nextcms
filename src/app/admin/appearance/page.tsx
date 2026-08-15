@@ -41,7 +41,7 @@ export default async function AppearancePage() {
             { key: "subheading", label: "Subheading", type: "textarea" },
             { key: "ctaText", label: "CTA Button Text", type: "text" },
             { key: "ctaLink", label: "CTA Button Link", type: "text" },
-            { key: "backgroundImage", label: "Background Image URL", type: "text" },
+            { key: "backgroundImage", label: "Background Image", type: "image" },
           ]}
         />
         
@@ -52,7 +52,7 @@ export default async function AppearancePage() {
           fields={[
             { key: "heading", label: "Heading", type: "text" },
             { key: "content", label: "Content", type: "textarea" },
-            { key: "imageUrl", label: "Image URL", type: "text" },
+            { key: "imageUrl", label: "Image", type: "image" },
           ]}
         />
 
