@@ -229,8 +229,10 @@ model Revision {
 }
 
 model SiteSetting {
-  key   String  @id
-  value String?
+  id        String   @id @default(cuid())
+  key       String   @unique
+  value     String
+  updatedAt DateTime @updatedAt @map("updatedAt")
 
   @@map("site_settings")
   @@schema("cms")
