@@ -245,9 +245,41 @@ export default async function HomePage() {
         </div>
       </section>
 
-      {/* 6. NEWS SECTION */}
-      <section className="py-20 bg-white">
+      {/* 6. GALLERY & ACHIEVEMENTS */}
+      <section id="gallery" className="py-20 bg-white">
         <div className="container mx-auto px-6 md:px-12">
+          <div className="flex flex-col md:flex-row md:items-end justify-between mb-12">
+            <div>
+              <div className="flex items-center gap-2 text-[#0f7f6d] font-semibold mb-2 uppercase tracking-widest text-sm">
+                <span className="w-8 h-0.5 bg-[#0f7f6d]"></span> Campus Life
+              </div>
+              <h2 className="text-3xl md:text-4xl font-bold text-[#454545]">Photo Gallery & Achievements</h2>
+            </div>
+            <Link href="/gallery" className="text-[#0f7f6d] font-semibold flex items-center gap-1 mt-4 md:mt-0 hover:gap-2 transition-all">
+              View All Gallery <span className="material-icons-outlined text-sm">arrow_right_alt</span>
+            </Link>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {gallery.map((image) => (
+              <div key={image.id} className="relative rounded-lg overflow-hidden group cursor-pointer aspect-video">
+                <img src={image.url} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" alt={image.title || ""} />
+                <div className="absolute inset-0 bg-[#454545]/80 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col items-center justify-center text-white">
+                  <span className="material-icons-outlined text-4xl mb-2 translate-y-4 group-hover:translate-y-0 transition-transform duration-300">add_circle_outline</span>
+                  <h4 className="text-lg font-bold translate-y-4 group-hover:translate-y-0 transition-transform duration-300 delay-75">{image.title}</h4>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* 7. LATEST NEWS & EVENTS */}
+      <section className="py-20 bg-[#F7F8F8] relative overflow-hidden">
+        <div className="absolute top-0 right-0 w-96 h-96 bg-[#0f7f6d]/5 rounded-full filter blur-3xl -z-10"></div>
+        <div className="absolute bottom-0 left-0 w-96 h-96 bg-[#E3E8E7]/50 rounded-full filter blur-3xl -z-10"></div>
+        
+        <div className="container mx-auto px-6 md:px-12 relative z-10">
           <div className="text-center max-w-2xl mx-auto mb-16">
             <div className="flex items-center justify-center gap-2 text-[#0f7f6d] font-semibold mb-2 uppercase tracking-widest text-sm">
               <span className="w-8 h-0.5 bg-[#0f7f6d]"></span> Latest News <span className="w-8 h-0.5 bg-[#0f7f6d]"></span>
@@ -283,14 +315,52 @@ export default async function HomePage() {
             ))}
           </div>
           
-          <div className="text-center mt-12">
-             <Link href="/blog" className="px-8 py-3 bg-white border border-gray-200 text-[#454545] hover:bg-gray-50 rounded font-semibold transition-colors shadow-sm inline-block">
-                 More News & Articles
-             </Link>
+            <div className="text-center mt-12">
+               <Link href="/blog" className="px-8 py-3 bg-white border border-gray-200 text-[#454545] hover:bg-gray-50 rounded font-semibold transition-colors shadow-sm inline-block">
+                   More News & Articles
+               </Link>
+            </div>
+          </div>
+        </section>
+
+      {/* 8. CTA SECTION */}
+      <section className="py-24 bg-[#0f7f6d] relative overflow-hidden">
+        <div className="absolute inset-0 opacity-10">
+          <svg className="absolute top-0 left-0 w-full h-full animate-[spin_120s_linear_infinite]" viewBox="0 0 100 100" preserveAspectRatio="none">
+            <defs>
+              <pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse">
+                <path d="M 10 0 L 0 0 0 10" fill="none" stroke="white" strokeWidth="0.5"/>
+              </pattern>
+            </defs>
+            <rect width="100" height="100" fill="url(#grid)" />
+          </svg>
+        </div>
+        
+        <div className="absolute top-1/2 left-[10%] w-64 h-64 border border-white/20 rounded-full animate-ping" style={{ animationDuration: '4s' }}></div>
+        <div className="absolute top-1/2 right-[10%] w-96 h-96 border border-white/10 rounded-full animate-pulse" style={{ animationDuration: '5s' }}></div>
+
+        <div className="container mx-auto px-6 md:px-12 relative z-10 text-center">
+          <div>
+            <span className="inline-block px-4 py-1.5 bg-white/10 text-[#E3E8E7] font-semibold rounded mb-6 border border-white/20 uppercase tracking-widest text-sm">
+              Join Our Community
+            </span>
+            <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-8 leading-tight max-w-3xl mx-auto">
+              Ready to Take the Next Step in Your Education?
+            </h2>
+            
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-6 mt-10">
+              <Link href="/contact" className="group px-8 py-4 bg-white text-[#0f7f6d] hover:bg-[#454545] hover:text-white rounded font-bold transition-all shadow-xl hover:shadow-2xl w-full sm:w-auto flex items-center justify-center gap-3 transform hover:-translate-y-2">
+                <span className="material-icons-outlined group-hover:rotate-12 transition-transform duration-300">school</span>
+                Enroll Now
+              </Link>
+              <Link href="/contact" className="group px-8 py-4 bg-transparent border-2 border-white hover:bg-white text-white hover:text-[#454545] rounded font-bold transition-all w-full sm:w-auto flex items-center justify-center gap-3 transform hover:-translate-y-2">
+                <span className="material-icons-outlined group-hover:scale-125 transition-transform duration-300">mail_outline</span>
+                Contact Us
+              </Link>
+            </div>
           </div>
         </div>
       </section>
-
     </div>
   );
 }
