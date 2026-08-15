@@ -1,11 +1,19 @@
 import Link from "next/link";
 import { Metadata } from "next";
 
+import { prisma } from "@/lib/prisma";
+
 export const metadata: Metadata = {
   title: "About Us",
 };
 
-export default function AboutPage() {
+export default async function AboutPage() {
+  const appearanceData = await prisma.appearance.findMany({
+    where: { key: "theme:vision" },
+  });
+
+  const visionConfig = appearanceData[0]?.value as Record<string, any> || {};
+
   return (
     <div>
       {/* Page Hero */}
@@ -77,8 +85,8 @@ export default function AboutPage() {
                 <span className="material-icons-outlined text-3xl">visibility</span>
               </div>
               <h3 className="text-2xl font-bold text-[#454545] mb-4">Our Vision</h3>
-              <p className="text-gray-600 leading-relaxed">
-                To be a globally recognized educational institution that cultivates lifelong learners, critical thinkers, and compassionate leaders who contribute positively to an ever-changing world.
+              <p className="text-gray-600 leading-relaxed whitespace-pre-wrap">
+                {visionConfig.vision || "To be a globally recognized educational institution that cultivates lifelong learners, critical thinkers, and compassionate leaders who contribute positively to an ever-changing world."}
               </p>
             </div>
             <div className="bg-[#454545] p-10 rounded-lg shadow-sm group hover:shadow-lg transition-shadow">
@@ -86,11 +94,9 @@ export default function AboutPage() {
                 <span className="material-icons-outlined text-3xl">flag</span>
               </div>
               <h3 className="text-2xl font-bold text-white mb-4">Our Mission</h3>
-              <ul className="space-y-3 text-[#E3E8E7]/90">
-                <li className="flex items-start gap-3"><span className="material-icons-outlined text-[#0f7f6d] mt-0.5 text-sm">check_circle</span> Deliver high-quality, student-centered education</li>
-                <li className="flex items-start gap-3"><span className="material-icons-outlined text-[#0f7f6d] mt-0.5 text-sm">check_circle</span> Foster creativity, innovation, and critical thinking</li>
-                <li className="flex items-start gap-3"><span className="material-icons-outlined text-[#0f7f6d] mt-0.5 text-sm">check_circle</span> Build strong moral character and civic responsibility</li>
-              </ul>
+              <p className="text-[#E3E8E7]/90 leading-relaxed whitespace-pre-wrap">
+                {visionConfig.mission || "Deliver high-quality, student-centered education.\nFoster creativity, innovation, and critical thinking.\nBuild strong moral character and civic responsibility."}
+              </p>
             </div>
           </div>
         </div>

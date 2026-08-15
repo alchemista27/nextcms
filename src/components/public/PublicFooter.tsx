@@ -1,7 +1,6 @@
 "use client";
 
 import Link from "next/link";
-import { MenuItem } from "@prisma/client";
 
 interface PublicFooterProps {
   phone?: string;
@@ -12,7 +11,6 @@ interface PublicFooterProps {
   youtube?: string;
   siteName?: string;
   siteDescription?: string;
-  footerMenus?: MenuItem[];
 }
 
 export default function PublicFooter({
@@ -24,7 +22,6 @@ export default function PublicFooter({
   youtube,
   siteName,
   siteDescription,
-  footerMenus,
 }: PublicFooterProps) {
   return (
     <footer className="bg-[#454545] text-gray-300 py-16 border-t-4 border-[#0f7f6d]">
@@ -84,42 +81,31 @@ export default function PublicFooter({
               Quick Links
             </h4>
             <ul className="space-y-3 text-sm">
-              {footerMenus && footerMenus.length > 0 ? (
-                footerMenus
-                  .sort((a, b) => a.order - b.order)
-                  .map((menu) => (
-                    <li key={menu.id}>
-                      <Link
-                        href={menu.url || "#"}
-                        target={menu.target}
-                        className="hover:text-[#0f7f6d] transition-colors flex items-center gap-2"
-                      >
-                        <span className="material-icons-outlined text-xs">
-                          chevron_right
-                        </span>{" "}
-                        {menu.label}
-                      </Link>
-                    </li>
-                  ))
-              ) : (
-                <>
-                  <li>
-                    <Link href="/about" className="hover:text-[#0f7f6d] transition-colors flex items-center gap-2">
-                      <span className="material-icons-outlined text-xs">chevron_right</span> About Us
-                    </Link>
-                  </li>
-                  <li>
-                    <Link href="/blog" className="hover:text-[#0f7f6d] transition-colors flex items-center gap-2">
-                      <span className="material-icons-outlined text-xs">chevron_right</span> Latest News
-                    </Link>
-                  </li>
-                  <li>
-                    <Link href="/contact" className="hover:text-[#0f7f6d] transition-colors flex items-center gap-2">
-                      <span className="material-icons-outlined text-xs">chevron_right</span> Contact Us
-                    </Link>
-                  </li>
-                </>
-              )}
+              <li>
+                <Link href="/about" className="hover:text-[#0f7f6d] transition-colors flex items-center gap-2">
+                  <span className="material-icons-outlined text-xs">chevron_right</span> About Us
+                </Link>
+              </li>
+              <li>
+                <Link href="/academics" className="hover:text-[#0f7f6d] transition-colors flex items-center gap-2">
+                  <span className="material-icons-outlined text-xs">chevron_right</span> Academics
+                </Link>
+              </li>
+              <li>
+                <Link href="/team" className="hover:text-[#0f7f6d] transition-colors flex items-center gap-2">
+                  <span className="material-icons-outlined text-xs">chevron_right</span> Teachers
+                </Link>
+              </li>
+              <li>
+                <Link href="/gallery" className="hover:text-[#0f7f6d] transition-colors flex items-center gap-2">
+                  <span className="material-icons-outlined text-xs">chevron_right</span> Gallery
+                </Link>
+              </li>
+              <li>
+                <Link href="/contact" className="hover:text-[#0f7f6d] transition-colors flex items-center gap-2">
+                  <span className="material-icons-outlined text-xs">chevron_right</span> Contact Us
+                </Link>
+              </li>
             </ul>
           </div>
 

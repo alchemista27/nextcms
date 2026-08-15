@@ -9,9 +9,9 @@ export default async function AppearancePage() {
   const keys = [
     "theme:hero",
     "theme:about",
+    "theme:features",
     "theme:vision",
     "theme:stats",
-    "theme:contact",
     "theme:cta",
   ];
 
@@ -67,6 +67,43 @@ export default async function AppearancePage() {
             { key: "stat2_value", label: "Stat 2 Value", type: "text" },
             { key: "stat3_label", label: "Stat 3 Label", type: "text" },
             { key: "stat3_value", label: "Stat 3 Value", type: "text" },
+          ]}
+        />
+        <AppearanceForm
+          sectionKey="theme:features"
+          title="Features Section (Info Boxes)"
+          initialData={configMap["theme:features"] || {}}
+          fields={[
+            { key: "box1_title", label: "Box 1 Title", type: "text" },
+            { key: "box1_desc", label: "Box 1 Description", type: "textarea" },
+            { key: "box2_title", label: "Box 2 Title", type: "text" },
+            { key: "box2_desc", label: "Box 2 Description", type: "textarea" },
+            { key: "box3_title", label: "Box 3 Title", type: "text" },
+            { key: "box3_desc", label: "Box 3 Description", type: "textarea" },
+          ]}
+        />
+
+        <AppearanceForm
+          sectionKey="theme:cta"
+          title="Call to Action (CTA) Section"
+          initialData={configMap["theme:cta"] || {}}
+          fields={[
+            { key: "heading", label: "Heading", type: "text" },
+            { key: "button1_text", label: "Primary Button Text", type: "text" },
+            { key: "button1_link", label: "Primary Button Link", type: "text" },
+            { key: "button2_text", label: "Secondary Button Text", type: "text" },
+            { key: "button2_link", label: "Secondary Button Link", type: "text" },
+          ]}
+        />
+
+
+        <AppearanceForm
+          sectionKey="theme:vision"
+          title="Vision & Mission (About Page)"
+          initialData={configMap["theme:vision"] || {}}
+          fields={[
+            { key: "vision", label: "Vision Statement", type: "textarea" },
+            { key: "mission", label: "Mission Statement", type: "textarea" },
           ]}
         />
       </div>

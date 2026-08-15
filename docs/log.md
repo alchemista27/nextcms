@@ -162,3 +162,19 @@
   - Membuat `docs/DEPLOYMENT.md` beserta `env.example` sebagai dokumentasi standar devops yang mendemonstrasikan peluncuran mandiri ke Vercel dan Supabase.
   - Verifikasi kompatibilitas tipe (*Typechecking*) dan kompilasi *build production* terkonfirmasi sempurna (0 error).
 - **Commit Message**: `feat(test): implement sprint 10 automated testing suite and deployment guide`
+
+---
+
+- **Tanggal**: 15 Agustus 2026
+- **Sprint**: Post-Launch Refinements & Bugfixes
+- **Progress**:
+  - **Public Header Fix**: Memperbaiki isu *header* publik dan *navbar* yang tidak muncul (invisible) akibat kelas utilitas animasi kustom Tailwind (`opacity-0 animate-[slideDown...]`) yang tidak terkonfigurasi secara global. Kelas tersebut telah dihapus sehingga navigasi kini tampil normal dan *fully visible*.
+  - **General Settings Sync**: Menyelaraskan *key* penyimpanan di form *General Settings* (`general_siteTitle`, `general_siteDescription`) agar terhubung langsung dengan *metadata* situs.
+  - **Dynamic Contact & Social Links**: Memastikan data nomor telepon, email, dan sosial media yang diinputkan di menu *General Settings* terender secara akurat pada *topbar* (bar hitam) di *header* publik.
+  - **Favicon Management**: Menambahkan fitur untuk mengubah URL Favicon secara dinamis dari dalam dashboard *General Settings*, dan mengaplikasikan injeksi meta *icon* tersebut secara global via root `layout.tsx`.
+  - **Dynamic Admin Dashboard**: Merombak total beranda admin (`/admin/page.tsx`) yang sebelumnya menggunakan data statis/placeholder:
+    - Statistik atas kini menghitung total aktual untuk entri Posts, Team Members, Media, dan Users.
+    - Mengaktifkan fitur formulir **Quick Draft** yang divalidasi dan disimpan secara langsung ke database sebagai *draft post* via Server Actions.
+    - Grafik "Posts per Month" dikalkulasi otomatis berdasar akumulasi riwayat posting 6 bulan terakhir.
+    - Tabel *Recent Posts* dan *Recent Activity* menampilkan data kreasi/modifikasi *post* yang paling baru.
+- **Commit Message**: `fix: public header visibility, dynamic favicon, and integrate real database data into admin dashboard overview`

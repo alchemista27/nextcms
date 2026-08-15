@@ -10,7 +10,6 @@ const navItems = [
   { href: "/admin/team", icon: "badge", label: "Team Members" },
   { href: "/admin/gallery", icon: "photo_library", label: "Gallery" },
   { href: "/admin/testimonials", icon: "format_quote", label: "Testimonials" },
-  { href: "/admin/menus", icon: "menu", label: "Menus" },
   { href: "/admin/appearance", icon: "palette", label: "Appearance" },
   { href: "/admin/users", icon: "group", label: "Users" },
   { href: "/admin/settings/general", icon: "settings", label: "Settings" },

@@ -2,7 +2,7 @@ import Link from "next/link";
 import { prisma } from "@/lib/prisma";
 
 export default async function HomePage() {
-  const [posts, team, gallery, testimonials] = await Promise.all([
+  const [posts, team, gallery, testimonials, appearanceData] = await Promise.all([
     prisma.post.findMany({
       where: { status: "PUBLISHED" },
       orderBy: { publishedAt: "desc" },
@@ -23,7 +23,25 @@ export default async function HomePage() {
       orderBy: { order: "asc" },
       take: 3,
     }),
+    prisma.appearance.findMany({
+      where: {
+        key: {
+          in: ["theme:hero", "theme:features", "theme:about", "theme:stats", "theme:cta"],
+        },
+      },
+    }),
   ]);
+
+  const configMap = appearanceData.reduce((acc, curr) => {
+    acc[curr.key] = curr.value as Record<string, any>;
+    return acc;
+  }, {} as Record<string, Record<string, any>>);
+
+  const hero = configMap["theme:hero"] || {};
+  const features = configMap["theme:features"] || {};
+  const about = configMap["theme:about"] || {};
+  const stats = configMap["theme:stats"] || {};
+  const cta = configMap["theme:cta"] || {};
 
   return (
     <div>
@@ -32,17 +50,20 @@ export default async function HomePage() {
         <div
           className="absolute inset-0 bg-cover bg-center z-[-1]"
           style={{
-            backgroundImage:
-              "linear-gradient(rgba(69, 69, 69, 0.8), rgba(69, 69, 69, 0.85)), url('https://images.unsplash.com/photo-1523050854058-8df90110c9f1?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80')",
+            backgroundImage: `linear-gradient(rgba(69, 69, 69, 0.8), rgba(69, 69, 69, 0.85)), url('${hero.backgroundImage || "https://images.unsplash.com/photo-1523050854058-8df90110c9f1?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80"}')`,
           }}
         ></div>
         <div className="container mx-auto px-6 md:px-12 relative z-10 text-center lg:text-left">
           <div className="w-full lg:w-2/3">
             <span className="inline-block px-4 py-1.5 bg-[#0f7f6d]/20 text-[#E3E8E7] font-semibold rounded border border-[#0f7f6d]/30 uppercase tracking-wider text-sm mb-6">
-              Welcome to SMaRT School
+              {hero.subheading || "Welcome to SMaRT School"}
             </span>
             <h1 className="text-4xl lg:text-6xl xl:text-7xl font-bold text-white leading-[1.2] mb-6">
-              Empowering Students <br /> To Achieve <span className="text-[#E3E8E7]">Excellence</span>.
+              {hero.heading || (
+                <>
+                  Empowering Students <br /> To Achieve <span className="text-[#E3E8E7]">Excellence</span>.
+                </>
+              )}
             </h1>
             <p className="text-lg text-gray-300 mb-10 max-w-xl mx-auto lg:mx-0">
               A premier educational institution committed to academic excellence,
@@ -51,10 +72,10 @@ export default async function HomePage() {
             </p>
             <div className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4">
               <Link
-                href="/about"
+                href={hero.ctaLink || "/about"}
                 className="px-8 py-4 bg-[#0f7f6d] hover:bg-white hover:text-[#0f7f6d] text-white rounded font-bold transition-all shadow-lg w-full sm:w-auto text-center"
               >
-                Discover More
+                {hero.ctaText || "Discover More"}
               </Link>
               <Link
                 href="/contact"
@@ -76,10 +97,9 @@ export default async function HomePage() {
               <div className="w-16 h-16 bg-[#E3E8E7] text-[#0f7f6d] rounded-full flex items-center justify-center mb-6">
                 <span className="material-icons-outlined text-3xl">menu_book</span>
               </div>
-              <h3 className="text-xl font-bold text-[#454545] mb-3">Quality Education</h3>
+              <h3 className="text-xl font-bold text-[#454545] mb-3">{features.box1_title || "Quality Education"}</h3>
               <p className="text-gray-500 mb-4 line-clamp-3">
-                We provide a comprehensive curriculum designed to challenge and
-                inspire students to reach their full potential.
+                {features.box1_desc || "We provide a comprehensive curriculum designed to challenge and inspire students to reach their full potential."}
               </p>
             </div>
 
@@ -88,10 +108,9 @@ export default async function HomePage() {
               <div className="w-16 h-16 bg-white/20 text-white rounded-full flex items-center justify-center mb-6">
                 <span className="material-icons-outlined text-3xl">psychology</span>
               </div>
-              <h3 className="text-xl font-bold mb-3">Expert Teachers</h3>
+              <h3 className="text-xl font-bold mb-3">{features.box2_title || "Expert Teachers"}</h3>
               <p className="text-[#E3E8E7]/90 mb-4 line-clamp-3">
-                Our faculty consists of highly qualified, dedicated professionals
-                who are passionate about teaching.
+                {features.box2_desc || "Our faculty consists of highly qualified, dedicated professionals who are passionate about teaching."}
               </p>
             </div>
 
@@ -100,10 +119,9 @@ export default async function HomePage() {
               <div className="w-16 h-16 bg-[#E3E8E7] text-[#0f7f6d] rounded-full flex items-center justify-center mb-6">
                 <span className="material-icons-outlined text-3xl">emoji_events</span>
               </div>
-              <h3 className="text-xl font-bold text-[#454545] mb-3">Global Recognition</h3>
+              <h3 className="text-xl font-bold text-[#454545] mb-3">{features.box3_title || "Global Recognition"}</h3>
               <p className="text-gray-500 mb-4 line-clamp-3">
-                Recognized for academic excellence and outstanding extracurricular
-                achievements worldwide.
+                {features.box3_desc || "Recognized for academic excellence and outstanding extracurricular achievements worldwide."}
               </p>
             </div>
           </div>
@@ -116,7 +134,7 @@ export default async function HomePage() {
           <div className="flex flex-col lg:flex-row items-center gap-16">
             <div className="w-full lg:w-1/2 relative pb-8 pr-8">
               <img
-                src="https://images.unsplash.com/photo-1577896851231-70ef18881754?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+                src={about.imageUrl || "https://images.unsplash.com/photo-1577896851231-70ef18881754?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"}
                 alt="About SMaRT School"
                 className="rounded-lg shadow-2xl w-full relative z-10"
               />
@@ -132,15 +150,11 @@ export default async function HomePage() {
               <div className="flex items-center gap-2 text-[#0f7f6d] font-semibold mb-2 uppercase tracking-widest text-sm">
                 <span className="w-8 h-0.5 bg-[#0f7f6d]"></span> About Our Institution
               </div>
-              <h2 className="text-3xl md:text-4xl font-bold text-[#454545] mb-6 leading-tight">
-                We Are Creating Leaders <br />
-                For Tomorrow's World
+              <h2 className="text-3xl md:text-4xl font-bold text-[#454545] mb-6 leading-tight whitespace-pre-wrap">
+                {about.heading || "We Are Creating Leaders\nFor Tomorrow's World"}
               </h2>
-              <p className="text-gray-600 mb-6 leading-relaxed">
-                SMaRT School is a community of learners dedicated to academic
-                excellence, personal growth, and global citizenship. We provide a
-                supportive and challenging environment where students are
-                encouraged to explore their passions.
+              <p className="text-gray-600 mb-6 leading-relaxed whitespace-pre-wrap">
+                {about.content || "SMaRT School is a community of learners dedicated to academic excellence, personal growth, and global citizenship. We provide a supportive and challenging environment where students are encouraged to explore their passions."}
               </p>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-8">
@@ -187,18 +201,18 @@ export default async function HomePage() {
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center divide-x-0 md:divide-x divide-white/20">
             <div className="flex flex-col items-center">
               <span className="material-icons-outlined text-5xl text-[#E3E8E7] mb-4">groups</span>
-              <h3 className="text-5xl font-bold text-white mb-2">2500</h3>
-              <p className="text-[#E3E8E7] font-medium uppercase tracking-widest text-sm">Students Enrolled</p>
+              <h3 className="text-5xl font-bold text-white mb-2">{stats.stat1_value || "2500"}</h3>
+              <p className="text-[#E3E8E7] font-medium uppercase tracking-widest text-sm">{stats.stat1_label || "Students Enrolled"}</p>
             </div>
             <div className="flex flex-col items-center">
               <span className="material-icons-outlined text-5xl text-[#E3E8E7] mb-4">school</span>
-              <h3 className="text-5xl font-bold text-white mb-2">150</h3>
-              <p className="text-[#E3E8E7] font-medium uppercase tracking-widest text-sm">Certified Teachers</p>
+              <h3 className="text-5xl font-bold text-white mb-2">{stats.stat2_value || "150"}</h3>
+              <p className="text-[#E3E8E7] font-medium uppercase tracking-widest text-sm">{stats.stat2_label || "Certified Teachers"}</p>
             </div>
             <div className="flex flex-col items-center">
               <span className="material-icons-outlined text-5xl text-[#E3E8E7] mb-4">emoji_events</span>
-              <h3 className="text-5xl font-bold text-white mb-2">85</h3>
-              <p className="text-[#E3E8E7] font-medium uppercase tracking-widest text-sm">Awards Won</p>
+              <h3 className="text-5xl font-bold text-white mb-2">{stats.stat3_value || "85"}</h3>
+              <p className="text-[#E3E8E7] font-medium uppercase tracking-widest text-sm">{stats.stat3_label || "Awards Won"}</p>
             </div>
             <div className="flex flex-col items-center">
               <span className="material-icons-outlined text-5xl text-[#E3E8E7] mb-4">apartment</span>
@@ -345,17 +359,17 @@ export default async function HomePage() {
               Join Our Community
             </span>
             <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-8 leading-tight max-w-3xl mx-auto">
-              Ready to Take the Next Step in Your Education?
+              {cta.heading || "Ready to Take the Next Step in Your Education?"}
             </h2>
             
             <div className="flex flex-col sm:flex-row items-center justify-center gap-6 mt-10">
-              <Link href="/contact" className="group px-8 py-4 bg-white text-[#0f7f6d] hover:bg-[#454545] hover:text-white rounded font-bold transition-all shadow-xl hover:shadow-2xl w-full sm:w-auto flex items-center justify-center gap-3 transform hover:-translate-y-2">
+              <Link href={cta.button1_link || "/contact"} className="group px-8 py-4 bg-white text-[#0f7f6d] hover:bg-[#454545] hover:text-white rounded font-bold transition-all shadow-xl hover:shadow-2xl w-full sm:w-auto flex items-center justify-center gap-3 transform hover:-translate-y-2">
                 <span className="material-icons-outlined group-hover:rotate-12 transition-transform duration-300">school</span>
-                Enroll Now
+                {cta.button1_text || "Enroll Now"}
               </Link>
-              <Link href="/contact" className="group px-8 py-4 bg-transparent border-2 border-white hover:bg-white text-white hover:text-[#454545] rounded font-bold transition-all w-full sm:w-auto flex items-center justify-center gap-3 transform hover:-translate-y-2">
+              <Link href={cta.button2_link || "/contact"} className="group px-8 py-4 bg-transparent border-2 border-white hover:bg-white text-white hover:text-[#454545] rounded font-bold transition-all w-full sm:w-auto flex items-center justify-center gap-3 transform hover:-translate-y-2">
                 <span className="material-icons-outlined group-hover:scale-125 transition-transform duration-300">mail_outline</span>
-                Contact Us
+                {cta.button2_text || "Contact Us"}
               </Link>
             </div>
           </div>
